@@ -1,7 +1,9 @@
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants, Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { GitHubStarsButton } from '@/components/github-stars-button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { SignIn as ClerkSignInForm } from '@clerk/nextjs';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { InteractiveGridPattern } from './interactive-grid';
@@ -15,13 +17,13 @@ export default function SignInViewPage() {
   return (
     <div className='relative flex min-h-screen flex-col items-center justify-center overflow-hidden md:grid lg:max-w-none lg:grid-cols-2 lg:px-0'>
       <Link
-        href='/examples/authentication'
+        href='/auth/sign-up'
         className={cn(
           buttonVariants({ variant: 'ghost' }),
-          'absolute top-4 right-4 hidden md:top-8 md:right-8'
+          'absolute top-4 right-4 hidden md:top-8 md:right-8 md:inline-flex'
         )}
       >
-        Login
+        Sign up
       </Link>
       <div className='relative hidden h-full flex-col p-10 lg:flex dark:border-r'>
         <div className='absolute inset-0 bg-sidebar' />
@@ -58,7 +60,6 @@ export default function SignInViewPage() {
       </div>
       <div className='flex h-full items-center justify-center p-4 lg:p-8'>
         <div className='flex w-full max-w-md flex-col items-center justify-center space-y-6'>
-          {/* github link  */}
           <GitHubStarsButton
             owner='kiranism'
             repo='next-shadcn-dashboard-starter'
@@ -66,18 +67,34 @@ export default function SignInViewPage() {
             variant='outline'
             size='default'
           />
-          <ClerkSignInForm
-            initialValues={{
-              emailAddress: 'your_mail+clerk_test@example.com'
-            }}
-          />
+          <Card className='w-full'>
+            <CardHeader className='text-center'>
+              <CardTitle>Sign in</CardTitle>
+              <CardDescription>
+                Local preview form. Real authentication can be wired later.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <div className='space-y-2'>
+                <Label htmlFor='email'>Email</Label>
+                <Input id='email' type='email' defaultValue='admin@influence.local' />
+              </div>
+              <div className='space-y-2'>
+                <Label htmlFor='password'>Password</Label>
+                <Input id='password' type='password' defaultValue='local-preview' />
+              </div>
+              <Button asChild className='w-full'>
+                <Link href='/dashboard/overview'>Continue to dashboard</Link>
+              </Button>
+            </CardContent>
+          </Card>
           <div className='text-muted-foreground space-y-2 px-8 text-center text-xs'>
             <p>
               This is an{' '}
               <Link href='/about' className='hover:text-primary underline underline-offset-4'>
                 open-source project
               </Link>{' '}
-              for demo purposes. Authentication is handled securely by Clerk.
+              for demo purposes. Authentication is currently a local preview shell.
             </p>
             <p>
               <Link

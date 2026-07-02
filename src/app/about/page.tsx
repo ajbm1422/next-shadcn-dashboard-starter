@@ -40,19 +40,11 @@ export default function AboutPage() {
 
           {/* Auth Section */}
           <section className='bg-card rounded-2xl border p-8 shadow-sm'>
-            <h2 className='text-foreground mb-4 text-xl font-semibold'>Authentication by Clerk</h2>
+            <h2 className='text-foreground mb-4 text-xl font-semibold'>Authentication Preview</h2>
             <p className='text-muted-foreground text-lg leading-relaxed'>
-              Authentication for this application is securely handled by{' '}
-              <a
-                href='https://clerk.com'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='text-primary font-medium hover:underline'
-              >
-                Clerk
-              </a>
-              , a modern authentication and user management platform. Clerk provides secure sign-in,
-              session management, and user data protection out of the box.
+              This local build keeps the account, profile, and organization screens as dashboard UI.
+              A production authentication provider can be connected later without changing the admin
+              layout.
             </p>
           </section>
 

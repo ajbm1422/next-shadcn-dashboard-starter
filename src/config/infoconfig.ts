@@ -6,24 +6,14 @@ export const workspacesInfoContent: InfobarContent = {
     {
       title: 'Overview',
       description:
-        'The Workspaces page allows you to manage your workspaces and switch between them. This feature is powered by Clerk Organizations, which enables multi-tenant workspace management. You can view all available workspaces, create new ones, and switch your active workspace.',
-      links: [
-        {
-          title: 'Clerk Organizations Documentation',
-          url: 'https://clerk.com/docs/organizations/overview'
-        }
-      ]
+        'The Workspaces page allows you to manage local workspace shells and switch between them. You can view all available workspaces, create new ones, and switch your active workspace context.',
+      links: []
     },
     {
       title: 'Creating Workspaces',
       description:
         'To create a new workspace, click the "Create Organization" button. You will be prompted to enter a workspace name and configure initial settings. Once created, you can switch to the new workspace and start managing it.',
-      links: [
-        {
-          title: 'Multi-tenant Authentication Guide',
-          url: 'https://clerk.com/blog/how-to-build-multitenant-authentication-with-clerk'
-        }
-      ]
+      links: []
     },
     {
       title: 'Switching Workspaces',
@@ -38,15 +28,10 @@ export const workspacesInfoContent: InfobarContent = {
       links: []
     },
     {
-      title: 'Server-Side Permission Checks',
+      title: 'Permission Checks',
       description:
-        "This application follows Clerk's recommended patterns for multi-tenant authentication. Server-side permission checks ensure that users can only access resources for their active organization.",
-      links: [
-        {
-          title: 'Clerk Organizations Documentation',
-          url: 'https://clerk.com/docs/organizations/overview'
-        }
-      ]
+        'The local account context keeps organization role and permission metadata available to navigation and page-level UI. Replace it with your production authorization layer when backend APIs are connected.',
+      links: []
     }
   ]
 };
@@ -57,13 +42,8 @@ export const teamInfoContent: InfobarContent = {
     {
       title: 'Overview',
       description:
-        "The Team Management page allows you to manage your workspace team, including members, roles, security settings, and more. This page provides comprehensive organization management through Clerk's OrganizationProfile component.",
-      links: [
-        {
-          title: 'Clerk Organizations Documentation',
-          url: 'https://clerk.com/docs/organizations/overview'
-        }
-      ]
+        'The Team Management page allows you to manage your workspace team, including members, roles, security settings, and more. This page keeps the organization management design without depending on an external auth widget.',
+      links: []
     },
     {
       title: 'Managing Team Members',
@@ -74,13 +54,8 @@ export const teamInfoContent: InfobarContent = {
     {
       title: 'Roles and Permissions',
       description:
-        'Configure default roles and permissions in the Clerk Dashboard under Organizations settings. Roles define what actions team members can perform within the workspace. Common roles include admin, member, and custom roles you define.',
-      links: [
-        {
-          title: 'Clerk Organizations Documentation',
-          url: 'https://clerk.com/docs/organizations/overview'
-        }
-      ]
+        'Configure default roles and permissions in your application backend. Roles define what actions team members can perform within the workspace. Common roles include admin, member, and custom roles you define.',
+      links: []
     },
     {
       title: 'Security Settings',
@@ -109,58 +84,43 @@ export const billingInfoContent: InfobarContent = {
     {
       title: 'Overview',
       description:
-        "The Billing page allows you to manage your organization's subscription and usage limits. Plans and subscriptions are managed through Clerk Billing for B2B, which provides organization-level subscription management with integrated Stripe payment processing.",
-      links: [
-        {
-          title: 'Clerk Billing Documentation',
-          url: 'https://clerk.com/docs/billing/overview'
-        }
-      ]
+        "The Billing page allows you to manage your organization's subscription and usage limits. The current implementation is a local UI shell ready for a future billing provider.",
+      links: []
     },
     {
       title: 'Available Plans',
       description:
-        'View and subscribe to available plans through the pricing table. Plans are created and managed in the Clerk Dashboard. Toggle "Publicly available" on plans to show them in the pricing table. Common plans include free, pro, and team tiers.',
-      links: [
-        {
-          title: 'Clerk Dashboard - Plans',
-          url: 'https://dashboard.clerk.com/~/billing/plans'
-        }
-      ]
+        'View available plans through the local pricing cards. Common plans include free, pro, and team tiers.',
+      links: []
     },
     {
       title: 'Plan Features',
       description:
-        'Each plan can include specific features that unlock functionality in the application. Features are added to plans in the Clerk Dashboard and can be checked in code using the `has()` function with `feature` checks.',
+        'Each plan can include specific features that unlock functionality in the application. Replace the local plan metadata with your production billing entitlements later.',
       links: []
     },
     {
       title: 'Access Control',
       description:
-        'Plans and features are used for access control throughout the application. Server-side checks use the `has()` function to verify plan or feature access. Client-side protection uses the `<Show>` component to conditionally render content based on subscription status.',
+        'Plans and features are used for access control throughout the application. The current page-level checks read from the local organization plan and should be backed by server-side checks in production.',
       links: []
     },
     {
-      title: 'Billing Cost Structure',
+      title: 'Billing Integration',
       description:
-        "Clerk Billing costs 0.7% per transaction, plus transaction fees paid directly to Stripe. Clerk Billing is not the same as Stripe Billing - plans and pricing are managed through the Clerk Dashboard and won't sync with existing Stripe products. Clerk uses Stripe only for payment processing.",
+        'Connect Stripe, Toss Payments, or another provider when the product needs real subscription changes. The visible dashboard design can stay the same.',
       links: []
     },
     {
       title: 'Setup Requirements',
       description:
-        "To enable billing, navigate to Billing Settings in the Clerk Dashboard and enable billing for your application. Choose between Clerk's development gateway (for testing) or your own Stripe account (for production). Note: A Stripe account created for development cannot be used for production.",
-      links: [
-        {
-          title: 'Billing Settings',
-          url: 'https://dashboard.clerk.com/~/billing/settings'
-        }
-      ]
+        'Wire the pricing actions to your backend billing endpoint before enabling real plan changes.',
+      links: []
     },
     {
-      title: 'Beta Status',
+      title: 'Preview Status',
       description:
-        'Billing is currently in Beta and its APIs are experimental and may undergo breaking changes. To mitigate potential disruptions, we recommend pinning your SDK and `clerk-js` package versions.',
+        'Billing data is currently mocked for the dashboard preview. Treat it as UI scaffolding until a real billing source is connected.',
       links: []
     }
   ]

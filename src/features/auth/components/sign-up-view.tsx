@@ -1,8 +1,10 @@
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants, Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { SignUp as ClerkSignUpForm } from '@clerk/nextjs';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Icons } from '@/components/icons';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { InteractiveGridPattern } from './interactive-grid';
@@ -16,13 +18,13 @@ export default function SignUpViewPage({ stars }: { stars: number }) {
   return (
     <div className='relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0'>
       <Link
-        href='/examples/authentication'
+        href='/auth/sign-in'
         className={cn(
           buttonVariants({ variant: 'ghost' }),
-          'absolute top-4 right-4 hidden md:top-8 md:right-8'
+          'absolute top-4 right-4 hidden md:top-8 md:right-8 md:inline-flex'
         )}
       >
-        Sign Up
+        Login
       </Link>
       <div className='relative hidden h-full flex-col p-10 lg:flex dark:border-r'>
         <div className='absolute inset-0 bg-sidebar' />
@@ -59,11 +61,10 @@ export default function SignUpViewPage({ stars }: { stars: number }) {
       </div>
       <div className='flex h-full items-center justify-center p-4 lg:p-8'>
         <div className='flex w-full max-w-md flex-col items-center justify-center space-y-6'>
-          {/* github link  */}
           <Link
             className={cn('group inline-flex hover:text-yellow-200')}
             target='_blank'
-            href={'https://github.com/kiranism/next-shadcn-dashboard-starter'}
+            href='https://github.com/kiranism/next-shadcn-dashboard-starter'
           >
             <div className='flex items-center'>
               <GitHubLogoIcon className='size-4' />
@@ -77,18 +78,36 @@ export default function SignUpViewPage({ stars }: { stars: number }) {
               <span className='font-display font-medium'>{stars}</span>
             </div>
           </Link>
-          <ClerkSignUpForm
-            initialValues={{
-              emailAddress: 'your_mail+clerk_test@example.com'
-            }}
-          />
+          <Card className='w-full'>
+            <CardHeader className='text-center'>
+              <CardTitle>Create account</CardTitle>
+              <CardDescription>Local preview form for the starter shell.</CardDescription>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <div className='space-y-2'>
+                <Label htmlFor='name'>Name</Label>
+                <Input id='name' defaultValue='Zbo Moon' />
+              </div>
+              <div className='space-y-2'>
+                <Label htmlFor='email'>Email</Label>
+                <Input id='email' type='email' defaultValue='admin@influence.local' />
+              </div>
+              <div className='space-y-2'>
+                <Label htmlFor='organization'>Organization</Label>
+                <Input id='organization' defaultValue='Influence Ops' />
+              </div>
+              <Button asChild className='w-full'>
+                <Link href='/dashboard/overview'>Create local preview account</Link>
+              </Button>
+            </CardContent>
+          </Card>
           <div className='text-muted-foreground space-y-2 px-8 text-center text-xs'>
             <p>
               This is an{' '}
               <Link href='/about' className='hover:text-primary underline underline-offset-4'>
                 open-source project
               </Link>{' '}
-              for demo purposes. Authentication is handled securely by Clerk.
+              for demo purposes. Authentication is currently a local preview shell.
             </p>
             <p>
               <Link

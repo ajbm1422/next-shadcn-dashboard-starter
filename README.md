@@ -17,7 +17,6 @@
   <a href="https://github.com/Kiranism/next-shadcn-dashboard-starter/network/members"><img src="https://img.shields.io/github/forks/Kiranism/next-shadcn-dashboard-starter?style=social" alt="Forks" /></a>
   <a href="https://github.com/Kiranism/next-shadcn-dashboard-starter/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Kiranism/next-shadcn-dashboard-starter" alt="MIT License" /></a>
   <img src="https://img.shields.io/badge/Next.js-16-black" alt="Next.js" />
-  <a href="https://go.clerk.com/ILdYhn7"><img src="https://img.shields.io/badge/Sponsored_by-Clerk-6C47FF?style=flat-square&logo=clerk" alt="Sponsored by Clerk" /></a>
 </p>
 
 ## Overview
@@ -30,7 +29,7 @@ It ships with authentication, charts, tables, forms, and a feature-based folder 
 
 - Framework - [Next.js 16](https://nextjs.org/16)
 - Language - [TypeScript](https://www.typescriptlang.org)
-- Auth - [Clerk](https://go.clerk.com/ILdYhn7)
+- Auth - local preview shell, ready for a production provider
 - Error tracking - [Sentry](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy26q2-nextjs&utm_content=github-banner-project-tryfree)
 - Styling - [Tailwind CSS v4](https://tailwindcss.com)
 - Components - [shadcn/ui](https://ui.shadcn.com)
@@ -53,9 +52,9 @@ _Looking for a TanStack Start version? Here's the [repo](https://git.new/tanstac
 - Pre-built dashboard layout with sidebar, header, and content area
 - Analytics overview page with cards and charts
 - Data tables with React Query prefetch, client-side cache, search, filter, and pagination
-- Authentication and user management through Clerk
-- Multi-tenant workspaces using Clerk Organizations (create, switch, manage teams)
-- Billing and subscriptions via Clerk Billing for B2B, with plan management and feature gating
+- Local account and profile preview shell
+- Multi-tenant workspace UI for creating, switching, and managing teams
+- Billing and plan UI with local organization-level plan gating
 - Client-side RBAC navigation that filters menu items by organization, permissions, and roles
 - Infobar component for tips, status messages, or contextual notes on any page
 - shadcn/ui components styled with Tailwind CSS
@@ -77,20 +76,20 @@ A few things you can build with it:
 
 | Page                                                                                                                                                                  | Notes                                                                                                                                                                                |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Signup / Signin](https://go.clerk.com/ILdYhn7)                                                                                                                       | Auth handled by Clerk, with passwordless sign-in, social logins, and enterprise SSO.                                                                                                |
+| Signup / Signin                                                                                                                                                       | Local preview forms. Wire a production auth provider when needed.                                                                                                                   |
 | [Dashboard Overview](https://shadcn-dashboard.kiranism.dev/dashboard)                                                                                                 | Cards and Recharts graphs. Parallel routes give each section its own loading and error state.                                                                                       |
 | [Product List (Table)](https://shadcn-dashboard.kiranism.dev/dashboard/product)                                                                                       | TanStack Table plus React Query (server prefetch, client cache) with nuqs URL state for search, filter, and pagination. `shallow: true` keeps interactions on the client.           |
 | [Create Product Form](https://shadcn-dashboard.kiranism.dev/dashboard/product/new)                                                                                    | TanStack Form and Zod with `useMutation` for create and update. Cache is invalidated on success.                                                                                    |
 | [Users (Table)](https://shadcn-dashboard.kiranism.dev/dashboard/users)                                                                                                | Same setup as Products: React Query with nuqs, server prefetch, and client-side pagination and filtering.                                                                           |
 | [React Query Demo](https://shadcn-dashboard.kiranism.dev/dashboard/react-query)                                                                                       | A Pokemon API example showing the server prefetch, `HydrationBoundary`, and `useSuspenseQuery` pattern with client-side cache.                                                      |
-| [Profile](https://shadcn-dashboard.kiranism.dev/dashboard/profile)                                                                                                   | Clerk's account management UI for profile and security settings.                                                                                                                    |
+| [Profile](https://shadcn-dashboard.kiranism.dev/dashboard/profile)                                                                                                   | Local profile and security settings shell.                                                                                                                                          |
 | [Kanban Board](https://shadcn-dashboard.kiranism.dev/dashboard/kanban)                                                                                                | Drag-and-drop task board built with dnd-kit and Zustand. Column sorting, priority badges, assignees, and due dates.                                                                 |
 | [Chat](https://shadcn-dashboard.kiranism.dev/dashboard/chat)                                                                                                          | Messaging UI with a conversation list, message bubbles, quick replies, attachments, and an auto-reply demo. Multi-panel layout that works on mobile.                                |
 | [Notifications](https://shadcn-dashboard.kiranism.dev/dashboard/notifications)                                                                                        | Notification center with a header badge, popover preview, and a full page with All / Unread / Read tabs. Includes mark-as-read and mark-all-as-read.                                |
-| [Workspaces](https://shadcn-dashboard.kiranism.dev/dashboard/workspaces)                                                                                              | Organization management using Clerk's `<OrganizationList />`. View, create, and switch between organizations.                                                                       |
-| [Team Management](https://shadcn-dashboard.kiranism.dev/dashboard/workspaces/team)                                                                                    | Team management using Clerk's `<OrganizationProfile />`. Manage members, roles, permissions, security, and org details. Needs an active organization.                               |
-| [Billing & Plans](https://shadcn-dashboard.kiranism.dev/dashboard/billing)                                                                                            | Billing page using Clerk's `<PricingTable />`. View plans, subscribe, and manage subscriptions. Needs an active organization.                                                       |
-| [Exclusive Page](https://shadcn-dashboard.kiranism.dev/dashboard/exclusive)                                                                                           | Plan-based access control with Clerk's `<Protect>`. Only available to organizations on the Pro plan, with a fallback UI for everyone else.                                          |
+| [Workspaces](https://shadcn-dashboard.kiranism.dev/dashboard/workspaces)                                                                                              | Local organization management. View, create, and switch between organizations.                                                                                                      |
+| [Team Management](https://shadcn-dashboard.kiranism.dev/dashboard/workspaces/team)                                                                                    | Team management UI for members, roles, permissions, security, and org details. Needs an active organization.                                                                        |
+| [Billing & Plans](https://shadcn-dashboard.kiranism.dev/dashboard/billing)                                                                                            | Local billing and plan cards. Needs an active organization.                                                                                                                         |
+| [Exclusive Page](https://shadcn-dashboard.kiranism.dev/dashboard/exclusive)                                                                                           | Local plan-based access control. Only available to organizations on the Pro or Team plan, with a fallback UI for everyone else.                                                     |
 | [Not Found](https://shadcn-dashboard.kiranism.dev/dashboard/notfound)                                                                                                 | A root-level not-found page.                                                                                                                                                        |
 | [Global Error](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy26q2-nextjs&utm_content=github-banner-project-tryfree) | A shared error page wired to Sentry for logging, reports, and session replay.                                                                                                       |
 
@@ -158,11 +157,7 @@ git clone https://github.com/Kiranism/next-shadcn-dashboard-starter.git
 
 ##### Environment variables
 
-See `env.example.txt` for the variables you need. They cover authentication and error tracking.
-
-##### Clerk setup
-
-For setting up Clerk auth (including organizations, workspaces, and teams), see [clerk_setup.md](./docs/clerk_setup.md).
+See `env.example.txt` for the variables you need. They cover build output and error tracking.
 
 The app should now be running at http://localhost:3000.
 
@@ -173,16 +168,8 @@ The app should now be running at http://localhost:3000.
 
 #### Cleanup
 
-To strip out features you don't need (auth, kanban, chat, notifications, extra themes, Sentry), run the cleanup script:
-
-```bash
-node scripts/cleanup.js --interactive   # interactive mode
-node scripts/cleanup.js --list          # see available features
-node scripts/cleanup.js --dry-run chat  # preview before removing
-node scripts/cleanup.js kanban chat     # remove specific features
-```
-
-Run `node scripts/cleanup.js --help` for all options. Delete `scripts/cleanup.js` when you're done.
+The upstream cleanup helper has been removed from this local copy so the organization and profile
+design shells stay intact.
 
 ## Deploy
 
@@ -195,12 +182,10 @@ Build the image:
 ```bash
 # Node.js
 docker build \
-  --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxxxx \
   -t shadcn-dashboard .
 
 # OR Bun
 docker build -f Dockerfile.bun \
-  --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxxxx \
   -t shadcn-dashboard .
 ```
 
@@ -208,8 +193,6 @@ Run the container:
 
 ```bash
 docker run -d -p 3000:3000 \
-  -e NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxxxx \
-  -e CLERK_SECRET_KEY=sk_live_xxxxx \
   --restart unless-stopped \
   --name shadcn-dashboard \
   shadcn-dashboard

@@ -3,7 +3,7 @@
 /**
  * Fully client-side hook for filtering navigation items based on RBAC
  *
- * This hook uses Clerk's client-side hooks to check permissions, roles, and organization
+ * This hook uses the local account context to check permissions, roles, and organization
  * without any server calls. This is perfect for navigation visibility (UX only).
  *
  * Performance:
@@ -17,7 +17,7 @@
  */
 
 import { useMemo } from 'react';
-import { useOrganization, useUser } from '@clerk/nextjs';
+import { useAccount } from '@/lib/account-context';
 import type { NavItem, NavGroup } from '@/types';
 
 /**
@@ -27,23 +27,21 @@ import type { NavItem, NavGroup } from '@/types';
  * @returns Filtered items
  */
 export function useFilteredNavItems(items: NavItem[]) {
-  const { organization, membership } = useOrganization();
-  const { user } = useUser();
+  const { activeOrganization, user } = useAccount();
 
   // Memoize context and permissions
   const accessContext = useMemo(() => {
-    const permissions = membership?.permissions || [];
-    const role = membership?.role;
+    const permissions = activeOrganization?.permissions || [];
+    const role = activeOrganization?.role;
 
     return {
-      organization: organization ?? undefined,
-      user: user ?? undefined,
+      organization: activeOrganization ?? undefined,
+      user,
       permissions: permissions as string[],
       role: role ?? undefined,
-      hasOrg: !!organization
+      hasOrg: !!activeOrganization
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- using stable primitives to avoid infinite re-renders from unstable Clerk object refs
-  }, [organization?.id, user?.id, membership?.permissions, membership?.role]);
+  }, [activeOrganization, user]);
 
   // Filter items synchronously (all client-side)
   const filteredItems = useMemo(() => {
@@ -79,19 +77,9 @@ export function useFilteredNavItems(items: NavItem[]) {
           }
         }
 
-        // Note: Plans and features require server-side checks with Clerk's has() function
-        // For navigation visibility, you can either:
-        // 1. Store plan/feature info in organization metadata (client-accessible)
-        // 2. Use server actions (current approach)
-        // 3. Skip plan/feature checks for navigation (recommended for performance)
-
-        // For now, if plan/feature is specified, we'll need to handle it differently
-        // Most navigation items won't need plan/feature checks anyway
         if (item.access.plan || item.access.feature) {
-          // Option: Return true and let the page handle it, or use server action
-          // For now, we'll show it (page-level protection should handle it)
           console.warn(
-            `Plan/feature checks for navigation items require server-side verification. ` +
+            `Plan/feature checks for navigation items require application-level verification. ` +
               `Item "${item.title}" will be shown, but page-level protection should be implemented.`
           );
         }
@@ -135,7 +123,7 @@ export function useFilteredNavItems(items: NavItem[]) {
             // Plan/feature checks (same warning as above)
             if (childItem.access.plan || childItem.access.feature) {
               console.warn(
-                `Plan/feature checks for navigation items require server-side verification. ` +
+                `Plan/feature checks for navigation items require application-level verification. ` +
                   `Item "${childItem.title}" will be shown, but page-level protection should be implemented.`
               );
             }

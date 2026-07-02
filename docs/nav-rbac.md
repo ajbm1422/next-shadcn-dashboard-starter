@@ -4,7 +4,7 @@
 
 This document explains the fully client-side RBAC (Role-Based Access Control) system for navigation items.
 
-**Key Insight**: Navigation visibility is UX only, not security. We can check everything client-side using Clerk's hooks!
+**Key Insight**: Navigation visibility is UX only, not security. We can check the local account context client-side for instant menu filtering.
 
 ## Architecture
 
@@ -16,7 +16,7 @@ This document explains the fully client-side RBAC (Role-Based Access Control) sy
 ### Why Client-Side?
 
 - **Navigation visibility is UX only** - Users can't bypass security by seeing/hiding nav items
-- **Clerk provides all data client-side** - `useOrganization()` gives us `membership.permissions` and `membership.role`
+- **Local account context provides preview data client-side** - `useAccount()` gives us the active organization, permissions, and role
 - **Zero server calls** - Instant filtering, no loading states, no UI flashing
 - **Better performance** - No network latency, no async complexity
 
@@ -26,9 +26,9 @@ This document explains the fully client-side RBAC (Role-Based Access Control) sy
 
 ### All Checks Are Synchronous
 
-✅ **requireOrg**: Client-side check using `useOrganization()`  
-✅ **permission**: Client-side check using `membership.permissions` array  
-✅ **role**: Client-side check using `membership.role`  
+✅ **requireOrg**: Client-side check using `useAccount()`
+✅ **permission**: Client-side check using the active organization's `permissions` array
+✅ **role**: Client-side check using the active organization's `role`
 ⚠️ **plan/feature**: Requires server-side check (see below)
 
 ### Zero Server Calls
@@ -76,13 +76,13 @@ function MyComponent() {
 
 ### Plan/Feature Checks
 
-Plans and features require Clerk's `has()` function which is server-side only. Options:
+Plans and features should be verified by your production entitlement layer. Options:
 
 1. **Store in organization metadata** (recommended for navigation):
 
    ```typescript
    // In your organization setup
-   organization.publicMetadata.plan = 'pro';
+   organization.plan = 'pro';
 
    // In nav-config.ts
    access: {
@@ -93,7 +93,7 @@ Plans and features require Clerk's `has()` function which is server-side only. O
 
 2. **Show item, protect at page level** (current approach):
    - Navigation item is shown
-   - Page component checks server-side and redirects/shows error if needed
+   - Page component checks the backend entitlement and redirects/shows error if needed
 
 3. **Use server action** (if you really need it):
    - Only for navigation items that absolutely need plan/feature checks
