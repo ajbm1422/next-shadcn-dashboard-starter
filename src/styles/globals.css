@@ -14,6 +14,12 @@
     @apply bg-background text-foreground;
   }
 
+  .flur-wordmark {
+    font-family:
+      var(--font-outfit), var(--font-inter), 'Apple SD Gothic Neo', 'Pretendard', system-ui,
+      sans-serif;
+  }
+
   /* Global scrollbar styling to match ScrollArea */
   * {
     scrollbar-width: thin;

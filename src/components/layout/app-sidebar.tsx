@@ -32,6 +32,7 @@ import { useAccount } from '@/lib/account-context';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
+import { FlurLogo } from '../brand/flur-logo';
 import { Icons } from '../icons';
 import { OrgSwitcher } from '../org-switcher';
 
@@ -48,7 +49,14 @@ export default function AppSidebar() {
 
   return (
     <Sidebar collapsible='icon'>
-      <SidebarHeader className='group-data-[collapsible=icon]:pt-4'>
+      <SidebarHeader className='gap-2 group-data-[collapsible=icon]:pt-4'>
+        <Link
+          href='/'
+          aria-label='플러 홈'
+          className='hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex h-10 items-center rounded-lg px-2 text-sidebar-foreground transition-colors group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0'
+        >
+          <FlurLogo size='sm' wordmarkClassName='group-data-[collapsible=icon]:hidden' />
+        </Link>
         <OrgSwitcher />
       </SidebarHeader>
       <SidebarContent className='overflow-x-hidden'>

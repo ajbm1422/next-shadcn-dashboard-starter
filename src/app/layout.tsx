@@ -16,8 +16,20 @@ const META_THEME_COLORS = {
 };
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: {
+    default: '플러',
+    template: '%s | 플러'
+  },
+  description: '영상 커머스 운영과 인플루언서 분석을 위한 플러 대시보드',
+  applicationName: '플러',
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.svg', type: 'image/svg+xml' }
+    ],
+    apple: [{ url: '/brand/flur-apple-touch-icon.png', sizes: '180x180', type: 'image/png' }]
+  }
 };
 
 export const viewport: Viewport = {

@@ -1,0 +1,23 @@
+{
+  "name": "플러",
+  "short_name": "플러",
+  "description": "영상 커머스 운영과 인플루언서 분석을 위한 플러 대시보드",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#101827",
+  "icons": [
+    {
+      "src": "/brand/flur-apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/flur-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

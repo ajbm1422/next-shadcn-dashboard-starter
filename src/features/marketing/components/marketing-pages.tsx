@@ -30,6 +30,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion';
+import { FlurLogo } from '@/components/brand/flur-logo';
 import { Icons } from '@/components/icons';
 import { cn } from '@/lib/utils';
 import {
@@ -73,17 +74,8 @@ function asset(path: string) {
   return `${CHARLLA_ASSET_BASE}${path}`;
 }
 
-function CharllaLogo({ className = 'h-7 w-auto' }: { className?: string }) {
-  return (
-    <Image
-      src={asset('img-charlla-logo.svg')}
-      alt='charlla'
-      width={118}
-      height={30}
-      className={className}
-      unoptimized
-    />
-  );
+function BrandLogo({ size = 'md' }: { size?: 'xs' | 'sm' | 'md' | 'lg' }) {
+  return <FlurLogo size={size} />;
 }
 
 function AssetImage({
@@ -118,7 +110,7 @@ function MarketingHeader() {
       </div>
       <div className='mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 md:px-6'>
         <Link href='/' className='flex items-center gap-2 font-semibold tracking-tight'>
-          <CharllaLogo />
+          <BrandLogo />
         </Link>
 
         <NavigationMenu viewport={false} className='hidden lg:flex'>
@@ -207,9 +199,9 @@ function MarketingFooter() {
     <footer className='border-t bg-white text-neutral-950'>
       <div className='mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.2fr_2fr] md:px-6'>
         <div>
-          <CharllaLogo />
+          <BrandLogo />
           <p className='mt-4 max-w-sm text-sm leading-6 text-neutral-600'>
-            찰나는 생생한 고화질 플레이어, 구매 링크를 삽입한 샵 플레이어로 커머스에 꼭 필요한
+            플러는 생생한 고화질 플레이어, 구매 링크를 삽입한 샵 플레이어로 커머스에 꼭 필요한
             서비스를 노코드로 사용할 수 있는 숏폼 솔루션입니다.
           </p>
           <p className='mt-6 text-xs leading-5 text-neutral-500'>
@@ -369,7 +361,7 @@ function ComparisonTable() {
                 <div className='mt-4 text-3xl font-semibold text-neutral-400'>16.7MB</div>
               </div>
               <div className='rounded-md bg-neutral-950 p-3 text-white'>
-                <div className='text-xs font-medium text-neutral-400'>찰나</div>
+                <div className='text-xs font-medium text-neutral-400'>플러</div>
                 <div className='mt-2 h-3 rounded-full bg-emerald-400' />
                 <div className='mt-2 h-3 w-3/4 rounded-full bg-emerald-300' />
                 <div className='mt-4 text-3xl font-semibold'>2MB대</div>
@@ -466,10 +458,10 @@ function FinalCta() {
     <section className='bg-neutral-950 px-4 py-20 text-white md:px-6'>
       <div className='mx-auto max-w-4xl text-center'>
         <h2 className='text-3xl font-bold tracking-tight md:text-5xl'>
-          찰나의 모든 기능, 30일 동안 무제한 사용하세요.
+          플러의 모든 기능, 30일 동안 무제한 사용하세요.
         </h2>
         <p className='mx-auto mt-4 max-w-2xl text-neutral-300'>
-          찰나의 생생한 몰입으로 쇼핑몰 매출을 올려 보세요.
+          플러의 생생한 몰입으로 쇼핑몰 매출을 올려 보세요.
         </p>
         <div className='mt-8 flex flex-col justify-center gap-3 sm:flex-row'>
           <Button asChild size='lg'>
@@ -496,7 +488,7 @@ export function LandingPage() {
             사진보다 영상으로, 더욱 생생한 쇼핑몰 만들기
           </h1>
           <p className='mx-auto mt-6 max-w-2xl text-lg leading-8 text-neutral-700'>
-            GIF보다 빠른 찰나 숏폼으로 시작하세요
+            GIF보다 빠른 플러 숏폼으로 시작하세요
           </p>
           <div className='mt-8 flex flex-col justify-center gap-3 sm:flex-row'>
             <Button asChild size='lg'>
@@ -514,7 +506,7 @@ export function LandingPage() {
         <SectionHeading
           eyebrow='GIF 대체'
           title='GIF보다 용량은 작게, 화질은 높게'
-          description='GIF만들기 대신 가볍고 선명한 찰나 숏폼으로 상세페이지를 최적화하세요.'
+          description='GIF만들기 대신 가볍고 선명한 플러 숏폼으로 상세페이지를 최적화하세요.'
         />
         <ComparisonTable />
       </section>
@@ -550,7 +542,7 @@ export function LandingPage() {
           <div>
             <div className='text-sm font-semibold text-emerald-700'>구매 흐름 연결</div>
             <h2 className='mt-3 text-3xl font-bold tracking-tight md:text-5xl'>
-              클릭! 한 번에 구매까지 이어지는 찰나 숏폼
+              클릭! 한 번에 구매까지 이어지는 플러 숏폼
             </h2>
             <p className='mt-4 leading-7 text-neutral-700'>
               구매전환율을 높이는 가장 똑똑한 방법. 숏폼 영상에 구매 링크를 추가하고 상품페이지까지
@@ -1342,7 +1334,7 @@ function BlogHeader() {
       <div className='mx-auto flex h-[54px] max-w-[1152px] items-center justify-between gap-4 px-4'>
         <div className='flex min-w-0 items-center gap-3'>
           <Link href='/' className='flex items-center gap-2 font-semibold tracking-tight'>
-            <CharllaLogo className='h-6 w-auto' />
+            <BrandLogo size='sm' />
           </Link>
           <Link href='/blog' className='flex items-center gap-2 text-sm font-semibold'>
             <Separator orientation='vertical' className='h-5' />
@@ -1401,7 +1393,7 @@ function BlogShell({ children }: { children: React.ReactNode }) {
       {children}
       <footer className='border-t px-4 py-10'>
         <div className='mx-auto flex max-w-[1152px] flex-col gap-3 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between'>
-          <span>찰나 Media</span>
+          <span>플러 Media</span>
           <div className='flex gap-3'>
             <Link href='/blog' className='hover:text-neutral-950'>
               RSS
@@ -1524,7 +1516,7 @@ export function BlogPage() {
   return (
     <BlogShell>
       <main>
-        <h1 className='sr-only'>찰나 Blog</h1>
+        <h1 className='sr-only'>플러 Blog</h1>
         <section className='mx-auto max-w-[1152px] px-4 pt-24'>
           <div className='grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end'>
             <div className='min-w-0'>
@@ -1582,8 +1574,8 @@ function GuideHeader() {
     <header className='sticky top-0 z-50 flex h-16 items-center border-b border-neutral-200 bg-white px-4 text-neutral-950'>
       <div className='grid w-full grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[320px_1fr_320px]'>
         <Link href='/' className='flex min-w-0 items-center gap-2 font-semibold'>
-          <CharllaLogo className='h-6 w-auto' />
-          <span className='truncate'>찰나 Guide</span>
+          <BrandLogo size='sm' />
+          <span className='truncate'>Guide</span>
         </Link>
 
         <nav className='hidden items-center justify-center gap-6 text-sm text-neutral-600 lg:flex'>
@@ -1631,8 +1623,8 @@ function GuideSidebar() {
     <aside className='hidden border-r bg-white lg:block'>
       <div className='sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto px-5 py-7'>
         <Link href='/guide' className='flex items-center gap-2 font-semibold'>
-          <CharllaLogo className='h-5 w-auto' />
-          <span>찰나 Guide</span>
+          <BrandLogo size='xs' />
+          <span>Guide</span>
         </Link>
         <div className='mt-8 space-y-8'>
           {guideNav.map((section) => (
@@ -1659,7 +1651,7 @@ function GuideSidebar() {
           ))}
         </div>
         <div className='mt-10 rounded-lg border p-3 text-xs leading-5 text-neutral-500'>
-          Charlla User Guide의 자주 묻는 질문을 문서형 레이아웃으로 정리했습니다.
+          플러 User Guide의 자주 묻는 질문을 문서형 레이아웃으로 정리했습니다.
         </div>
       </div>
     </aside>
@@ -1751,11 +1743,11 @@ export function FaqPage() {
 const termDocuments = {
   privacy: {
     eyebrow: '개인정보 처리방침',
-    title: '찰나(Charlla) 서비스 개인정보처리방침',
+    title: '플러 서비스 개인정보처리방침',
     version: 'Version 3.6 · 통합 표준 개인정보처리방침',
     effective: '시행일: 2026년 6월 1일',
     summary:
-      '찰나 서비스 제공을 위해 필요한 최소한의 개인정보를 수집하고, 서비스 운영과 고객 지원 목적 안에서만 처리합니다.',
+      '플러 서비스 제공을 위해 필요한 최소한의 개인정보를 수집하고, 서비스 운영과 고객 지원 목적 안에서만 처리합니다.',
     sections: [
       {
         title: '제1조 수집하는 개인정보 항목 및 이용 목적',
@@ -1777,15 +1769,15 @@ const termDocuments = {
   },
   use: {
     eyebrow: '이용약관',
-    title: '찰나(Charlla) 서비스 표준이용약관',
+    title: '플러 서비스 표준이용약관',
     version: 'Version 5.5 · 표준이용약관',
     effective: '시행일: 2026년 6월 1일',
     summary:
-      '찰나 서비스 이용 조건, 계정 관리, 요금제, 제한 행위, 서비스 제공 범위와 책임 기준을 정의합니다.',
+      '플러 서비스 이용 조건, 계정 관리, 요금제, 제한 행위, 서비스 제공 범위와 책임 기준을 정의합니다.',
     sections: [
       {
         title: '제1조 목적',
-        body: '본 약관은 찰나 서비스 이용과 관련하여 회사와 이용자 사이의 권리, 의무, 책임사항을 정합니다.'
+        body: '본 약관은 플러 서비스 이용과 관련하여 회사와 이용자 사이의 권리, 의무, 책임사항을 정합니다.'
       },
       {
         title: '제2조 계정 및 조직',
@@ -1811,7 +1803,7 @@ const termDocuments = {
     sections: [
       {
         title: '제1조 처리 범위',
-        body: '찰나는 고객이 서비스에 업로드하거나 연동한 데이터를 서비스 제공과 유지보수 목적 범위에서 처리합니다.'
+        body: '플러는 고객이 서비스에 업로드하거나 연동한 데이터를 서비스 제공과 유지보수 목적 범위에서 처리합니다.'
       },
       {
         title: '제2조 보안 조치',
@@ -1829,7 +1821,7 @@ const termDocuments = {
   },
   'japan-addendum': {
     eyebrow: 'JAPAN ADDENDUM',
-    title: '찰나(Charlla) 서비스 일본 고객 특약',
+    title: '플러 서비스 일본 고객 특약',
     version: 'Japan Addendum v1.0',
     effective: '시행일: 2026년 6월 1일',
     summary:
@@ -1837,7 +1829,7 @@ const termDocuments = {
     sections: [
       {
         title: '제1조 적용 범위',
-        body: '본 특약은 일본 법인 또는 일본 소재 사업장이 찰나 서비스를 이용하는 경우 표준약관과 함께 적용됩니다.'
+        body: '본 특약은 일본 법인 또는 일본 소재 사업장이 플러 서비스를 이용하는 경우 표준약관과 함께 적용됩니다.'
       },
       {
         title: '제2조 데이터 보호',
@@ -1907,7 +1899,7 @@ export function GuideOverviewPage() {
         <main className='px-5 py-10 md:px-10 lg:px-14'>
           <div className='mx-auto max-w-5xl'>
             <Badge className='bg-emerald-100 text-emerald-900 hover:bg-emerald-100'>
-              Charlla Guide
+              플러 Guide
             </Badge>
             <h1 className='mt-5 max-w-3xl text-4xl leading-tight font-semibold tracking-tight md:text-5xl'>
               영상 업로드부터 위젯 배포와 통계 확인까지 한 번에 보는 이용 가이드
@@ -1967,7 +1959,7 @@ export function NoticePage() {
       <main className='mx-auto max-w-[960px] px-4 py-16'>
         <Badge className='bg-neutral-950 text-white hover:bg-neutral-950'>공지사항</Badge>
         <h1 className='mt-5 text-4xl font-semibold tracking-tight md:text-5xl'>
-          찰나 서비스 공지사항
+          플러 서비스 공지사항
         </h1>
         <div className='mt-10 space-y-4'>
           {localNews.map((item) => (
@@ -2026,10 +2018,10 @@ export function SupportPage() {
           <Card className='rounded-lg'>
             <CardHeader>
               <CardTitle>문의 접수</CardTitle>
-              <CardDescription>help@charlla.io로 전달될 문의 폼 미리보기입니다.</CardDescription>
+              <CardDescription>support@flur.local로 전달될 문의 폼 미리보기입니다.</CardDescription>
             </CardHeader>
             <CardContent className='space-y-4'>
-              <Input defaultValue='help@charlla.io' readOnly />
+              <Input defaultValue='support@flur.local' readOnly />
               <Input placeholder='회사명 또는 쇼핑몰 URL' />
               <Input placeholder='문의 내용을 입력하세요' />
               <Button asChild className='w-full'>
@@ -2105,7 +2097,7 @@ export function MarketingAuthPage({ mode }: { mode: 'sign-in' | 'sign-up' }) {
       <header className='px-4 py-5 md:px-8'>
         <div className='mx-auto flex max-w-6xl items-center justify-between'>
           <Link href='/' className='flex items-center gap-2 font-semibold tracking-tight'>
-            <CharllaLogo />
+            <BrandLogo />
           </Link>
           <Button asChild variant='ghost' className={MARKETING_GHOST_BUTTON_CLASS}>
             <Link href='/'>서비스 소개</Link>
@@ -2122,7 +2114,7 @@ export function MarketingAuthPage({ mode }: { mode: 'sign-in' | 'sign-up' }) {
             <h1 className='max-w-2xl text-5xl leading-tight font-bold tracking-tight'>
               {isSignIn
                 ? '영상 라이브러리와 통계로 바로 돌아가기'
-                : '찰나의 모든 기능을 1개월 동안 무료로 테스트하세요'}
+                : '플러의 모든 기능을 1개월 동안 무료로 테스트하세요'}
             </h1>
             <p className='mt-5 max-w-xl text-lg leading-8 text-neutral-700'>
               {isSignIn
@@ -2155,7 +2147,7 @@ export function MarketingAuthPage({ mode }: { mode: 'sign-in' | 'sign-up' }) {
                   <Input
                     id='marketing-auth-name'
                     className='mt-2 h-10'
-                    defaultValue='Charlla Operator'
+                    defaultValue='플러 Operator'
                   />
                 </label>
               )}
@@ -2165,7 +2157,7 @@ export function MarketingAuthPage({ mode }: { mode: 'sign-in' | 'sign-up' }) {
                   id='marketing-auth-email'
                   className='mt-2 h-10'
                   type='email'
-                  defaultValue='help@charlla.io'
+                  defaultValue='support@flur.local'
                 />
               </label>
               <label htmlFor='marketing-auth-password' className='block text-sm font-medium'>
