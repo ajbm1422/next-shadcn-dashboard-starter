@@ -73,8 +73,8 @@ export function useBreadcrumbs() {
       ];
     }
 
-    if (pathname === '/dashboard/ai') {
-      return [{ title: 'AI', link: '/dashboard/ai' }];
+    if (pathname === '/dashboard/ai' || pathname === '/dashboard/assistant') {
+      return [{ title: 'AI 인사이트', link: '/dashboard/assistant' }];
     }
 
     const segments = pathname

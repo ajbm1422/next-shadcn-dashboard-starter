@@ -29,7 +29,7 @@ export const navGroups: NavGroup[] = [
         items: []
       },
       {
-        title: 'AI',
+        title: 'AI 인사이트',
         url: '/dashboard/assistant',
         icon: 'sparkles',
         isActive: false,

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
 import { AssistantEmptyState } from './assistant-empty-state';
 import { MessageList } from './message-list';
 import { PromptBox } from './prompt-box';
@@ -9,6 +10,7 @@ import type { AssistantStreamStatus, ChatMessage } from '../types/assistant.type
 
 export function ChatPanel({
   messages,
+  suggestions,
   status,
   error,
   hasArtifact,
@@ -16,6 +18,7 @@ export function ChatPanel({
   onStop
 }: {
   messages: ChatMessage[];
+  suggestions: string[];
   status: AssistantStreamStatus;
   error?: string;
   hasArtifact: boolean;
@@ -31,6 +34,7 @@ export function ChatPanel({
     setInput('');
     await onSend(nextMessage);
   };
+  const isWorking = status === 'submitted' || status === 'streaming';
 
   if (messages.length === 0) {
     return (
@@ -63,6 +67,23 @@ export function ChatPanel({
           <Alert variant='destructive'>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
+        )}
+        {suggestions.length > 0 && (
+          <div className='flex flex-wrap gap-2 px-2'>
+            {suggestions.map((suggestion) => (
+              <Button
+                key={suggestion}
+                type='button'
+                variant='outline'
+                size='sm'
+                className='h-auto min-h-8 max-w-full justify-start rounded-full px-3 py-1.5 text-left text-xs leading-5 whitespace-normal'
+                disabled={isWorking}
+                onClick={() => void send(suggestion)}
+              >
+                {suggestion}
+              </Button>
+            ))}
+          </div>
         )}
         <PromptBox
           value={input}

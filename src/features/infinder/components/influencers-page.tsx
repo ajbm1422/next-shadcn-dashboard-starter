@@ -103,8 +103,8 @@ export function InfluencersPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(5,minmax(140px,1fr))]'>
-            <InputGroup className='xl:col-span-2'>
+          <div className='grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(240px,1fr)_repeat(4,minmax(132px,0.72fr))_auto]'>
+            <InputGroup>
               <InputGroupAddon>
                 <Icons.search />
               </InputGroupAddon>
@@ -177,14 +177,17 @@ export function InfluencersPage() {
               </SelectContent>
             </Select>
 
-            <div className='border-input dark:bg-input/30 flex h-9 items-center gap-2 rounded-md border px-3 text-sm shadow-xs'>
+            <label
+              htmlFor='paid-only'
+              className='border-input hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50 flex h-9 w-fit cursor-pointer items-center gap-2 rounded-md border px-2.5 text-sm whitespace-nowrap shadow-xs transition-colors'
+            >
               <Checkbox
                 id='paid-only'
                 checked={paidOnly}
                 onCheckedChange={(value) => setPaidOnly(value === true)}
               />
-              <label htmlFor='paid-only'>광고 이력</label>
-            </div>
+              <span>광고 이력</span>
+            </label>
 
             <InputGroup className='md:col-span-2 xl:col-span-2'>
               <InputGroupAddon>
@@ -376,7 +379,7 @@ function ChannelMobileCard({ channel, onOpen }: { channel: Channel; onOpen: () =
   return (
     <button
       type='button'
-      className='hover:bg-muted/50 focus-visible:ring-ring w-full rounded-lg border p-4 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none'
+      className='hover:bg-muted/50 focus-visible:ring-ring w-full cursor-pointer rounded-lg border p-4 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none'
       onClick={onOpen}
     >
       <div className='flex min-w-0 items-start gap-3'>

@@ -45,6 +45,7 @@ export default function AppSidebar() {
   const { user, activeOrganization } = useAccount();
   const router = useRouter();
   const filteredGroups = useFilteredNavGroups(navGroups);
+  const navIconClassName = 'text-neutral-950 stroke-[2.15] dark:text-white';
 
   React.useEffect(() => {
     // Side effects based on sidebar state changes
@@ -94,7 +95,7 @@ export default function AppSidebar() {
                           tooltip={item.title}
                           isActive={isNavItemActive(item.url)}
                         >
-                          {item.icon && <Icon />}
+                          {item.icon && <Icon className={navIconClassName} />}
                           <span>{item.title}</span>
                           <Icons.chevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                         </SidebarMenuButton>
@@ -122,7 +123,7 @@ export default function AppSidebar() {
                       isActive={isNavItemActive(item.url)}
                     >
                       <Link href={item.url}>
-                        <Icon />
+                        <Icon className={navIconClassName} />
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>

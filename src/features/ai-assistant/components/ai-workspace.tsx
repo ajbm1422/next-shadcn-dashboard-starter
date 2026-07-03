@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChatPanel } from './chat-panel';
 import { ArtifactPanel } from './artifact-panel';
@@ -15,6 +16,7 @@ export function AiWorkspace() {
     artifacts,
     activeArtifact,
     activeArtifactId,
+    suggestions,
     status,
     error,
     sendMessage,
@@ -35,6 +37,7 @@ export function AiWorkspace() {
   const renderChatPanel = () => (
     <ChatPanel
       messages={messages}
+      suggestions={suggestions}
       status={status}
       error={error}
       hasArtifact={hasArtifact}
@@ -90,38 +93,59 @@ export function AiWorkspace() {
         )}
       </div>
 
-      <motion.div
-        layout
-        transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
-        className={
-          hasArtifact
-            ? 'hidden min-h-0 gap-0 md:grid md:grid-cols-[minmax(420px,500px)_minmax(0,1fr)]'
-            : 'hidden md:block'
-        }
-      >
-        <motion.div layout className='min-w-0 pr-4'>
+      {hasArtifact ? (
+        <motion.div
+          layout
+          transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+          className='hidden h-[calc(100dvh-2rem)] min-h-0 md:block'
+        >
+          <ResizablePanelGroup orientation='horizontal' className='min-h-0'>
+            <ResizablePanel
+              defaultSize='40%'
+              minSize='420px'
+              maxSize='52%'
+              className='min-w-[420px]'
+            >
+              <motion.div layout className='h-full min-w-0 pr-4'>
+                {renderChatPanel()}
+              </motion.div>
+            </ResizablePanel>
+            <ResizableHandle
+              withHandle
+              className='bg-border/70 cursor-col-resize transition-colors hover:bg-border'
+            />
+            <ResizablePanel minSize='520px' className='min-w-[520px] pl-4'>
+              <AnimatePresence>
+                {activeArtifact && (
+                  <motion.div
+                    key={activeArtifact.id}
+                    initial={shouldReduceMotion ? false : { opacity: 0, x: 28, scale: 0.985 }}
+                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, scale: 1 }}
+                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 20, scale: 0.985 }}
+                    transition={{ duration: 0.24, ease: 'easeOut' }}
+                    className='min-w-0'
+                  >
+                    {artifactSwitcher}
+                    <ArtifactPanel
+                      artifact={activeArtifact}
+                      onClose={closeArtifact}
+                      className='md:h-[calc(100dvh-2rem)]'
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </motion.div>
+      ) : (
+        <motion.div
+          layout
+          transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+          className='hidden md:block'
+        >
           {renderChatPanel()}
         </motion.div>
-        <AnimatePresence>
-          {activeArtifact && (
-            <motion.div
-              key={activeArtifact.id}
-              initial={shouldReduceMotion ? false : { opacity: 0, x: 28, scale: 0.985 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, scale: 1 }}
-              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 20, scale: 0.985 }}
-              transition={{ duration: 0.24, ease: 'easeOut' }}
-              className='border-border/70 min-w-0 border-l pl-4'
-            >
-              {artifactSwitcher}
-              <ArtifactPanel
-                artifact={activeArtifact}
-                onClose={closeArtifact}
-                className='md:h-[calc(100dvh-2rem)]'
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+      )}
     </div>
   );
 }

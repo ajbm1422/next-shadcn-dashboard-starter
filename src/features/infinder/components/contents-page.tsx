@@ -172,7 +172,7 @@ function ContentCard({ content, onOpen }: { content: Content; onOpen: () => void
   return (
     <button
       type='button'
-      className='group hover:bg-muted/30 focus-visible:ring-ring overflow-hidden rounded-lg border text-left transition-colors focus-visible:ring-2 focus-visible:outline-none'
+      className='group hover:bg-muted/30 focus-visible:ring-ring cursor-pointer overflow-hidden rounded-lg border text-left transition-colors focus-visible:ring-2 focus-visible:outline-none'
       onClick={onOpen}
     >
       <div className='bg-muted relative aspect-video overflow-hidden'>

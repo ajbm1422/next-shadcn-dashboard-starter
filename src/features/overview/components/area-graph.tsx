@@ -15,7 +15,7 @@ export function AreaGraph() {
       <CardHeader>
         <CardTitle>
           판단 스코어
-          <Badge variant='outline'>
+          <Badge variant='outline' className='ml-2 align-middle'>
             <Icons.trendingUp />
             Backend
           </Badge>

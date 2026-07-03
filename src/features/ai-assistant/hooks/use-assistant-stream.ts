@@ -124,6 +124,17 @@ function safeUrl(value: string | undefined) {
   }
 }
 
+function cleanSuggestions(suggestions: readonly string[]) {
+  return Array.from(
+    new Set(
+      suggestions
+        .map((suggestion) => suggestion.trim())
+        .filter(Boolean)
+        .map((suggestion) => suggestion.replace(/^[*-]\s*/, ''))
+    )
+  ).slice(0, 3);
+}
+
 function channelTags(channel: Channel) {
   const tags = [
     channel.category || '미분류',
@@ -257,6 +268,7 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
   const [messages, setMessages] = useState<UIChatMessage[]>([]);
   const [artifacts, setArtifacts] = useState<ArtifactState[]>([]);
   const [activeArtifactId, setActiveArtifactId] = useState<string>();
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [status, setStatus] = useState<AssistantStreamStatus>('idle');
   const [error, setError] = useState<string>();
   const abortRef = useRef<AbortController | null>(null);
@@ -426,6 +438,9 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
         });
         setActiveArtifactId(event.artifact.id);
         return;
+      case 'suggestions.updated':
+        setSuggestions(cleanSuggestions(event.suggestions));
+        return;
       case 'message.completed':
         setMessages((current) =>
           updateMessage(current, event.messageId, (message) => ({
@@ -498,11 +513,12 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
       if (payload.type === 'final' && payload.response) {
         const response = fromJson(ChatResponseSchema, payload.response);
         const nextArtifacts = artifactsFromChatResponse(response);
+        setSuggestions(cleanSuggestions(response.suggestions));
 
         setMessages((current) =>
           updateMessage(current, messageId, (message) => ({
             ...message,
-            content: message.content.trim() ? message.content : response.message,
+            content: response.message.trim() ? response.message : message.content,
             status: 'completed',
             toolCalls: upsertToolCall(message.toolCalls, {
               id: toolCallId,
@@ -565,6 +581,7 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
       abortRef.current = controller;
       activeAssistantMessageIdRef.current = undefined;
       setError(undefined);
+      setSuggestions([]);
       setStatus('submitted');
 
       const userMessage: UIChatMessage = {
@@ -654,6 +671,7 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
     artifacts,
     activeArtifact,
     activeArtifactId,
+    suggestions,
     status,
     error,
     sendMessage,

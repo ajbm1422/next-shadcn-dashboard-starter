@@ -23,22 +23,25 @@ export function BarGraph() {
   const { overview, isLoading } = useDashboardOverview();
 
   return (
-    <Card>
+    <Card className='flex h-full flex-col'>
       <CardHeader>
         <CardTitle>
           운영 지표 상대 규모
-          <Badge variant='outline'>
+          <Badge variant='outline' className='ml-2 align-middle'>
             <Icons.trendingUp />
             Log scale
           </Badge>
         </CardTitle>
         <CardDescription>서로 다른 단위의 집계값을 로그 스케일로 정규화합니다.</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className='flex flex-1 flex-col'>
         {isLoading ? (
-          <Skeleton className='h-[280px] w-full xl:h-[420px]' />
+          <Skeleton className='min-h-[280px] flex-1 xl:min-h-[420px]' />
         ) : (
-          <ChartContainer config={chartConfig} className='aspect-auto h-[280px] xl:h-[420px]'>
+          <ChartContainer
+            config={chartConfig}
+            className='aspect-auto min-h-[280px] flex-1 xl:min-h-[420px]'
+          >
             <BarChart accessibilityLayer data={overview.metricChartData} margin={{ left: -24 }}>
               <CartesianGrid vertical={false} strokeDasharray='3 3' />
               <XAxis

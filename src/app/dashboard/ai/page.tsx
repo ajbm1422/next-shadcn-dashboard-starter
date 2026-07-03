@@ -2,7 +2,7 @@ import PageContainer from '@/components/layout/page-container';
 import { AiWorkspace } from '@/features/ai-assistant/components/ai-workspace';
 
 export const metadata = {
-  title: 'Dashboard: AI'
+  title: 'Dashboard: AI 인사이트'
 };
 
 export default function Page() {

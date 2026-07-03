@@ -57,6 +57,11 @@ const artifactCompletedEventSchema = z.object({
   artifact: artifactSchema
 });
 
+const suggestionsUpdatedEventSchema = z.object({
+  type: z.literal('suggestions.updated'),
+  suggestions: z.array(z.string()).max(3)
+});
+
 const messageCompletedEventSchema = z.object({
   type: z.literal('message.completed'),
   messageId: z.string()
@@ -80,6 +85,7 @@ export const assistantEventSchema = z.discriminatedUnion('type', [
   toolCompletedEventSchema,
   artifactStartedEventSchema,
   artifactCompletedEventSchema,
+  suggestionsUpdatedEventSchema,
   messageCompletedEventSchema,
   doneEventSchema,
   errorEventSchema

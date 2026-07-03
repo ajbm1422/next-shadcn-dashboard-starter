@@ -153,6 +153,13 @@ export async function POST(request: Request) {
           delta:
             '오른쪽 결과 패널에서 후보 테이블을 확인하고, 이후 캠페인 저장이나 CSV 내보내기로 연결하면 됩니다.'
         });
+        await send('suggestions.updated', {
+          suggestions: [
+            '후보별 최근 유튜브 쇼츠 조회수 추이를 비교해줘',
+            '광고 이력이 있는 유튜브 채널만 다시 정렬해줘',
+            '예산 500만원 기준으로 유튜브 후보 우선순위를 만들어줘'
+          ]
+        });
         await send('tool.completed', {
           toolCallId: 'tool_mock_001',
           message: '검색이 완료됐어.'

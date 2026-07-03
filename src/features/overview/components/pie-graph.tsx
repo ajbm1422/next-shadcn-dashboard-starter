@@ -38,7 +38,7 @@ export function PieGraph() {
       <CardHeader className='items-center pb-0'>
         <CardTitle>
           데이터 구성
-          <Badge variant='outline'>
+          <Badge variant='outline' className='ml-2 align-middle'>
             <Icons.trendingUp />
             Log scale
           </Badge>
