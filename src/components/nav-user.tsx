@@ -72,28 +72,28 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Icons.sparkles className='mr-2 h-4 w-4' />
-                Upgrade to Pro
+                프로로 업그레이드
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Icons.circleCheck className='mr-2 h-4 w-4' />
-                Account
+                계정
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Icons.creditCard className='mr-2 h-4 w-4' />
-                Billing
+                결제
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Icons.notification className='mr-2 h-4 w-4' />
-                Notifications
+                알림
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Icons.logout className='mr-2 h-4 w-4' />
-              Log out
+              로그아웃
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

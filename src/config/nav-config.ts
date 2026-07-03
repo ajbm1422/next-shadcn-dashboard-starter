@@ -5,6 +5,14 @@ export const navGroups: NavGroup[] = [
     label: '',
     items: [
       {
+        title: '대시보드',
+        url: '/dashboard/overview',
+        icon: 'dashboard',
+        isActive: false,
+        shortcut: ['d', 'd'],
+        items: []
+      },
+      {
         title: '인플루언서',
         url: '/dashboard/influencers',
         icon: 'teams',

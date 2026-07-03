@@ -3,9 +3,11 @@ import { createClient } from '@connectrpc/connect';
 import { createConnectTransport } from '@connectrpc/connect-web';
 import {
   GetDashboardRequestSchema,
+  ChannelReportQuerySchema,
   InfinderService,
   ListChannelsRequestSchema,
-  ListContentsRequestSchema
+  ListContentsRequestSchema,
+  VideoReportQuerySchema
 } from '@/gen/infinder/v1/infinder_pb';
 
 export const infinderApiBaseUrl =
@@ -68,4 +70,12 @@ export function listContents(input: {
       pageSize: input.pageSize ?? 12
     })
   );
+}
+
+export function getChannelReport(id: string) {
+  return infinderClient.getChannelReport(create(ChannelReportQuerySchema, { id }));
+}
+
+export function getVideoReport(id: string) {
+  return infinderClient.getVideoReport(create(VideoReportQuerySchema, { id, videoId: id }));
 }

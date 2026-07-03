@@ -20,6 +20,19 @@ import {
   useSidebar
 } from '@/components/ui/sidebar';
 
+function planLabel(plan: string) {
+  if (plan === 'Free') return '무료';
+  if (plan === 'Pro') return '프로';
+  if (plan === 'Team') return '팀';
+  return plan;
+}
+
+function roleLabel(role: string) {
+  if (role === 'Admin') return '관리자';
+  if (role === 'Member') return '멤버';
+  return role;
+}
+
 export function OrgSwitcher() {
   const { isMobile, state } = useSidebar();
   const router = useRouter();
@@ -52,8 +65,8 @@ export function OrgSwitcher() {
                   : 'visible max-w-full opacity-100'
               }`}
             >
-              <span className='truncate font-medium'>Create organization</span>
-              <span className='text-muted-foreground truncate text-xs'>Get started</span>
+              <span className='truncate font-medium'>조직 만들기</span>
+              <span className='text-muted-foreground truncate text-xs'>시작하기</span>
             </div>
             <Icons.chevronsUpDown
               className={`ml-auto transition-all duration-200 ease-in-out ${
@@ -95,7 +108,7 @@ export function OrgSwitcher() {
               >
                 <span className='truncate font-medium'>{displayOrganization.name}</span>
                 <span className='text-muted-foreground truncate text-xs'>
-                  {displayOrganization.roleLabel}
+                  {roleLabel(displayOrganization.roleLabel)}
                 </span>
               </div>
               <Icons.chevronsUpDown
@@ -113,9 +126,7 @@ export function OrgSwitcher() {
             side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
-            <DropdownMenuLabel className='text-muted-foreground text-xs'>
-              Organizations
-            </DropdownMenuLabel>
+            <DropdownMenuLabel className='text-muted-foreground text-xs'>조직</DropdownMenuLabel>
             {organizations.map((organization, index) => {
               const isActive = organization.id === activeOrganizationId;
               return (
@@ -129,7 +140,9 @@ export function OrgSwitcher() {
                   </div>
                   <div className='grid'>
                     <span>{organization.name}</span>
-                    <span className='text-muted-foreground text-xs'>{organization.plan}</span>
+                    <span className='text-muted-foreground text-xs'>
+                      {planLabel(organization.plan)}
+                    </span>
                   </div>
                   {isActive && <Icons.check className='ml-auto size-4' />}
                   {!isActive && <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>}
@@ -146,7 +159,7 @@ export function OrgSwitcher() {
               <div className='flex size-6 items-center justify-center rounded-md border bg-transparent'>
                 <Icons.add className='size-4' />
               </div>
-              <div className='text-muted-foreground font-medium'>Add organization</div>
+              <div className='text-muted-foreground font-medium'>조직 추가</div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

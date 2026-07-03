@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import type { ComponentType } from 'react';
+import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import type { Content } from '@/gen/infinder/v1/infinder_pb';
 import { Icons } from '@/components/icons';
@@ -20,6 +21,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { listContents } from '@/lib/infinder-client';
 import { formatCompact, formatDate, formatNumber } from '@/lib/format';
 import { topicOptions } from '@/features/infinder/options';
+import { extractYoutubeVideoId, saveVideoFallback } from '@/features/infinder/video-fallback';
 
 export function ContentsPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -28,7 +30,7 @@ export function ContentsPage() {
 
   const contentsQuery = useQuery({
     queryKey: ['infinder', 'contents', search, topic],
-    queryFn: () => listContents({ search, topic, pageSize: 12 }),
+    queryFn: () => listContents({ search, topic, pageSize: 20 }),
     enabled: isMounted,
     staleTime: 30_000,
     refetchOnWindowFocus: false
@@ -110,11 +112,40 @@ function ContentGrid({
   isLoading: boolean;
   isError: boolean;
 }) {
+  const router = useRouter();
+  const openContent = (content: Content) => {
+    if (!content.id) return;
+
+    const views = Number(content.views);
+    const likes = Number(content.likes);
+    const comments = Number(content.comments);
+    const videoId = extractYoutubeVideoId(content.thumbnailUrl);
+
+    saveVideoFallback({
+      id: content.id,
+      videoId,
+      title: content.title,
+      thumbnail: content.thumbnailUrl,
+      channelName: content.channelName,
+      viewCount: views,
+      likeCount: likes,
+      commentCount: comments,
+      publishedAt: content.publishedAt,
+      topic: content.topic,
+      engagementRate: views > 0 ? ((likes + comments) / views) * 100 : 0,
+      likeRate: views > 0 ? (likes / views) * 100 : 0,
+      commentRate: views > 0 ? (comments / views) * 100 : 0,
+      source: 'content'
+    });
+
+    router.push(`/dashboard/videos/${encodeURIComponent(content.id)}`);
+  };
+
   if (isLoading) {
     return (
-      <div className='grid gap-4 md:grid-cols-2 xl:grid-cols-3'>
-        {Array.from({ length: 6 }).map((_, index) => (
-          <Skeleton key={index} className='aspect-[4/3] w-full' />
+      <div className='grid gap-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
+        {Array.from({ length: 10 }).map((_, index) => (
+          <Skeleton key={index} className='aspect-[5/4] w-full' />
         ))}
       </div>
     );
@@ -129,17 +160,21 @@ function ContentGrid({
   }
 
   return (
-    <div className='grid gap-4 md:grid-cols-2 xl:grid-cols-3'>
+    <div className='grid gap-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
       {contents.map((content) => (
-        <ContentCard key={content.id} content={content} />
+        <ContentCard key={content.id} content={content} onOpen={() => openContent(content)} />
       ))}
     </div>
   );
 }
 
-function ContentCard({ content }: { content: Content }) {
+function ContentCard({ content, onOpen }: { content: Content; onOpen: () => void }) {
   return (
-    <article className='overflow-hidden rounded-lg border'>
+    <button
+      type='button'
+      className='group hover:bg-muted/30 focus-visible:ring-ring overflow-hidden rounded-lg border text-left transition-colors focus-visible:ring-2 focus-visible:outline-none'
+      onClick={onOpen}
+    >
       <div className='bg-muted relative aspect-video overflow-hidden'>
         {content.thumbnailUrl ? (
           <Image
@@ -148,8 +183,8 @@ function ContentCard({ content }: { content: Content }) {
             fill
             unoptimized
             loader={passthroughImageLoader}
-            sizes='(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw'
-            className='object-cover'
+            sizes='(min-width: 1536px) 18vw, (min-width: 1280px) 23vw, (min-width: 768px) 30vw, 100vw'
+            className='object-cover transition-transform duration-200 group-hover:scale-[1.02]'
           />
         ) : (
           <div className='text-muted-foreground flex size-full items-center justify-center text-sm'>
@@ -157,9 +192,20 @@ function ContentCard({ content }: { content: Content }) {
           </div>
         )}
       </div>
-      <div className='p-4'>
+      <div className='p-3'>
         <div className='flex items-center justify-between gap-3'>
-          <Badge variant='outline'>{content.topic || '미분류'}</Badge>
+          <Badge variant='outline' className='max-w-[70%] truncate'>
+            {content.topic || '미분류'}
+          </Badge>
+          <span className='bg-muted rounded-md px-1.5 py-0.5 text-[11px] font-medium tabular-nums'>
+            V {content.velocityScore.toFixed(1)}
+          </span>
+        </div>
+        <h2 className='mt-2 line-clamp-2 min-h-10 text-sm font-medium leading-5'>
+          {content.title || '제목 없음'}
+        </h2>
+        <div className='text-muted-foreground mt-2 flex items-center justify-between gap-3 text-xs'>
+          <span className='truncate'>{content.channelName}</span>
           <span className='text-muted-foreground text-xs'>
             {formatDate(content.publishedAt, {
               year: 'numeric',
@@ -168,21 +214,13 @@ function ContentCard({ content }: { content: Content }) {
             })}
           </span>
         </div>
-        <h2 className='mt-3 line-clamp-2 min-h-12 font-medium leading-6'>
-          {content.title || '제목 없음'}
-        </h2>
-        <p className='text-muted-foreground mt-2 truncate text-sm'>{content.channelName}</p>
-        <div className='mt-4 grid grid-cols-3 gap-2 text-xs'>
+        <div className='mt-3 grid grid-cols-3 gap-1.5 text-xs'>
           <MetricPill icon={Icons.trendingUp} value={formatCompact(content.views)} />
           <MetricPill icon={Icons.badgeCheck} value={formatCompact(content.likes)} />
           <MetricPill icon={Icons.chat} value={formatCompact(content.comments)} />
         </div>
-        <div className='bg-muted/30 mt-3 rounded-md border px-3 py-2 text-xs'>
-          <div className='text-muted-foreground'>Velocity score</div>
-          <div className='mt-1 font-semibold tabular-nums'>{content.velocityScore.toFixed(1)}</div>
-        </div>
       </div>
-    </article>
+    </button>
   );
 }
 
@@ -198,8 +236,8 @@ function MetricPill({
   value: string;
 }) {
   return (
-    <span className='bg-muted/40 inline-flex min-w-0 items-center gap-1 rounded-md border px-2 py-1.5'>
-      <Icon className='text-muted-foreground size-3.5' />
+    <span className='bg-muted/40 inline-flex min-w-0 items-center gap-1 rounded-md border px-1.5 py-1'>
+      <Icon className='text-muted-foreground size-3' />
       <span className='truncate font-medium tabular-nums'>{value}</span>
     </span>
   );

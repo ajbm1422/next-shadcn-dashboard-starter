@@ -47,6 +47,13 @@ export default function AppSidebar() {
     // Side effects based on sidebar state changes
   }, [isOpen]);
 
+  const isNavItemActive = (url: string) => {
+    if (url === '/dashboard/overview') {
+      return pathname === url || pathname === '/dashboard';
+    }
+    return pathname === url || pathname.startsWith(`${url}/`);
+  };
+
   return (
     <Sidebar collapsible='icon'>
       <SidebarHeader className='gap-2 group-data-[collapsible=icon]:pt-4'>
@@ -75,7 +82,10 @@ export default function AppSidebar() {
                   >
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton tooltip={item.title} isActive={pathname === item.url}>
+                        <SidebarMenuButton
+                          tooltip={item.title}
+                          isActive={isNavItemActive(item.url)}
+                        >
                           {item.icon && <Icon />}
                           <span>{item.title}</span>
                           <Icons.chevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
@@ -101,7 +111,7 @@ export default function AppSidebar() {
                     <SidebarMenuButton
                       asChild
                       tooltip={item.title}
-                      isActive={pathname === item.url}
+                      isActive={isNavItemActive(item.url)}
                     >
                       <Link href={item.url}>
                         <Icon />
@@ -148,23 +158,23 @@ export default function AppSidebar() {
                 <DropdownMenuGroup>
                   <DropdownMenuItem onClick={() => router.push('/dashboard/profile')}>
                     <Icons.account className='mr-2 h-4 w-4' />
-                    Profile
+                    프로필
                   </DropdownMenuItem>
                   {activeOrganization && (
                     <DropdownMenuItem onClick={() => router.push('/dashboard/billing')}>
                       <Icons.creditCard className='mr-2 h-4 w-4' />
-                      Billing
+                      결제
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuItem onClick={() => router.push('/dashboard/notifications')}>
                     <Icons.notification className='mr-2 h-4 w-4' />
-                    Notifications
+                    알림
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push('/auth/sign-in')}>
                   <Icons.logout className='mr-2 h-4 w-4' />
-                  Sign out
+                  로그아웃
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

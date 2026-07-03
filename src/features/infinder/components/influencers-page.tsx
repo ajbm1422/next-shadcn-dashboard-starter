@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import type { Channel } from '@/gen/infinder/v1/infinder_pb';
 import { Icons } from '@/components/icons';
@@ -41,6 +42,7 @@ import {
 } from '@/features/infinder/utils';
 
 export function InfluencersPage() {
+  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
@@ -86,6 +88,10 @@ export function InfluencersPage() {
   const channels = isMounted ? (channelsQuery.data?.channels ?? []) : [];
   const total = isMounted ? channelsQuery.data?.total : 0;
   const isLoading = !isMounted || channelsQuery.isLoading;
+  const openChannel = (channel: Channel) => {
+    const id = channel.id || channel.channelId;
+    if (id) router.push(`/dashboard/influencers/${encodeURIComponent(id)}`);
+  };
 
   return (
     <div className='space-y-4'>
@@ -209,6 +215,7 @@ export function InfluencersPage() {
             channels={channels}
             isLoading={isLoading}
             isError={channelsQuery.isError}
+            onOpenChannel={openChannel}
           />
         </CardContent>
       </Card>
@@ -219,11 +226,13 @@ export function InfluencersPage() {
 function ChannelResult({
   channels,
   isLoading,
-  isError
+  isError,
+  onOpenChannel
 }: {
   channels: Channel[];
   isLoading: boolean;
   isError: boolean;
+  onOpenChannel: (channel: Channel) => void;
 }) {
   return (
     <>
@@ -240,7 +249,13 @@ function ChannelResult({
         )}
         {!isLoading &&
           !isError &&
-          channels.map((channel) => <ChannelMobileCard key={channel.id} channel={channel} />)}
+          channels.map((channel) => (
+            <ChannelMobileCard
+              key={channel.id}
+              channel={channel}
+              onOpen={() => onOpenChannel(channel)}
+            />
+          ))}
       </div>
 
       <div className='hidden overflow-x-auto md:block'>
@@ -282,7 +297,13 @@ function ChannelResult({
             )}
             {!isLoading &&
               !isError &&
-              channels.map((channel) => <ChannelTableRow key={channel.id} channel={channel} />)}
+              channels.map((channel) => (
+                <ChannelTableRow
+                  key={channel.id}
+                  channel={channel}
+                  onOpen={() => onOpenChannel(channel)}
+                />
+              ))}
           </TableBody>
         </Table>
       </div>
@@ -290,11 +311,22 @@ function ChannelResult({
   );
 }
 
-function ChannelTableRow({ channel }: { channel: Channel }) {
+function ChannelTableRow({ channel, onOpen }: { channel: Channel; onOpen: () => void }) {
   const avgViews = average(channel.viewCount, channel.videoCount);
 
   return (
-    <TableRow>
+    <TableRow
+      role='link'
+      tabIndex={0}
+      className='hover:bg-muted/50 cursor-pointer'
+      onClick={onOpen}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onOpen();
+        }
+      }}
+    >
       <TableCell>
         <div className='flex min-w-0 items-center gap-3'>
           <ChannelAvatar channel={channel} />
@@ -338,11 +370,15 @@ function ChannelTableRow({ channel }: { channel: Channel }) {
   );
 }
 
-function ChannelMobileCard({ channel }: { channel: Channel }) {
+function ChannelMobileCard({ channel, onOpen }: { channel: Channel; onOpen: () => void }) {
   const avgViews = average(channel.viewCount, channel.videoCount);
 
   return (
-    <article className='rounded-lg border p-4'>
+    <button
+      type='button'
+      className='hover:bg-muted/50 focus-visible:ring-ring w-full rounded-lg border p-4 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none'
+      onClick={onOpen}
+    >
       <div className='flex min-w-0 items-start gap-3'>
         <ChannelAvatar channel={channel} />
         <div className='min-w-0 flex-1'>
@@ -374,7 +410,7 @@ function ChannelMobileCard({ channel }: { channel: Channel }) {
           tone={deltaClassName(channel.subscriberCountIncrease7)}
         />
       </div>
-    </article>
+    </button>
   );
 }
 
