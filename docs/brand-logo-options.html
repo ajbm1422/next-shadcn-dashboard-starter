@@ -1,0 +1,3270 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>fler Brand Options</title>
+    <style>
+      :root {
+        --ink: #111827;
+        --surface: #f8fafc;
+        --line: #e5e7eb;
+        --muted: #6b7280;
+        --green: #059669;
+        --sky: #0284c7;
+        --lime: #a3e635;
+        --blue: #2563eb;
+        --violet: #7c3aed;
+        --amber: #f59e0b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--surface);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 30px;
+        line-height: 1.2;
+      }
+
+      h2 {
+        margin-top: 40px;
+        margin-bottom: 16px;
+        font-size: 18px;
+      }
+
+      h3 {
+        margin: 28px 0 14px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .lead {
+        margin-top: 10px;
+        max-width: 720px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .palette {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .palette-card,
+      .option {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+      }
+
+      .palette-card {
+        padding: 14px;
+      }
+
+      .palette-row {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .swatch {
+        height: 28px;
+        flex: 1;
+        border-radius: 8px;
+      }
+
+      .palette-title,
+      .option-title {
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .palette-desc,
+      .option-desc {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .option {
+        min-height: 186px;
+        padding: 16px;
+      }
+
+      .mark-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 96px;
+      }
+
+      svg {
+        display: block;
+      }
+
+      .wordmark {
+        display: flex;
+        min-height: 70px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #fff;
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .wordmark-compact {
+        font-size: 24px;
+      }
+
+      .wordmark-wide {
+        font-size: 24px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .wordmark-pill {
+        min-height: 58px;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+      }
+
+      .wordmark-split {
+        gap: 8px;
+      }
+
+      .wordmark-split span:first-child {
+        color: var(--green);
+      }
+
+      .wordmark-underlined {
+        position: relative;
+      }
+
+      .wordmark-underlined::after {
+        position: absolute;
+        right: 46px;
+        bottom: 16px;
+        left: 46px;
+        height: 5px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--sky), var(--green));
+        content: "";
+      }
+
+      .wordmark-gradient {
+        background: linear-gradient(135deg, #111827, #0f766e);
+        color: #fff;
+      }
+
+      .wordmark-outline {
+        color: #fff;
+        text-shadow:
+          -1px -1px 0 var(--ink),
+          1px -1px 0 var(--ink),
+          -1px 1px 0 var(--ink),
+          1px 1px 0 var(--ink);
+      }
+
+      .dark-chip {
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .font-geist {
+        font-family: Geist, Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .font-instrument {
+        font-family: "Instrument Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .font-outfit {
+        font-family: Outfit, Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .font-dm {
+        font-family: "DM Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .font-space {
+        font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .font-jetbrains {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .font-fira {
+        font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .font-mulish {
+        font-family: Mulish, Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .font-playfair {
+        font-family: "Playfair Display", Georgia, serif;
+      }
+
+      .font-merriweather {
+        font-family: Merriweather, Georgia, serif;
+      }
+
+      .script-wordmark {
+        font-size: 42px;
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .script-wordmark-sm {
+        font-size: 34px;
+      }
+
+      .font-snell {
+        font-family: "Snell Roundhand", "Apple Chancery", "Segoe Script", cursive;
+      }
+
+      .font-savoye {
+        font-family: "Savoye LET", "Snell Roundhand", "Apple Chancery", cursive;
+      }
+
+      .font-chancery {
+        font-family: "Apple Chancery", "URW Chancery L", "Segoe Script", cursive;
+      }
+
+      .font-zapfino {
+        font-family: Zapfino, "Apple Chancery", cursive;
+      }
+
+      .font-bradley {
+        font-family: "Bradley Hand", "Comic Sans MS", cursive;
+      }
+
+      .font-noteworthy {
+        font-family: Noteworthy, "Bradley Hand", cursive;
+      }
+
+      .font-marker {
+        font-family: "Marker Felt", "Comic Sans MS", cursive;
+      }
+
+      .font-segoe-script {
+        font-family: "Segoe Script", "Snell Roundhand", cursive;
+      }
+
+      .font-lucida-hand {
+        font-family: "Lucida Handwriting", "Apple Chancery", cursive;
+      }
+
+      .font-kefa {
+        font-family: Kefa, "Hoefler Text", Georgia, serif;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>fler logo direction board</h1>
+      <p class="lead">
+        The wordmark is fixed as fler. F monograms are now the default direction, with a
+        few abstract marks included so the identity does not collapse into a plain letter icon.
+      </p>
+
+      <section>
+        <h2>Base color candidates</h2>
+        <div class="palette">
+          <article class="palette-card">
+            <div class="palette-row">
+              <span class="swatch" style="background: #111827"></span>
+              <span class="swatch" style="background: #059669"></span>
+              <span class="swatch" style="background: #0284c7"></span>
+            </div>
+            <p class="palette-title">01. Graphite + Signal Green + Sky</p>
+            <p class="palette-desc">Recommended. B2B dashboard, AI search, data freshness all fit.</p>
+          </article>
+          <article class="palette-card">
+            <div class="palette-row">
+              <span class="swatch" style="background: #0f172a"></span>
+              <span class="swatch" style="background: #a3e635"></span>
+              <span class="swatch" style="background: #22c55e"></span>
+            </div>
+            <p class="palette-title">02. Deep Navy + Lime</p>
+            <p class="palette-desc">More energetic. Good for creator discovery, slightly louder.</p>
+          </article>
+          <article class="palette-card">
+            <div class="palette-row">
+              <span class="swatch" style="background: #18181b"></span>
+              <span class="swatch" style="background: #2563eb"></span>
+              <span class="swatch" style="background: #f59e0b"></span>
+            </div>
+            <p class="palette-title">03. Charcoal + Blue + Amber</p>
+            <p class="palette-desc">Enterprise analytics tone. Amber works for campaign signals.</p>
+          </article>
+          <article class="palette-card">
+            <div class="palette-row">
+              <span class="swatch" style="background: #101827"></span>
+              <span class="swatch" style="background: #7c3aed"></span>
+              <span class="swatch" style="background: #2dd4bf"></span>
+            </div>
+            <p class="palette-title">04. Ink + Violet + Teal</p>
+            <p class="palette-desc">More AI-like. Use carefully so the UI does not become generic.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Strict two-color icon options</h2>
+        <h3>Signal green background + white mark</h3>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green flow leaf">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M18 52c19-30 46-30 46-30s2 27-23 42c-12 7-21 3-23-12Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">51. Green Flow Leaf</p>
+            <p class="option-desc">Fresh signal flow, simple enough for favicon use.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green match rings">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="34" cy="41" r="17" fill="none" stroke="#fff" stroke-width="8" />
+                <circle cx="49" cy="41" r="17" fill="none" stroke="#fff" stroke-width="8" />
+              </svg>
+            </div>
+            <p class="option-title">52. Green Match Rings</p>
+            <p class="option-desc">Brand and creator fit with no extra decoration.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green pulse path">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M17 43h13l6-12 10 25 7-13h12" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">53. Green Pulse Path</p>
+            <p class="option-desc">Performance pulse without chart-bar cliche.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green clip stack">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="22" y="18" width="28" height="46" rx="9" fill="#fff" />
+                <rect x="34" y="24" width="28" height="40" rx="9" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">54. Green Clip Stack</p>
+            <p class="option-desc">Short-form content library in two colors only.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green signal drop">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M41 14c13 15 20 26 20 36 0 11-9 19-20 19s-20-8-20-19c0-10 7-21 20-36Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">55. Green Signal Drop</p>
+            <p class="option-desc">One collected insight from scattered signals.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green orbit dot">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="41" cy="41" r="22" fill="none" stroke="#fff" stroke-width="8" />
+                <circle cx="60" cy="29" r="8" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">56. Green Orbit Dot</p>
+            <p class="option-desc">A creator signal moving around the campaign core.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green rising route">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M18 56c15-25 29 5 47-25" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M64 29l-1 15 13-8-12-7Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">57. Green Rising Route</p>
+            <p class="option-desc">Discovery moving into campaign growth.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green candidate tile">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="18" y="18" width="20" height="20" rx="7" fill="#fff" />
+                <rect x="44" y="18" width="20" height="20" rx="7" fill="#fff" />
+                <rect x="18" y="44" width="20" height="20" rx="7" fill="#fff" />
+                <path d="M45 63c4-15 15-23 24-15-3 11-11 16-24 15Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">58. Green Candidate Tile</p>
+            <p class="option-desc">Candidate grid with one organic pick.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green double wave">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M16 35c9-11 18-11 27 0s18 11 27 0" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" />
+                <path d="M16 50c9-11 18-11 27 0s18 11 27 0" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">59. Green Double Wave</p>
+            <p class="option-desc">Content flow and trend movement.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green compass cut">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M45 17 57 47 27 35 45 17Z" fill="#fff" />
+                <path d="M37 65 25 35l30 12-18 18Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">60. Green Compass Cut</p>
+            <p class="option-desc">Guided creator discovery, reduced to two forms.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green loop link">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M24 35c0-8 6-14 14-14h9v10h-9c-2 0-4 2-4 4s2 4 4 4h6" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 47c0 8-6 14-14 14h-9V51h9c2 0 4-2 4-4s-2-4-4-4h-6" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">61. Green Loop Link</p>
+            <p class="option-desc">Brand, creator, and content connection.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green spark grid">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <g fill="#fff">
+                  <circle cx="27" cy="27" r="5" /><circle cx="41" cy="27" r="5" /><circle cx="55" cy="27" r="5" />
+                  <circle cx="27" cy="41" r="5" /><circle cx="41" cy="41" r="5" />
+                  <path d="M57 43l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" />
+                </g>
+              </svg>
+            </div>
+            <p class="option-title">62. Green Spark Grid</p>
+            <p class="option-desc">Structured candidates plus one highlighted signal.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green frame line">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="21" y="21" width="40" height="40" rx="12" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M33 55V28M47 55V28" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">63. Green Frame Line</p>
+            <p class="option-desc">A calmer two-stroke mark for app chrome.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green ribbon pick">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M25 17h32v48L41 56 25 65V17Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">64. Green Ribbon Pick</p>
+            <p class="option-desc">Saved shortlist and recommended creator picks.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green short play">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="25" y="17" width="32" height="48" rx="10" fill="#fff" />
+                <path d="M38 33v17l13-8.5L38 33Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">65. Green Short Play</p>
+            <p class="option-desc">Video content cue with a clean cutout effect.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green split stream">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M23 24h36c0 11-8 19-19 19H23V24Z" fill="#fff" />
+                <path d="M59 58H23c0-11 8-19 19-19h17v19Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">66. Green Split Stream</p>
+            <p class="option-desc">Two inputs resolving into one recommendation flow.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green data seed">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M41 64V34" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M41 38c-14-2-23-9-27-21 16-1 26 6 27 21Z" fill="#fff" />
+                <path d="M42 45c13-10 25-11 37-4-11 12-24 14-37 4Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">67. Green Data Seed</p>
+            <p class="option-desc">Fresh data, growth, and campaign seeding.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green lens arc">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="37" cy="37" r="18" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M25 36c7-7 16-7 24 0" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">68. Green Lens Arc</p>
+            <p class="option-desc">Search and discovery without extra color noise.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green quiet s">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M22 34c0-8 7-14 15-14h22v10H37c-3 0-5 2-5 4s2 4 5 4h9c9 0 16 6 16 14s-7 14-16 14H23V56h23c3 0 5-2 5-4s-2-4-5-4h-9c-8 0-15-6-15-14Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">69. Green Quiet S</p>
+            <p class="option-desc">A soft flow mark, not a literal brand initial.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green gate">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M25 59V23h12v36H25ZM45 59V23h12v24H45v12Z" fill="#fff" />
+                <path d="M37 23h20v10H37V23Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">70. Green Gate</p>
+            <p class="option-desc">A restrained geometric mark that pairs with Accent L.</p>
+          </article>
+        </div>
+
+        <h3>Blue background + white mark</h3>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue flow leaf">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M18 52c19-30 46-30 46-30s2 27-23 42c-12 7-21 3-23-12Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">71. Blue Flow Leaf</p>
+            <p class="option-desc">Same soft signal idea with a cooler product tone.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue match rings">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <circle cx="34" cy="41" r="17" fill="none" stroke="#fff" stroke-width="8" />
+                <circle cx="49" cy="41" r="17" fill="none" stroke="#fff" stroke-width="8" />
+              </svg>
+            </div>
+            <p class="option-title">72. Blue Match Rings</p>
+            <p class="option-desc">Clear matching metaphor, cleaner than multi-color rings.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue pulse path">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M17 43h13l6-12 10 25 7-13h12" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">73. Blue Pulse Path</p>
+            <p class="option-desc">Analytics energy in a strict two-color lockup.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue clip stack">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <rect x="22" y="18" width="28" height="46" rx="9" fill="#fff" />
+                <rect x="34" y="24" width="28" height="40" rx="9" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">74. Blue Clip Stack</p>
+            <p class="option-desc">Mobile video library silhouette.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue signal drop">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M41 14c13 15 20 26 20 36 0 11-9 19-20 19s-20-8-20-19c0-10 7-21 20-36Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">75. Blue Signal Drop</p>
+            <p class="option-desc">Collected insight with more tech-like color.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue orbit dot">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <circle cx="41" cy="41" r="22" fill="none" stroke="#fff" stroke-width="8" />
+                <circle cx="60" cy="29" r="8" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">76. Blue Orbit Dot</p>
+            <p class="option-desc">Creator orbit with colder, more SaaS-like presence.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue rising route">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M18 56c15-25 29 5 47-25" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M64 29l-1 15 13-8-12-7Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">77. Blue Rising Route</p>
+            <p class="option-desc">Growth route with a calmer campaign feel.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue candidate tile">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <rect x="18" y="18" width="20" height="20" rx="7" fill="#fff" />
+                <rect x="44" y="18" width="20" height="20" rx="7" fill="#fff" />
+                <rect x="18" y="44" width="20" height="20" rx="7" fill="#fff" />
+                <path d="M45 63c4-15 15-23 24-15-3 11-11 16-24 15Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">78. Blue Candidate Tile</p>
+            <p class="option-desc">Structured shortlist, one selected candidate.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue double wave">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M16 35c9-11 18-11 27 0s18 11 27 0" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" />
+                <path d="M16 50c9-11 18-11 27 0s18 11 27 0" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">79. Blue Double Wave</p>
+            <p class="option-desc">Trend flow without extra accent colors.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue compass cut">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M45 17 57 47 27 35 45 17Z" fill="#fff" />
+                <path d="M37 65 25 35l30 12-18 18Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">80. Blue Compass Cut</p>
+            <p class="option-desc">Decision support in a sharper icon shape.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue loop link">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M24 35c0-8 6-14 14-14h9v10h-9c-2 0-4 2-4 4s2 4 4 4h6" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 47c0 8-6 14-14 14h-9V51h9c2 0 4-2 4-4s-2-4-4-4h-6" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">81. Blue Loop Link</p>
+            <p class="option-desc">Connection mark with a cooler AI-tool tone.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue spark grid">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <g fill="#fff">
+                  <circle cx="27" cy="27" r="5" /><circle cx="41" cy="27" r="5" /><circle cx="55" cy="27" r="5" />
+                  <circle cx="27" cy="41" r="5" /><circle cx="41" cy="41" r="5" />
+                  <path d="M57 43l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" />
+                </g>
+              </svg>
+            </div>
+            <p class="option-title">82. Blue Spark Grid</p>
+            <p class="option-desc">Candidate matrix with one AI-picked signal.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue frame line">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <rect x="21" y="21" width="40" height="40" rx="12" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M33 55V28M47 55V28" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">83. Blue Frame Line</p>
+            <p class="option-desc">Quiet geometric mark, stronger in blue.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue ribbon pick">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M25 17h32v48L41 56 25 65V17Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">84. Blue Ribbon Pick</p>
+            <p class="option-desc">Saved candidate or campaign shortlist mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue short play">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <rect x="25" y="17" width="32" height="48" rx="10" fill="#fff" />
+                <path d="M38 33v17l13-8.5L38 33Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">85. Blue Short Play</p>
+            <p class="option-desc">Video cue with only blue and white.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue split stream">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M23 24h36c0 11-8 19-19 19H23V24Z" fill="#fff" />
+                <path d="M59 58H23c0-11 8-19 19-19h17v19Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">86. Blue Split Stream</p>
+            <p class="option-desc">Inputs merging into a selected recommendation.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue data seed">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M41 64V34" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M41 38c-14-2-23-9-27-21 16-1 26 6 27 21Z" fill="#fff" />
+                <path d="M42 45c13-10 25-11 37-4-11 12-24 14-37 4Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">87. Blue Data Seed</p>
+            <p class="option-desc">Freshness and growth with colder polish.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue lens arc">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <circle cx="37" cy="37" r="18" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M25 36c7-7 16-7 24 0" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">88. Blue Lens Arc</p>
+            <p class="option-desc">Search and creator discovery in a simple silhouette.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue quiet s">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M22 34c0-8 7-14 15-14h22v10H37c-3 0-5 2-5 4s2 4 5 4h9c9 0 16 6 16 14s-7 14-16 14H23V56h23c3 0 5-2 5-4s-2-4-5-4h-9c-8 0-15-6-15-14Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">89. Blue Quiet S</p>
+            <p class="option-desc">Soft flow mark with a cleaner color ratio.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue gate">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M25 59V23h12v36H25ZM45 59V23h12v24H45v12Z" fill="#fff" />
+                <path d="M37 23h20v10H37V23Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">90. Blue Gate</p>
+            <p class="option-desc">Rigid enough for B2B, still compact.</p>
+          </article>
+        </div>
+
+        <h3>Graphite background + white mark</h3>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite flow leaf">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M18 52c19-30 46-30 46-30s2 27-23 42c-12 7-21 3-23-12Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">91. Graphite Flow Leaf</p>
+            <p class="option-desc">Most conservative version of the organic signal mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite match rings">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="34" cy="41" r="17" fill="none" stroke="#fff" stroke-width="8" />
+                <circle cx="49" cy="41" r="17" fill="none" stroke="#fff" stroke-width="8" />
+              </svg>
+            </div>
+            <p class="option-title">92. Graphite Match Rings</p>
+            <p class="option-desc">Premium creator-brand matching metaphor.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite pulse path">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M17 43h13l6-12 10 25 7-13h12" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">93. Graphite Pulse Path</p>
+            <p class="option-desc">Most dashboard-native pulse option.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite clip stack">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="22" y="18" width="28" height="46" rx="9" fill="#fff" />
+                <rect x="34" y="24" width="28" height="40" rx="9" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">94. Graphite Clip Stack</p>
+            <p class="option-desc">Short-form content mark with stronger contrast.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite signal drop">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M41 14c13 15 20 26 20 36 0 11-9 19-20 19s-20-8-20-19c0-10 7-21 20-36Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">95. Graphite Signal Drop</p>
+            <p class="option-desc">Strongest app-icon contrast among the drop marks.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite orbit dot">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="41" cy="41" r="22" fill="none" stroke="#fff" stroke-width="8" />
+                <circle cx="60" cy="29" r="8" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">96. Graphite Orbit Dot</p>
+            <p class="option-desc">Simple orbit mark for an analytics product.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite rising route">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M18 56c15-25 29 5 47-25" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M64 29l-1 15 13-8-12-7Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">97. Graphite Rising Route</p>
+            <p class="option-desc">Growth path with the least visual noise.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite candidate tile">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="18" y="18" width="20" height="20" rx="7" fill="#fff" />
+                <rect x="44" y="18" width="20" height="20" rx="7" fill="#fff" />
+                <rect x="18" y="44" width="20" height="20" rx="7" fill="#fff" />
+                <path d="M45 63c4-15 15-23 24-15-3 11-11 16-24 15Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">98. Graphite Candidate Tile</p>
+            <p class="option-desc">Dense product meaning in a compact tile mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite double wave">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M16 35c9-11 18-11 27 0s18 11 27 0" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" />
+                <path d="M16 50c9-11 18-11 27 0s18 11 27 0" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">99. Graphite Double Wave</p>
+            <p class="option-desc">Clean trend flow, more serious than the green version.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite compass cut">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M45 17 57 47 27 35 45 17Z" fill="#fff" />
+                <path d="M37 65 25 35l30 12-18 18Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">100. Graphite Compass Cut</p>
+            <p class="option-desc">Direction and recommendation in two white planes.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite loop link">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 35c0-8 6-14 14-14h9v10h-9c-2 0-4 2-4 4s2 4 4 4h6" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 47c0 8-6 14-14 14h-9V51h9c2 0 4-2 4-4s-2-4-4-4h-6" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">101. Graphite Loop Link</p>
+            <p class="option-desc">A reliable connection mark for the sidebar.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite spark grid">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <g fill="#fff">
+                  <circle cx="27" cy="27" r="5" /><circle cx="41" cy="27" r="5" /><circle cx="55" cy="27" r="5" />
+                  <circle cx="27" cy="41" r="5" /><circle cx="41" cy="41" r="5" />
+                  <path d="M57 43l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" />
+                </g>
+              </svg>
+            </div>
+            <p class="option-title">102. Graphite Spark Grid</p>
+            <p class="option-desc">AI selection signal without colorful AI tropes.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite frame line">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="21" y="21" width="40" height="40" rx="12" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M33 55V28M47 55V28" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">103. Graphite Frame Line</p>
+            <p class="option-desc">Best if the final brand needs to feel restrained.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite ribbon pick">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 17h32v48L41 56 25 65V17Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">104. Graphite Ribbon Pick</p>
+            <p class="option-desc">Strong campaign-save metaphor.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite short play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="25" y="17" width="32" height="48" rx="10" fill="#fff" />
+                <path d="M38 33v17l13-8.5L38 33Z" fill="#111827" />
+              </svg>
+            </div>
+            <p class="option-title">105. Graphite Short Play</p>
+            <p class="option-desc">Video cue with a negative-space play shape.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite split stream">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M23 24h36c0 11-8 19-19 19H23V24Z" fill="#fff" />
+                <path d="M59 58H23c0-11 8-19 19-19h17v19Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">106. Graphite Split Stream</p>
+            <p class="option-desc">Two streams, one clean monochrome icon.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite data seed">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M41 64V34" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M41 38c-14-2-23-9-27-21 16-1 26 6 27 21Z" fill="#fff" />
+                <path d="M42 45c13-10 25-11 37-4-11 12-24 14-37 4Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">107. Graphite Data Seed</p>
+            <p class="option-desc">Organic growth mark with premium contrast.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite lens arc">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="18" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M25 36c7-7 16-7 24 0" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">108. Graphite Lens Arc</p>
+            <p class="option-desc">Straightforward search/discovery mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite quiet s">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M22 34c0-8 7-14 15-14h22v10H37c-3 0-5 2-5 4s2 4 5 4h9c9 0 16 6 16 14s-7 14-16 14H23V56h23c3 0 5-2 5-4s-2-4-5-4h-9c-8 0-15-6-15-14Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">109. Graphite Quiet S</p>
+            <p class="option-desc">The most minimal abstract flow candidate.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="graphite gate">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 59V23h12v36H25ZM45 59V23h12v24H45v12Z" fill="#fff" />
+                <path d="M37 23h20v10H37V23Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">110. Graphite Gate</p>
+            <p class="option-desc">Clean geometric lockup for the Accent L wordmark.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>108 abstraction studies</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="abstract lens crescent">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 42c0-14 11-25 25-25 7 0 13 3 18 7-4-2-8-3-13-3-15 0-26 11-26 25 0 7 3 13 7 17-7-4-11-12-11-21Z" fill="#fff" />
+                <path d="M45 52h18c-5 7-12 11-21 11 2-3 3-7 3-11Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">111. Abstract Lens Crescent</p>
+            <p class="option-desc">Keeps the lens idea but removes the obvious handle.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal aperture">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M41 18c13 0 23 10 23 23s-10 23-23 23-23-10-23-23 10-23 23-23Zm0 12c-6 0-11 5-11 11s5 11 11 11 11-5 11-11-5-11-11-11Z" fill="#fff" />
+                <path d="M41 18h23L50 34 41 18ZM64 41v23L48 50l16-9ZM41 64H18l14-16 9 16ZM18 41V18l16 14-16 9Z" fill="#111827" />
+              </svg>
+            </div>
+            <p class="option-title">112. Signal Aperture</p>
+            <p class="option-desc">Lens becomes an aperture: discovery, focus, selection.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="orbit aperture">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M19 43c8-15 20-23 35-23 5 0 9 1 13 3-9 1-17 5-23 12-6 6-14 9-25 8Z" fill="#fff" />
+                <path d="M63 39c-8 15-20 23-35 23-5 0-9-1-13-3 9-1 17-5 23-12 6-6 14-9 25-8Z" fill="#fff" />
+                <circle cx="41" cy="41" r="7" fill="#111827" />
+              </svg>
+            </div>
+            <p class="option-title">113. Orbit Aperture</p>
+            <p class="option-desc">More abstract: matching orbit plus focus point.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="cut focus">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M21 41c6-12 16-19 30-19h10v10H51c-11 0-18 5-22 14l-8-5Z" fill="#fff" />
+                <path d="M61 41c-6 12-16 19-30 19H21V50h10c11 0 18-5 22-14l8 5Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">114. Cut Focus</p>
+            <p class="option-desc">Two opposing cuts: noisy data reduced to a fit.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="focus fold">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M22 22h38v38H22V22Zm10 10v18h18V32H32Z" fill="#fff" />
+                <path d="M50 50h14v14H50V50Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">115. Focus Fold</p>
+            <p class="option-desc">A squared-off lens for a more SaaS dashboard tone.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="finder slash">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="38" cy="38" r="20" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M54 54l9 9" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M23 54 55 22" stroke="#fff" stroke-width="7" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">116. Finder Slash</p>
+            <p class="option-desc">Still lens-based, but the slash makes it more ownable.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal iris">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M41 17c13 7 21 15 25 24-4 9-12 17-25 24-13-7-21-15-25-24 4-9 12-17 25-24Z" fill="#fff" />
+                <circle cx="41" cy="41" r="11" fill="#111827" />
+              </svg>
+            </div>
+            <p class="option-title">117. Signal Iris</p>
+            <p class="option-desc">Discovery as an iris, not a literal magnifier.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="quiet focus">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 41c0-10 8-18 18-18h17v10H42c-4 0-8 4-8 8s4 8 8 8h17v10H42c-10 0-18-8-18-18Z" fill="#fff" />
+                <path d="M47 37h14v8H47v-8Z" fill="#111827" />
+              </svg>
+            </div>
+            <p class="option-title">118. Quiet Focus</p>
+            <p class="option-desc">Minimal and abstract; reads as focus, not search.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="lens ribbon">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M21 44c7-17 21-25 40-22-3 11-10 19-21 24-8 4-14 9-18 16-3-6-3-12-1-18Z" fill="#fff" />
+                <path d="M35 38c7-4 15-4 24-2-6 7-13 11-22 13-1-4-2-7-2-11Z" fill="#111827" />
+              </svg>
+            </div>
+            <p class="option-title">119. Lens Ribbon</p>
+            <p class="option-desc">Soft ribbon form, closer to brand mark than UI icon.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="selected arc">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M21 40c7-13 18-20 32-20 5 0 10 1 14 3l-8 9c-2-1-4-1-7-1-10 0-17 5-22 14l-9-5Z" fill="#fff" />
+                <path d="M61 45c-7 11-17 17-30 17-5 0-10-1-14-3l8-9c2 1 4 1 7 1 9 0 16-4 21-11l8 5Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">120. Selected Arc</p>
+            <p class="option-desc">Two arcs imply shortlist filtering and final selection.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal window">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="22" y="22" width="38" height="38" rx="13" fill="#fff" />
+                <path d="M35 41c7-9 16-13 27-12-6 10-14 16-27 18v-6Z" fill="#111827" />
+                <path d="M53 53l10 10" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">121. Signal Window</p>
+            <p class="option-desc">Lens reduced to a window and a small directional stem.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="abstract scope">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M22 28h32c-3 8-9 13-18 15-7 2-12 6-14 12V28Z" fill="#fff" />
+                <path d="M60 54H28c3-8 9-13 18-15 7-2 12-6 14-12v27Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">122. Abstract Scope</p>
+            <p class="option-desc">The most abstract 108 variant: scope and flow only.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>116 color expansion studies</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="finder green slash">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="38" cy="38" r="20" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M54 54l9 9" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M23 54 55 22" stroke="#059669" stroke-width="8" stroke-linecap="round" />
+                <path d="M24 34c7-7 16-8 25-2" stroke="#0284c7" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">123. Finder Green Slash</p>
+            <p class="option-desc">Keeps 116 intact but turns the ownership stroke green.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="finder sky slash">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="38" cy="38" r="20" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M54 54l9 9" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M23 54 55 22" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <circle cx="53" cy="24" r="5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">124. Finder Sky Slash</p>
+            <p class="option-desc">Cooler search tone with a small green signal point.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="split finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M20 38c0-12 10-22 22-22 6 0 12 3 16 7" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M56 32c2 12-6 24-18 27-6 1-12 0-17-3" stroke="#059669" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M52 52l12 12" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M24 54 55 23" stroke="#0284c7" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">125. Split Finder</p>
+            <p class="option-desc">Lens split into white and green arcs, sky as the filter cut.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal slash lens">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="38" cy="38" r="20" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M54 54l9 9" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M22 54 55 21" stroke="#fff" stroke-width="7" stroke-linecap="round" />
+                <path d="M24 42h9l5-9 8 18 5-9h7" stroke="#059669" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">126. Signal Slash Lens</p>
+            <p class="option-desc">Adds performance signal without turning into a chart icon.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="finder orbit slash">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="38" cy="38" r="20" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M54 54l9 9" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M24 54 55 23" stroke="#fff" stroke-width="7" stroke-linecap="round" />
+                <path d="M20 45c12 8 27 8 42-1" stroke="#059669" stroke-width="6" stroke-linecap="round" fill="none" />
+                <circle cx="62" cy="42" r="5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">127. Finder Orbit Slash</p>
+            <p class="option-desc">Creator orbit passes through the finder mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green finder field">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="38" cy="38" r="20" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M54 54l9 9" stroke="#111827" stroke-width="8" stroke-linecap="round" />
+                <path d="M23 54 55 22" stroke="#111827" stroke-width="7" stroke-linecap="round" />
+                <path d="M25 34c7-7 16-7 25-1" stroke="#0284c7" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">128. Green Finder Field</p>
+            <p class="option-desc">Tests whether the green brand field can own the mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="sky finder field">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <circle cx="38" cy="38" r="20" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M54 54l9 9" stroke="#111827" stroke-width="8" stroke-linecap="round" />
+                <path d="M23 54 55 22" stroke="#111827" stroke-width="7" stroke-linecap="round" />
+                <circle cx="53" cy="24" r="5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">129. Sky Finder Field</p>
+            <p class="option-desc">More product-tool feeling, with green kept as a signal dot.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="finder cutout signal">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="38" cy="38" r="21" fill="#fff" />
+                <circle cx="38" cy="38" r="11" fill="#111827" />
+                <path d="M52 52l12 12" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M23 54 55 22" stroke="#059669" stroke-width="7" stroke-linecap="round" />
+                <path d="M31 38h14" stroke="#0284c7" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">130. Finder Cutout Signal</p>
+            <p class="option-desc">Bolder filled lens; color sits as cut and data line.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="slash aperture">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M38 18c12 0 21 9 21 20s-9 20-21 20-21-9-21-20 9-20 21-20Zm0 10c-6 0-11 4-11 10s5 10 11 10 11-4 11-10-5-10-11-10Z" fill="#fff" />
+                <path d="M52 52l12 12" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M24 54 55 23" stroke="#059669" stroke-width="7" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">131. Slash Aperture</p>
+            <p class="option-desc">Turns the lens into a more brandable aperture form.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="selected finder slash">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 54 56 22" stroke="#059669" stroke-width="10" stroke-linecap="round" />
+                <path d="M52 52l12 12" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M20 38c0-12 10-22 22-22 8 0 15 4 19 10" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 43c-3 10-12 17-23 17-6 0-11-2-15-5" stroke="#0284c7" stroke-width="8" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">132. Selected Finder Slash</p>
+            <p class="option-desc">Most balanced mix of 116 structure and brand colors.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="rear green slash">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M22 56 57 21" stroke="#059669" stroke-width="11" stroke-linecap="round" />
+                <path d="M52 52l12 12" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M20 38c0-12 10-22 22-22 8 0 15 4 19 10" stroke="#fff" stroke-width="9" stroke-linecap="round" fill="none" />
+                <path d="M58 43c-3 10-12 17-23 17-6 0-11-2-15-5" stroke="#0284c7" stroke-width="9" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">133. Rear Green Slash</p>
+            <p class="option-desc">Thicker hidden green stroke, stronger than 132.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="covered signal cut">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 55 56 24" stroke="#059669" stroke-width="10" stroke-linecap="round" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M21 39c0-12 9-21 21-21 7 0 14 3 18 9" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M60 40c-2 13-12 21-25 21-6 0-11-2-15-5" stroke="#0284c7" stroke-width="9" stroke-linecap="round" fill="none" />
+                <path d="M30 40h14" stroke="#fff" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">134. Covered Signal Cut</p>
+            <p class="option-desc">Adds a white signal cut inside the lens body.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue dominant finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 55 56 23" stroke="#059669" stroke-width="10" stroke-linecap="round" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M20 38c0-12 10-22 22-22 8 0 15 4 19 10" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 42c-2 13-12 22-25 22-7 0-13-2-18-6" stroke="#0284c7" stroke-width="11" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">135. Blue Dominant Finder</p>
+            <p class="option-desc">Lets sky carry more of the visible front contour.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="quiet covered finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M27 55 54 28" stroke="#059669" stroke-width="11" stroke-linecap="round" />
+                <path d="M52 52l11 11" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M21 39c0-12 10-21 22-21 7 0 13 3 17 8" stroke="#fff" stroke-width="9" stroke-linecap="round" fill="none" />
+                <path d="M56 45c-4 9-12 15-23 15-5 0-10-1-14-4" stroke="#0284c7" stroke-width="8" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">136. Quiet Covered Finder</p>
+            <p class="option-desc">More restrained proportions and less literal search feel.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="nested slash finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M22 56 57 21" stroke="#059669" stroke-width="10" stroke-linecap="round" />
+                <path d="M52 52l12 12" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M20 38c0-12 10-22 22-22 8 0 15 4 19 10" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 43c-3 10-12 17-23 17-6 0-11-2-15-5" stroke="#0284c7" stroke-width="8" stroke-linecap="round" fill="none" />
+                <circle cx="39" cy="39" r="7" fill="#111827" stroke="#fff" stroke-width="5" />
+              </svg>
+            </div>
+            <p class="option-title">137. Nested Slash Finder</p>
+            <p class="option-desc">Adds an inner focus point while keeping the rear slash.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal backed finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M23 56 57 22" stroke="#059669" stroke-width="12" stroke-linecap="round" />
+                <path d="M53 52l12 12" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M20 39c0-13 10-23 23-23 8 0 15 4 19 10" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 43c-3 11-12 18-24 18-6 0-11-2-15-5" stroke="#0284c7" stroke-width="8" stroke-linecap="round" fill="none" />
+                <circle cx="56" cy="24" r="4" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">138. Signal Backed Finder</p>
+            <p class="option-desc">Thickest rear green stroke plus a small sky endpoint.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Magnifier play mark studies</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue finder green play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#0284c7" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">139. Blue Finder Green Play</p>
+            <p class="option-desc">Direct version: blue search, green video signal.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green finder blue play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#059669" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#059669" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">140. Green Finder Blue Play</p>
+            <p class="option-desc">Closer to fler accent color, with blue as content cue.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="white finder green play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M32.8 28.4v17.2l13.2-8.6-13.2-8.6Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">141. White Finder Green Play</p>
+            <p class="option-desc">Most stable search mark with green video accent.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="white finder blue play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">142. White Finder Blue Play</p>
+            <p class="option-desc">Cleaner content-search feeling, less brand-green heavy.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="white finder white play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">143. White Finder White Play</p>
+            <p class="option-desc">Pure monochrome version; very app-icon safe.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="all blue finder play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#0284c7" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">144. All Blue Finder Play</p>
+            <p class="option-desc">Single-color blue mark for product/search surfaces.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="all green finder play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#059669" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#059669" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">145. All Green Finder Play</p>
+            <p class="option-desc">Single-color brand-green version.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="filled blue lens green play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="21" fill="#0284c7" />
+                <path d="M52 52l12 12" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 27v21l17-10.5L35 27Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">146. Filled Blue Lens</p>
+            <p class="option-desc">Bolder app icon, video mark sits inside a solid lens.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="filled green lens blue play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="21" fill="#059669" />
+                <path d="M52 52l12 12" stroke="#059669" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 27v21l17-10.5L35 27Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">147. Filled Green Lens</p>
+            <p class="option-desc">Brand-first filled lens, blue triangle as content layer.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green field white finder play">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">148. Green Field White Play</p>
+            <p class="option-desc">All-white symbol on green brand field.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="blue field white finder play">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">149. Blue Field White Play</p>
+            <p class="option-desc">All-white symbol on blue product field.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="white field green finder blue play">
+                <rect width="82" height="82" rx="20" fill="#fff" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#059669" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#059669" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">150. White Field Green Finder</p>
+            <p class="option-desc">Light background test: green finder, blue play.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="white field blue finder green play">
+                <rect width="82" height="82" rx="20" fill="#fff" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#0284c7" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">151. White Field Blue Finder</p>
+            <p class="option-desc">Light background test: blue finder, green play.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="compact finder green play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="38" cy="38" r="17" fill="none" stroke="#fff" stroke-width="7" />
+                <path d="M50 50l11 11" stroke="#fff" stroke-width="7" stroke-linecap="round" />
+                <path d="M36 30v17l13-8.5L36 30Z" fill="#059669" />
+                <path d="M25 36c7-7 16-7 24 0" stroke="#0284c7" stroke-width="4" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">152. Compact Finder Play</p>
+            <p class="option-desc">Smaller lens with both brand accents inside.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="wide handle blue finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="36" cy="36" r="18" fill="none" stroke="#0284c7" stroke-width="8" />
+                <path d="M50 50l15 15" stroke="#0284c7" stroke-width="9" stroke-linecap="round" />
+                <path d="M34 28v20l16-10-16-10Z" fill="#fff" />
+                <circle cx="51" cy="27" r="5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">153. Wide Handle Blue Finder</p>
+            <p class="option-desc">Heavier handle, white play, green signal dot.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="wide handle green finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="36" cy="36" r="18" fill="none" stroke="#059669" stroke-width="8" />
+                <path d="M50 50l15 15" stroke="#059669" stroke-width="9" stroke-linecap="round" />
+                <path d="M34 28v20l16-10-16-10Z" fill="#fff" />
+                <circle cx="51" cy="27" r="5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">154. Wide Handle Green Finder</p>
+            <p class="option-desc">Green finder, white play, blue signal dot.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="cutout play finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="21" fill="#fff" />
+                <path d="M52 52l12 12" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 27v21l17-10.5L35 27Z" fill="#111827" />
+                <path d="M23 53 55 21" stroke="#059669" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">155. Cutout Play Finder</p>
+            <p class="option-desc">White filled lens with negative-space play triangle.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="sky cutout play finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="21" fill="#0284c7" />
+                <path d="M52 52l12 12" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 27v21l17-10.5L35 27Z" fill="#111827" />
+                <path d="M24 53 55 22" stroke="#059669" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">156. Sky Cutout Play</p>
+            <p class="option-desc">Solid blue lens, cutout play, green slash accent.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green cutout play finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="21" fill="#059669" />
+                <path d="M52 52l12 12" stroke="#059669" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 27v21l17-10.5L35 27Z" fill="#111827" />
+                <path d="M24 53 55 22" stroke="#0284c7" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">157. Green Cutout Play</p>
+            <p class="option-desc">Solid green lens, cutout play, blue slash accent.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="balanced finder play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="37" r="19" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M51 51l13 13" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                <path d="M35 28v20l16-10-16-10Z" fill="#059669" />
+                <path d="M24 54 55 23" stroke="#fff" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">158. Balanced Finder Play</p>
+            <p class="option-desc">White finder, blue handle, green play, subtle white slash.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Current flur mark F studies</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f finder base">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h34c10 0 16 5 16 13s-6 13-16 13H39v7h22v11H25Zm14-27h18c3 0 5-1.5 5-4s-2-4-5-4H39v8Z" fill="#fff" />
+                <path d="M54 61c9-5 15-13 18-25 2 12-1 22-9 29-3 3-7 2-9-4Z" fill="#059669" />
+                <path d="M24 20c7 3 12 8 14 16-6-4-11-5-16-3-3 1-6-3-4-6 1-2 3-4 6-7Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">159. F Finder Base</p>
+            <p class="option-desc">Current mark structure, but the core letter is clearly F.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f clean orbit">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h36v12H39v8h19v11H39v11H25Z" fill="#fff" />
+                <path d="M48 61c10-5 16-13 19-25 2 12-2 22-11 29-3 2-6 1-8-4Z" fill="#059669" />
+                <path d="M21 35c10-8 22-10 34-4-12-1-21 3-27 12-5-1-8-4-7-8Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">160. F Clean Orbit</p>
+            <p class="option-desc">Simpler F with two clean motion layers around it.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f top signal">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M39 20h24c8 0 13 4 13 11s-5 11-13 11H39V31h23c2 0 4-1 4-3s-2-3-4-3H39v-5Z" fill="#0284c7" />
+                <path d="M53 62c9-6 15-15 17-27 3 14-1 24-10 31-3 2-5 1-7-4Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">161. F Top Signal</p>
+            <p class="option-desc">Blue top counter shape, green lower movement.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green beam">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M26 62V20h35v12H40v8h19v11H40v11H26Z" fill="#fff" />
+                <path d="M40 40h23c6 0 10 4 10 10s-4 10-10 10H40V49h21c2 0 3-1 3-3s-1-3-3-3H40v-3Z" fill="#059669" />
+                <path d="M22 31c9-7 20-8 32-3-12 1-20 5-25 13-4-1-7-4-7-10Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">162. F Green Beam</p>
+            <p class="option-desc">Green middle bar is visible without turning back into P.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f split bars">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="3" fill="#fff" />
+                <rect x="36" y="20" width="34" height="12" rx="6" fill="#fff" />
+                <rect x="36" y="40" width="25" height="11" rx="5.5" fill="#fff" />
+                <path d="M52 62c9-5 15-13 18-25 2 12-2 22-10 29-3 2-6 1-8-4Z" fill="#059669" />
+                <path d="M20 31c8-6 17-8 28-5-9 2-16 7-21 14-4-1-7-4-7-9Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">163. F Split Bars</p>
+            <p class="option-desc">Most geometric version: separate stem, top, and middle bars.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green field">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M51 61c9-6 15-15 17-27 2 13-1 23-10 30-3 2-5 1-7-3Z" fill="#111827" />
+                <path d="M20 34c10-8 21-9 33-4-12 0-20 4-26 13-4-1-7-4-7-9Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">164. F Green Field</p>
+            <p class="option-desc">Signal-green background, graphite depth, blue sweep.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f sky field">
+                <rect width="82" height="82" rx="20" fill="#0284c7" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M52 61c9-5 15-13 18-25 2 12-2 22-10 29-3 2-6 1-8-4Z" fill="#059669" />
+                <path d="M20 34c9-7 20-9 32-4-11 1-19 5-25 13-4-1-7-4-7-9Z" fill="#111827" />
+              </svg>
+            </div>
+            <p class="option-title">165. F Sky Field</p>
+            <p class="option-desc">Sky background variant with green as the main accent.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f white field">
+                <rect width="82" height="82" rx="20" fill="#fff" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#111827" />
+                <path d="M52 61c9-5 15-13 18-25 2 12-2 22-10 29-3 2-6 1-8-4Z" fill="#059669" />
+                <path d="M20 34c10-8 21-9 33-4-12 0-20 4-26 13-4-1-7-4-7-9Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">166. F White Field</p>
+            <p class="option-desc">Light app icon test with graphite F and two color accents.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal signal">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M20 58 61 17" stroke="#059669" stroke-width="9" stroke-linecap="round" />
+                <path d="M24 22c8 4 13 9 16 18-6-5-12-6-18-4-4 1-6-4-3-8 1-2 3-4 5-6Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">167. F Diagonal Signal</p>
+            <p class="option-desc">Rear green diagonal adds speed while preserving the F silhouette.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f blue spine">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#0284c7" />
+                <rect x="35" y="20" width="35" height="12" rx="6" fill="#fff" />
+                <rect x="35" y="40" width="26" height="11" rx="5.5" fill="#fff" />
+                <path d="M52 62c9-5 15-13 18-25 2 12-2 22-10 29-3 2-6 1-8-4Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">168. F Blue Spine</p>
+            <p class="option-desc">Blue vertical stem makes the letter less plain.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green spine">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#059669" />
+                <rect x="35" y="20" width="35" height="12" rx="6" fill="#fff" />
+                <rect x="35" y="40" width="26" height="11" rx="5.5" fill="#fff" />
+                <path d="M19 35c9-7 20-9 32-4-11 0-19 5-25 13-4-1-7-4-7-9Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">169. F Green Spine</p>
+            <p class="option-desc">Green stem anchors the brand, blue stays as motion.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f compact current">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M28 62V23h31c9 0 14 4 14 11s-5 11-14 11H42v7h18v10H28Zm14-27h16c3 0 4-1 4-3s-1-3-4-3H42v6Z" fill="#fff" />
+                <path d="M54 61c8-5 13-12 16-23 2 11-1 20-9 27-3 2-5 1-7-4Z" fill="#059669" />
+                <path d="M26 24c6 3 10 8 12 15-5-4-10-5-15-3-3 1-5-3-3-6 1-2 3-4 6-6Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">170. F Compact Current</p>
+            <p class="option-desc">Smaller and tighter version of the current mark logic.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f open corner">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h36v12H39v8h19v11H39v11H25Z" fill="#fff" />
+                <path d="M55 20h9c8 0 12 4 12 10s-4 10-12 10h-9V29h8c2 0 4-1 4-3s-2-3-4-3h-8v-3Z" fill="#0284c7" />
+                <path d="M52 61c9-5 15-13 18-25 2 12-2 22-10 29-3 2-6 1-8-4Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">171. F Open Corner</p>
+            <p class="option-desc">Keeps the old top-right energy but removes the P bowl.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f ribbon cross">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M40 43c12-8 23-8 34 0-10 1-18 6-23 14-5-2-8-6-11-14Z" fill="#059669" />
+                <path d="M20 32c11-8 23-9 36-3-13 0-22 4-28 13-5-1-8-4-8-10Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">172. F Ribbon Cross</p>
+            <p class="option-desc">Two color ribbons cross the F without hiding the letter.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f sharp cut">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h37v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M50 62 70 36c1 12-3 22-12 29-3 2-6 1-8-3Z" fill="#059669" />
+                <path d="M19 35 39 20c4 5 6 11 6 19-7-5-13-6-19-4-3 1-5 1-7 0Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">173. F Sharp Cut</p>
+            <p class="option-desc">More angular color cuts for a stronger SaaS app icon.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f monoline blocks">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M26 61V22h34" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <path d="M30 42h27" stroke="#fff" stroke-width="11" stroke-linecap="round" fill="none" />
+                <path d="M54 61c8-5 13-12 16-23 2 11-1 20-9 27-3 2-5 1-7-4Z" fill="#059669" />
+                <path d="M22 32c9-7 19-8 30-4-11 1-19 5-24 13-4-1-6-4-6-9Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">174. F Monoline Blocks</p>
+            <p class="option-desc">Rounded stroke F, closest to a modern product glyph.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f badge notch">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h37v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <rect x="50" y="50" width="18" height="18" rx="6" fill="#059669" />
+                <path d="M54 61h9l-9-8v8Z" fill="#fff" />
+                <path d="M20 34c10-7 21-9 33-3-12 0-20 4-26 13-4-1-7-4-7-10Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">175. F Badge Notch</p>
+            <p class="option-desc">Small green content tile attached to the lower-right edge.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f framed signal">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="15" y="15" width="52" height="52" rx="15" fill="none" stroke="#0284c7" stroke-width="5" />
+                <path d="M27 61V22h35v11H40v8h19v10H40v10H27Z" fill="#fff" />
+                <path d="M52 61c8-5 14-13 17-24 2 11-1 20-9 27-3 3-6 2-8-3Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">176. F Framed Signal</p>
+            <p class="option-desc">Blue frame creates a stronger icon container around the F.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f negative play">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M52 61c9-5 15-13 18-25 2 12-2 22-10 29-3 2-6 1-8-4Z" fill="#059669" />
+                <path d="M59 49v13l10-6.5L59 49Z" fill="#111827" />
+                <path d="M20 34c10-8 21-9 33-4-12 0-20 4-26 13-4-1-7-4-7-9Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">177. F Negative Play</p>
+            <p class="option-desc">Subtle video cue cut into the green lower accent.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f balanced flur">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 62V20h36v12H39v8h20v11H39v11H25Z" fill="#fff" />
+                <path d="M50 61c10-5 17-14 20-27 2 13-2 23-11 31-3 2-7 1-9-4Z" fill="#059669" />
+                <path d="M21 34c10-8 22-9 34-4-12 0-21 4-27 13-5-1-8-4-7-9Z" fill="#0284c7" />
+                <path d="M38 39h18" stroke="#111827" stroke-width="3" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">178. F Balanced Flur</p>
+            <p class="option-desc">Balanced final take: clear F, visible sky, visible green.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Attached F accent system studies</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f terminal caps">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="25" height="12" rx="6" fill="#fff" />
+                <rect x="58" y="20" width="12" height="12" rx="6" fill="#0284c7" />
+                <rect x="36" y="40" width="18" height="11" rx="5.5" fill="#fff" />
+                <rect x="52" y="40" width="13" height="11" rx="5.5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">179. F Terminal Caps</p>
+            <p class="option-desc">Blue ends the top bar, green ends the middle bar.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f reversed caps">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="25" height="12" rx="6" fill="#fff" />
+                <rect x="58" y="20" width="12" height="12" rx="6" fill="#059669" />
+                <rect x="36" y="40" width="18" height="11" rx="5.5" fill="#fff" />
+                <rect x="52" y="40" width="13" height="11" rx="5.5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">180. F Reversed Caps</p>
+            <p class="option-desc">Same rule as 179, with the colors swapped.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f entry exit caps">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="10" height="12" rx="6" fill="#0284c7" />
+                <rect x="44" y="20" width="26" height="12" rx="6" fill="#fff" />
+                <rect x="36" y="40" width="18" height="11" rx="5.5" fill="#fff" />
+                <rect x="52" y="40" width="13" height="11" rx="5.5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">181. F Entry Exit Caps</p>
+            <p class="option-desc">Blue starts the top stroke, green finishes the mid stroke.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f corner lock">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="34" y="20" width="13" height="12" rx="4" fill="#0284c7" />
+                <rect x="44" y="20" width="26" height="12" rx="6" fill="#fff" />
+                <rect x="36" y="40" width="18" height="11" rx="5.5" fill="#fff" />
+                <rect x="52" y="40" width="13" height="11" rx="5.5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">182. F Corner Lock</p>
+            <p class="option-desc">Blue locks into the stem-top joint, green marks the exit.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f stem splice">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="17" rx="4" fill="#0284c7" />
+                <rect x="24" y="33" width="14" height="29" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="34" height="12" rx="6" fill="#fff" />
+                <rect x="36" y="40" width="18" height="11" rx="5.5" fill="#fff" />
+                <rect x="52" y="40" width="13" height="11" rx="5.5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">183. F Stem Splice</p>
+            <p class="option-desc">Blue is part of the vertical stem, not a separate mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f lower splice">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="25" height="12" rx="6" fill="#fff" />
+                <rect x="58" y="20" width="12" height="12" rx="6" fill="#0284c7" />
+                <rect x="36" y="40" width="29" height="11" rx="5.5" fill="#fff" />
+                <rect x="24" y="51" width="14" height="11" rx="4" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">184. F Lower Splice</p>
+            <p class="option-desc">Green closes the lower stem, blue closes the top bar.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f stepped flow">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v20h17v11H38v11H24Z" fill="#fff" />
+                <rect x="36" y="20" width="22" height="12" rx="6" fill="#fff" />
+                <path d="M56 20h14v12H56c-4 0-6-2-6-6s2-6 6-6Z" fill="#0284c7" />
+                <path d="M53 40h13v11H53c-3 0-5-2-5-5.5S50 40 53 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">185. F Stepped Flow</p>
+            <p class="option-desc">Both colors are step terminals in the same reading direction.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f notch joints">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h46v12H38v8h27v11H38v11H24Z" fill="#fff" />
+                <path d="M57 20h13v12H57l-7-6 7-6Z" fill="#0284c7" />
+                <path d="M52 40h13v11H52l-6-5.5 6-5.5Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">186. F Notch Joints</p>
+            <p class="option-desc">Angled color notches bite into the F stroke ends.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f inline arrows">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <path d="M36 20h23l9 6-9 6H36V20Z" fill="#fff" />
+                <path d="M56 20h14l-9 6 9 6H56l8-6-8-6Z" fill="#0284c7" />
+                <path d="M36 40h18l9 5.5L54 51H36V40Z" fill="#fff" />
+                <path d="M52 40h14l-9 5.5L66 51H52l8-5.5L52 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">187. F Inline Arrows</p>
+            <p class="option-desc">Arrow-like caps are aligned to the F bars, not floating.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f soft terminals">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="7" fill="#fff" />
+                <rect x="36" y="20" width="22" height="12" rx="6" fill="#fff" />
+                <circle cx="62" cy="26" r="6" fill="#0284c7" />
+                <rect x="36" y="40" width="18" height="11" rx="5.5" fill="#fff" />
+                <circle cx="58" cy="45.5" r="5.5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">188. F Soft Terminals</p>
+            <p class="option-desc">Round caps attach directly to each horizontal stroke.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f contained color">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h46v12H38v8h27v11H38v11H24Z" fill="#fff" />
+                <rect x="56" y="23" width="11" height="6" rx="3" fill="#0284c7" />
+                <rect x="51" y="42.5" width="11" height="6" rx="3" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">189. F Contained Color</p>
+            <p class="option-desc">Small color inlays sit inside the F stroke terminals.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f outside caps">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="30" height="12" rx="6" fill="#fff" />
+                <rect x="66" y="22" width="5" height="8" rx="2.5" fill="#0284c7" />
+                <rect x="36" y="40" width="25" height="11" rx="5.5" fill="#fff" />
+                <rect x="61" y="42" width="5" height="7" rx="2.5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">190. F Outside Caps</p>
+            <p class="option-desc">Tiny external caps touch the exact ends of each bar.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f bracket ends">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v20h17v11H38v11H24Z" fill="#fff" />
+                <path d="M36 20h29v12H36V20Z" fill="#fff" />
+                <path d="M61 19h9v14h-9v-5h-5v-4h5v-5Z" fill="#0284c7" />
+                <path d="M52 39h13v13h-13v-5h-5v-3h5v-5Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">191. F Bracket Ends</p>
+            <p class="option-desc">Color brackets wrap the stroke ends with a clear rule.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal joins">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h34v12H36V20Z" fill="#fff" />
+                <path d="M58 20h12v12H48l10-12Z" fill="#0284c7" />
+                <path d="M36 40h29v11H36V40Z" fill="#fff" />
+                <path d="M54 40h11v11H44l10-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">192. F Diagonal Joins</p>
+            <p class="option-desc">Diagonal joins make both accents feel cut from the F.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f pixel lock">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="3" fill="#fff" />
+                <rect x="36" y="20" width="22" height="12" rx="3" fill="#fff" />
+                <rect x="58" y="20" width="12" height="12" rx="3" fill="#0284c7" />
+                <rect x="36" y="40" width="17" height="11" rx="3" fill="#fff" />
+                <rect x="53" y="40" width="12" height="11" rx="3" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">193. F Pixel Lock</p>
+            <p class="option-desc">Squarer terminals give a tighter product-system feel.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f vertical rail">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="24" y="20" width="6" height="18" rx="3" fill="#0284c7" />
+                <rect x="36" y="20" width="34" height="12" rx="6" fill="#fff" />
+                <rect x="36" y="40" width="29" height="11" rx="5.5" fill="#fff" />
+                <rect x="24" y="44" width="6" height="18" rx="3" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">194. F Vertical Rail</p>
+            <p class="option-desc">Both colors attach to the stem as a top-to-bottom rail.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f nested steps">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="34" height="12" rx="6" fill="#fff" />
+                <rect x="52" y="24" width="18" height="4" rx="2" fill="#0284c7" />
+                <rect x="36" y="40" width="29" height="11" rx="5.5" fill="#fff" />
+                <rect x="48" y="43" width="17" height="5" rx="2.5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">195. F Nested Steps</p>
+            <p class="option-desc">Thin in-stroke accents keep the white F dominant.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f channel bands">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="20" height="12" rx="6" fill="#fff" />
+                <rect x="54" y="20" width="16" height="12" rx="6" fill="#0284c7" />
+                <rect x="36" y="40" width="14" height="11" rx="5.5" fill="#fff" />
+                <rect x="48" y="40" width="17" height="11" rx="5.5" fill="#059669" />
+                <rect x="31" y="37" width="7" height="14" rx="3.5" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">196. F Channel Bands</p>
+            <p class="option-desc">Color bands complete each horizontal channel.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f linked corners">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="30" height="12" rx="6" fill="#fff" />
+                <rect x="60" y="20" width="10" height="18" rx="5" fill="#0284c7" />
+                <rect x="36" y="40" width="23" height="11" rx="5.5" fill="#fff" />
+                <rect x="55" y="34" width="10" height="17" rx="5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">197. F Linked Corners</p>
+            <p class="option-desc">Caps wrap around the top and middle right corners.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f system lockup">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="24" y="20" width="14" height="42" rx="4" fill="#fff" />
+                <rect x="36" y="20" width="24" height="12" rx="6" fill="#fff" />
+                <rect x="58" y="20" width="12" height="12" rx="6" fill="#0284c7" />
+                <rect x="36" y="40" width="17" height="11" rx="5.5" fill="#fff" />
+                <rect x="52" y="40" width="13" height="11" rx="5.5" fill="#059669" />
+                <rect x="24" y="52" width="14" height="10" rx="4" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">198. F System Lockup</p>
+            <p class="option-desc">Most restrained lockup: clear F, exact color terminals.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>192 shortened right-width studies</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal joins shortened 1">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h32v12H36V20Z" fill="#fff" />
+                <path d="M56 20h12v12H47l9-12Z" fill="#0284c7" />
+                <path d="M36 40h27v11H36V40Z" fill="#fff" />
+                <path d="M52 40h11v11H43l9-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">199. F Diagonal Short 1</p>
+            <p class="option-desc">Very close to 192, with the right edge pulled in 2px.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal joins shortened 2">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h30v12H36V20Z" fill="#fff" />
+                <path d="M55 20h11v12H46l9-12Z" fill="#0284c7" />
+                <path d="M36 40h25v11H36V40Z" fill="#fff" />
+                <path d="M50 40h11v11H42l8-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">200. F Diagonal Short 2</p>
+            <p class="option-desc">Top and middle bars are both slightly tighter.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal joins shortened 3">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40h23v11H36V40Z" fill="#fff" />
+                <path d="M49 40h10v11H41l8-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">201. F Diagonal Short 3</p>
+            <p class="option-desc">Compact but still keeps the same diagonal cut language.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal joins shortened 4">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h26v12H36V20Z" fill="#fff" />
+                <path d="M52 20h10v12H44l8-12Z" fill="#0284c7" />
+                <path d="M36 40h21v11H36V40Z" fill="#fff" />
+                <path d="M47 40h10v11H40l7-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">202. F Diagonal Short 4</p>
+            <p class="option-desc">Shorter right side for a denser app-icon silhouette.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal joins shortened 5">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h24v12H36V20Z" fill="#fff" />
+                <path d="M50 20h10v12H43l7-12Z" fill="#0284c7" />
+                <path d="M36 40h20v11H36V40Z" fill="#fff" />
+                <path d="M46 40h10v11H40l6-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">203. F Diagonal Short 5</p>
+            <p class="option-desc">Most compressed version before the bars feel too stubby.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal top short">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h27v12H36V20Z" fill="#fff" />
+                <path d="M52 20h11v12H44l8-12Z" fill="#0284c7" />
+                <path d="M36 40h25v11H36V40Z" fill="#fff" />
+                <path d="M50 40h11v11H42l8-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">204. F Diagonal Top Short</p>
+            <p class="option-desc">Top bar is shorter, middle bar stays slightly longer.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal middle short">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h30v12H36V20Z" fill="#fff" />
+                <path d="M55 20h11v12H46l9-12Z" fill="#0284c7" />
+                <path d="M36 40h21v11H36V40Z" fill="#fff" />
+                <path d="M47 40h10v11H40l7-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">205. F Diagonal Mid Short</p>
+            <p class="option-desc">Middle bar is tighter while the top keeps more authority.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal balanced short">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M54 20h10v12H46l8-12Z" fill="#0284c7" />
+                <path d="M36 40h22v11H36V40Z" fill="#fff" />
+                <path d="M48 40h10v11H41l7-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">206. F Diagonal Balanced Short</p>
+            <p class="option-desc">Balanced midpoint between 200 and 202.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal slim cuts">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M55 20h9v12H47l8-12Z" fill="#0284c7" />
+                <path d="M36 40h23v11H36V40Z" fill="#fff" />
+                <path d="M50 40h9v11H42l8-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">207. F Diagonal Slim Cuts</p>
+            <p class="option-desc">Right edge is shorter and the color wedges are slimmer.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f diagonal tight final">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h27v12H36V20Z" fill="#fff" />
+                <path d="M54 20h9v12H46l8-12Z" fill="#0284c7" />
+                <path d="M36 40h22v11H36V40Z" fill="#fff" />
+                <path d="M49 40h9v11H41l8-11Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">208. F Diagonal Tight Final</p>
+            <p class="option-desc">Tightened 192 with smaller color terminals and shorter reach.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>201 exact-angle corner studies</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 1">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H60V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">209. F Exact Corner 1</p>
+            <p class="option-desc">Same 8-by-12 angle as blue; green seam lands on the F corner.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 2">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H59V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">210. F Exact Corner 2</p>
+            <p class="option-desc">One pixel tighter on the right, same exact shared seam.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 3">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H58V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">211. F Exact Corner 3</p>
+            <p class="option-desc">Compact green terminal while keeping the exact blue angle.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 4">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H57V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">212. F Exact Corner 4</p>
+            <p class="option-desc">Shorter right reach, with the seam still locked to the corner.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 5">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H62V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">213. F Exact Corner 5</p>
+            <p class="option-desc">Wider green region, same seam endpoint and same angle.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 6">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H61V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">214. F Exact Corner 6</p>
+            <p class="option-desc">Slightly wider than 209, with no change to the seam geometry.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 7">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h11v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H56V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">215. F Exact Corner 7</p>
+            <p class="option-desc">Most compact green terminal while preserving the exact lock.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 8">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h10v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H60V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">216. F Exact Corner 8</p>
+            <p class="option-desc">Top blue terminal is shorter; the two diagonal angles still match.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 9">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h9v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H58V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">217. F Exact Corner 9</p>
+            <p class="option-desc">Shorter top and middle terminals, exact same diagonal construction.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="f green seam corner 10">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 62V20h14v42H24Z" fill="#fff" />
+                <path d="M36 20h28v12H36V20Z" fill="#fff" />
+                <path d="M53 20h8v12H45l8-12Z" fill="#0284c7" />
+                <path d="M36 40H46L38 52H36V40Z" fill="#fff" />
+                <path d="M46 40H59V52H38L46 40Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">218. F Exact Corner 10</p>
+            <p class="option-desc">Balanced final take: compact reach, exact corner contact.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Signal green icon options for Accent L wordmark</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="green flow cut">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M23 54c11-24 29-31 48-19-14-2-23 2-29 12-5 8-11 12-19 7Z" fill="#111827" />
+                <path d="M21 35c15-11 30-12 45-2-16-2-28 3-37 15-8-2-10-7-8-13Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">31. Green Flow Cut</p>
+            <p class="option-desc">Closest to the accent L feel: soft movement, firm base.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal core">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="41" cy="41" r="23" fill="#fff" />
+                <circle cx="41" cy="41" r="11" fill="#111827" />
+                <path d="M42 18c11 6 18 14 20 24-7-8-14-12-20-12V18Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">32. Signal Core</p>
+            <p class="option-desc">A clean signal center for creator-fit decisions.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="accent loop">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M25 47c0-13 10-23 23-23h7v10h-7c-7 0-12 5-12 12 0 8 6 13 14 13 5 0 9-2 13-6" stroke="#fff" stroke-width="9" stroke-linecap="round" fill="none" />
+                <path d="M55 24v35" stroke="#111827" stroke-width="9" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">33. Accent Loop</p>
+            <p class="option-desc">Echoes the green L accent without spelling the word.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="soft finder">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="37" cy="37" r="18" fill="#fff" />
+                <circle cx="37" cy="37" r="9" fill="#059669" />
+                <path d="M51 51l12 12" stroke="#111827" stroke-width="8" stroke-linecap="round" />
+                <path d="M23 40h10l5-8 7 17 5-9h8" stroke="#0284c7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">34. Soft Finder</p>
+            <p class="option-desc">Search plus live performance signal on a green base.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="creator orbit">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="41" cy="41" r="24" fill="none" stroke="#fff" stroke-width="8" />
+                <circle cx="41" cy="41" r="8" fill="#111827" />
+                <circle cx="61" cy="28" r="6" fill="#0284c7" />
+                <path d="M22 49c11 11 27 14 41 4" stroke="#111827" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">35. Creator Orbit</p>
+            <p class="option-desc">Brand and creator relationship, less literal than a chart.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="stacked clips">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="24" y="18" width="28" height="46" rx="9" fill="#fff" />
+                <rect x="34" y="23" width="28" height="43" rx="9" fill="#111827" />
+                <path d="M44 37v16l12-8-12-8Z" fill="#059669" />
+                <path d="M28 26h12" stroke="#0284c7" stroke-width="4" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">36. Stacked Clips</p>
+            <p class="option-desc">Short-form content library in a cleaner brand color.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="data sprout">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M41 63V32" stroke="#111827" stroke-width="8" stroke-linecap="round" />
+                <path d="M41 38c-13-2-22-9-27-21 16-1 26 6 27 21Z" fill="#fff" />
+                <path d="M42 43c12-9 24-10 36-4-11 12-23 13-36 4Z" fill="#111827" />
+                <circle cx="56" cy="37" r="5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">37. Data Sprout</p>
+            <p class="option-desc">Fresh data growth with a compact, organic silhouette.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="split signal">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M23 25h36c0 10-8 18-18 18H23V25Z" fill="#fff" />
+                <path d="M59 57H23c0-10 8-18 18-18h18v18Z" fill="#111827" />
+                <circle cx="61" cy="27" r="6" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">38. Split Signal</p>
+            <p class="option-desc">Two streams meeting: creators and campaign intent.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="clean wave">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M18 46c8-15 17-15 27 0s19 15 27 0" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M19 35c10-9 19-9 28 0s17 9 26 0" stroke="#111827" stroke-width="6" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">39. Clean Wave</p>
+            <p class="option-desc">Content flow and trend movement, no letter dependency.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="north card">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="21" y="17" width="40" height="48" rx="12" fill="#fff" />
+                <path d="M42 25l11 25-13-6-11 9 13-28Z" fill="#111827" />
+                <circle cx="56" cy="24" r="5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">40. North Card</p>
+            <p class="option-desc">Guided recommendation inside a saved candidate card.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="linked paths">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M24 34c0-7 6-13 13-13h10v10H37c-2 0-4 2-4 4s2 4 4 4h8" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M58 48c0 7-6 13-13 13H35V51h10c2 0 4-2 4-4s-2-4-4-4h-8" stroke="#111827" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M34 41h14" stroke="#0284c7" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">41. Linked Paths</p>
+            <p class="option-desc">Brand, content, and creator connection.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="insight slice">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <circle cx="41" cy="41" r="24" fill="#fff" />
+                <path d="M41 17a24 24 0 0 1 21 36L41 41V17Z" fill="#111827" />
+                <path d="M41 41l-18 16c-5-6-7-13-5-21l23 5Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">42. Insight Slice</p>
+            <p class="option-desc">Analytics without using plain bar-chart language.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="pulse badge">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="18" y="24" width="46" height="34" rx="17" fill="#fff" />
+                <path d="M24 42h10l5-9 8 18 5-9h8" stroke="#111827" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <circle cx="61" cy="24" r="6" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">43. Pulse Badge</p>
+            <p class="option-desc">Compact badge form, strong at sidebar size.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="soft tile">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="18" y="18" width="20" height="20" rx="7" fill="#fff" />
+                <rect x="44" y="18" width="20" height="20" rx="7" fill="#111827" />
+                <rect x="18" y="44" width="20" height="20" rx="7" fill="#0284c7" />
+                <path d="M46 60c8-16 17-16 23 0H46Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">44. Soft Tile</p>
+            <p class="option-desc">Creator shortlist grid with one selected signal.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="rising route">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M18 56c14-23 26 4 44-23" stroke="#111827" stroke-width="8" stroke-linecap="round" fill="none" />
+                <circle cx="20" cy="56" r="6" fill="#fff" />
+                <circle cx="43" cy="45" r="6" fill="#0284c7" />
+                <path d="M62 30l-1 14 12-8-11-6Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">45. Rising Route</p>
+            <p class="option-desc">Campaign path from discovery to growth.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="lumen frame">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <rect x="20" y="20" width="42" height="42" rx="12" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M35 54V28" stroke="#111827" stroke-width="8" stroke-linecap="round" />
+                <path d="M47 28v26" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">46. Lumen Frame</p>
+            <p class="option-desc">A quiet two-stroke frame that pairs with the accent L.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal leaf">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M20 51c19-28 42-27 42-27s1 23-21 37c-10 6-18 2-21-10Z" fill="#fff" />
+                <path d="M28 55c9-12 20-20 34-27" stroke="#111827" stroke-width="5" stroke-linecap="round" fill="none" />
+                <path d="M42 31c7-1 13 1 18 6" stroke="#0284c7" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">47. Signal Leaf</p>
+            <p class="option-desc">Cleaner, lighter version of growth plus data freshness.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="smart brackets">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M23 23h14v9h-5v18h5v9H23V23Z" fill="#fff" />
+                <path d="M59 23H45v9h5v18h-5v9h14V23Z" fill="#111827" />
+                <circle cx="41" cy="41" r="6" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">48. Smart Brackets</p>
+            <p class="option-desc">Structured AI artifacts without using a bot symbol.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="creator pin">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M41 17c12 0 21 9 21 20 0 15-21 30-21 30S20 52 20 37c0-11 9-20 21-20Z" fill="#fff" />
+                <circle cx="41" cy="37" r="9" fill="#111827" />
+                <path d="M34 50c5 4 10 4 15 0" stroke="#0284c7" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">49. Creator Pin</p>
+            <p class="option-desc">Finding the right creator, but still abstract enough.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="quiet mark">
+                <rect width="82" height="82" rx="20" fill="#059669" />
+                <path d="M23 57c5-25 17-36 36-32-11 5-17 12-19 22-2 8-8 12-17 10Z" fill="#111827" />
+                <path d="M29 50c8-14 20-20 36-18-11 4-19 10-25 19-4 2-8 2-11-1Z" fill="#fff" />
+                <circle cx="61" cy="28" r="5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">50. Quiet Mark</p>
+            <p class="option-desc">Most minimal direction: just flow, signal, and restraint.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Icon mark options</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F stream">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 60V22h33v10H37v8h18v10H37v10H25Z" fill="#fff" />
+                <path d="M56 24c7 5 10 12 10 20S63 59 56 64c3-7 4-14 4-20s-1-13-4-20Z" fill="#059669" />
+                <path d="M22 24c-5 5-7 11-7 18s2 13 7 18c-2-7-2-12-2-18s0-11 2-18Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">01. F Stream</p>
+            <p class="option-desc">Closest to current left/right motion feel.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F pull arrows">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M26 60V22h32v9H38v8h17v9H38v12H26Z" fill="#fff" />
+                <path d="M14 41h14" stroke="#0284c7" stroke-width="7" stroke-linecap="round" />
+                <path d="M68 41H54" stroke="#059669" stroke-width="7" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">02. F Pull</p>
+            <p class="option-desc">Literal pull-in metaphor. Simple at favicon size.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F play cut">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 61V21h35v10H37v8h17v9H37v13H24Z" fill="#fff" />
+                <path d="M50 54l15-9-15-9v18Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">03. F Play</p>
+            <p class="option-desc">Video product signal is strongest.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F finder">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M25 59V22h31v9H37v8h16v9H37v11H25Z" fill="#fff" />
+                <circle cx="57" cy="55" r="10" fill="none" stroke="#059669" stroke-width="6" />
+                <path d="M64 62l7 7" stroke="#059669" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">04. F Finder</p>
+            <p class="option-desc">Influencer discovery and search are clear.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F signal bars">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M23 60V22h31v9H35v8h16v9H35v12H23Z" fill="#fff" />
+                <rect x="56" y="48" width="6" height="13" rx="3" fill="#0284c7" />
+                <rect x="66" y="38" width="6" height="23" rx="3" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">05. F Signal</p>
+            <p class="option-desc">Metrics and growth dashboard tone.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F frame">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="17" y="18" width="48" height="46" rx="10" fill="none" stroke="#0284c7" stroke-width="5" />
+                <path d="M28 59V26h28v8H39v7h15v8H39v10H28Z" fill="#fff" />
+                <circle cx="64" cy="20" r="6" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">06. F Frame</p>
+            <p class="option-desc">Short-form/video frame impression.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F loop">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M27 59V23h29v9H38v7h15v9H38v11H27Z" fill="#fff" />
+                <path d="M19 44c0-15 13-25 28-21" stroke="#0284c7" stroke-width="5" stroke-linecap="round" fill="none" />
+                <path d="M63 38c0 15-13 25-28 21" stroke="#059669" stroke-width="5" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">07. F Loop</p>
+            <p class="option-desc">Campaign feedback loop / automation.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F AI bolt">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M23 60V22h32v9H35v8h17v9H35v12H23Z" fill="#fff" />
+                <path d="M59 24 50 44h9l-5 16 15-24h-9l6-12h-7Z" fill="#a3e635" />
+              </svg>
+            </div>
+            <p class="option-title">08. F Bolt</p>
+            <p class="option-desc">AI assistant side is visible, slightly louder.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F bracket data">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M29 59V23h29v9H40v7h15v9H40v11H29Z" fill="#fff" />
+                <path d="M18 27h8v5h-3v18h3v5h-8V27Z" fill="#0284c7" />
+                <path d="M64 27h-8v5h3v18h-3v5h8V27Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">09. F Bracket</p>
+            <p class="option-desc">Structured data/artifact rendering feel.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F chip">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="18" y="18" width="46" height="46" rx="12" fill="#172033" stroke="#059669" stroke-width="4" />
+                <path d="M29 58V25h27v8H40v7h14v8H40v10H29Z" fill="#fff" />
+                <path d="M65 28h7M65 41h7M65 54h7M10 28h7M10 41h7M10 54h7" stroke="#0284c7" stroke-width="4" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">10. F Chip</p>
+            <p class="option-desc">AI/data platform impression.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F orbit">
+                <circle cx="41" cy="41" r="39" fill="#111827" />
+                <path d="M29 61V21h31v10H41v8h17v10H41v12H29Z" fill="#fff" />
+                <path d="M14 43c7 8 18 12 30 11 12-1 22-7 28-16" stroke="#0284c7" stroke-width="5" stroke-linecap="round" fill="none" />
+                <circle cx="63" cy="34" r="5" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">11. F Orbit</p>
+            <p class="option-desc">Letter mark with more motion than the first batch.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="FL link">
+                <rect x="7" y="14" width="68" height="54" rx="27" fill="#111827" />
+                <path d="M20 56V26h25v8H30v6h13v8H30v8H20Z" fill="#fff" />
+                <path d="M48 26h10v21h13v9H48V26Z" fill="#059669" />
+                <path d="M36 41h13" stroke="#0284c7" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">12. FL Link</p>
+            <p class="option-desc">Hints at fler without spelling the whole word.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="finder compass">
+                <rect width="82" height="82" rx="18" fill="#f8fafc" stroke="#111827" stroke-width="4" />
+                <circle cx="41" cy="41" r="22" fill="#111827" />
+                <path d="M47 24 39 44 57 36 47 24Z" fill="#059669" />
+                <path d="M35 58 43 38 25 46 35 58Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">13. Compass</p>
+            <p class="option-desc">Discovery-first mark without relying on a letter.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="creator nodes">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M27 39h28M41 25v31" stroke="#243044" stroke-width="5" stroke-linecap="round" />
+                <circle cx="41" cy="24" r="10" fill="#059669" />
+                <circle cx="27" cy="41" r="10" fill="#0284c7" />
+                <circle cx="55" cy="41" r="10" fill="#fff" />
+                <circle cx="41" cy="58" r="10" fill="#a3e635" />
+              </svg>
+            </div>
+            <p class="option-title">14. Creator Nodes</p>
+            <p class="option-desc">Network, creators, and matching graph.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="F tab">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M18 25h46c5 0 9 4 9 9v14c0 5-4 9-9 9H18V25Z" fill="#fff" />
+                <path d="M29 54V29h26v7H38v5h15v7H38v6H29Z" fill="#111827" />
+                <path d="M13 41h14" stroke="#059669" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">15. F Tab</p>
+            <p class="option-desc">Bolder product-action shape language.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="data bloom">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="41" cy="41" r="9" fill="#fff" />
+                <path d="M41 13c6 9 6 18 0 28-6-10-6-19 0-28ZM41 69c-6-9-6-18 0-28 6 10 6 19 0 28ZM13 41c9-6 18-6 28 0-10 6-19 6-28 0ZM69 41c-9 6-18 6-28 0 10-6 19-6 28 0Z" fill="#059669" />
+                <path d="M22 22c11 2 17 8 19 19-11-2-17-8-19-19ZM60 60c-11-2-17-8-19-19 11 2 17 8 19 19Z" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">16. Data Bloom</p>
+            <p class="option-desc">Organic growth and signal clustering.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="video lens">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="37" cy="41" r="21" fill="none" stroke="#fff" stroke-width="8" />
+                <path d="M34 31v20l16-10-16-10Z" fill="#059669" />
+                <path d="M56 51l11 11" stroke="#0284c7" stroke-width="7" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">17. Video Lens</p>
+            <p class="option-desc">Video search and creator analysis in one mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="rank ribbon">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M24 18h34v47L41 55 24 65V18Z" fill="#fff" />
+                <path d="M32 49V28h18v7H40v4h9v7h-9v3h-8Z" fill="#111827" />
+                <path d="M58 18v24l9-6V18h-9Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">18. Rank Ribbon</p>
+            <p class="option-desc">Shortlist, saved candidates, campaign picks.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="spark matrix">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <g fill="#fff">
+                  <circle cx="28" cy="26" r="4" /><circle cx="40" cy="26" r="4" /><circle cx="52" cy="26" r="4" />
+                  <circle cx="28" cy="38" r="4" /><circle cx="40" cy="38" r="4" />
+                  <circle cx="28" cy="50" r="4" />
+                </g>
+                <path d="M53 43l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#059669" />
+                <circle cx="63" cy="25" r="4" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">19. Spark Matrix</p>
+            <p class="option-desc">AI plus structured candidate grid.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="wave badge">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M18 46c8-14 17-14 27 0s19 14 27 0" stroke="#0284c7" stroke-width="7" stroke-linecap="round" fill="none" />
+                <path d="M20 33c8-9 16-9 24 0s16 9 24 0" stroke="#059669" stroke-width="7" stroke-linecap="round" fill="none" />
+                <path d="M30 62V22h12v40H30Z" fill="#fff" />
+                <path d="M42 22h21v10H42V22ZM42 39h17v10H42V39Z" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">20. Wave F</p>
+            <p class="option-desc">Trend waves and channel flow, less static.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>No-letter symbol options</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="signal drop">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M41 15c13 15 20 26 20 35 0 11-9 19-20 19s-20-8-20-19c0-9 7-20 20-35Z" fill="#fff" />
+                <path d="M31 52h20" stroke="#059669" stroke-width="6" stroke-linecap="round" />
+                <path d="M36 42h15" stroke="#0284c7" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="option-title">21. Signal Drop</p>
+            <p class="option-desc">A collected insight from scattered creator signals.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="match rings">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="34" cy="41" r="18" fill="none" stroke="#0284c7" stroke-width="8" />
+                <circle cx="48" cy="41" r="18" fill="none" stroke="#059669" stroke-width="8" />
+                <circle cx="41" cy="41" r="7" fill="#fff" />
+              </svg>
+            </div>
+            <p class="option-title">22. Match Rings</p>
+            <p class="option-desc">Brand and creator fit without literal lettering.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="flow ribbon">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M18 47c7-19 21-27 37-24 11 2 14 12 8 19-7 8-22 6-30 14-4 4-5 8-4 12" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" />
+                <path d="M30 56c9-8 23-6 32-16" stroke="#059669" stroke-width="6" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">23. Flow Ribbon</p>
+            <p class="option-desc">Continuous campaign flow and lightweight motion.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="creator spark">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M41 18v14M41 50v14M18 41h14M50 41h14" stroke="#243044" stroke-width="5" stroke-linecap="round" />
+                <circle cx="41" cy="41" r="10" fill="#fff" />
+                <path d="M58 20l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#059669" />
+                <circle cx="25" cy="57" r="6" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">24. Creator Spark</p>
+            <p class="option-desc">One strong creator signal rising from the network.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="search pulse">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="36" cy="36" r="18" fill="none" stroke="#fff" stroke-width="7" />
+                <path d="M50 50l12 12" stroke="#fff" stroke-width="7" stroke-linecap="round" />
+                <path d="M22 38h7l5-9 8 18 5-9h8" stroke="#059669" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">25. Search Pulse</p>
+            <p class="option-desc">Search plus performance pulse in one simple mark.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="shortform stack">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <rect x="23" y="16" width="30" height="48" rx="9" fill="#fff" />
+                <rect x="33" y="22" width="28" height="44" rx="9" fill="#243044" stroke="#0284c7" stroke-width="5" />
+                <path d="M43 36v16l12-8-12-8Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">26. Shortform Stack</p>
+            <p class="option-desc">Saved reels, videos, and candidate content lists.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="campaign path">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M18 55c11-26 28 8 46-25" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" />
+                <circle cx="20" cy="55" r="6" fill="#0284c7" />
+                <circle cx="42" cy="43" r="6" fill="#059669" />
+                <path d="M63 29l-1 13 11-7-10-6Z" fill="#059669" />
+              </svg>
+            </div>
+            <p class="option-title">27. Campaign Path</p>
+            <p class="option-desc">Moving from discovery to execution and result.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="data leaf">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M18 48c22-31 46-31 46-31s2 25-21 43c-12 9-22 4-25-12Z" fill="#059669" />
+                <path d="M24 55c11-14 24-22 40-29" stroke="#111827" stroke-width="5" stroke-linecap="round" fill="none" />
+                <circle cx="29" cy="36" r="5" fill="#fff" />
+                <circle cx="43" cy="29" r="5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">28. Data Leaf</p>
+            <p class="option-desc">Growth, freshness, and clean data collection.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="north dot">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <circle cx="41" cy="41" r="25" fill="none" stroke="#243044" stroke-width="7" />
+                <path d="M42 18l10 27-27-10 17-17Z" fill="#fff" />
+                <path d="M40 42l17 22-24-14 7-8Z" fill="#059669" />
+                <circle cx="58" cy="23" r="5" fill="#0284c7" />
+              </svg>
+            </div>
+            <p class="option-title">29. North Dot</p>
+            <p class="option-desc">Guided decisions and campaign direction.</p>
+          </article>
+          <article class="option">
+            <div class="mark-wrap">
+              <svg width="82" height="82" viewBox="0 0 82 82" aria-label="clip weave">
+                <rect width="82" height="82" rx="20" fill="#111827" />
+                <path d="M22 34c0-8 6-14 14-14h8v10h-8c-2 0-4 2-4 4s2 4 4 4h10c8 0 14 6 14 14s-6 14-14 14h-8V56h8c2 0 4-2 4-4s-2-4-4-4H36c-8 0-14-6-14-14Z" fill="#fff" />
+                <path d="M37 30h18c5 0 9 4 9 9" stroke="#059669" stroke-width="6" stroke-linecap="round" fill="none" />
+                <path d="M45 56H27c-5 0-9-4-9-9" stroke="#0284c7" stroke-width="6" stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <p class="option-title">30. Clip Weave</p>
+            <p class="option-desc">Content, creator, and commerce links woven together.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Wordmark options</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="wordmark font-outfit">fler</div>
+            <p class="option-title">01. Outfit / fler</p>
+            <p class="option-desc">Recommended. Current code already uses Outfit.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-geist">fler</div>
+            <p class="option-title">02. Geist / fler</p>
+            <p class="option-desc">Clean Next.js dashboard feel.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-instrument">fler</div>
+            <p class="option-title">03. Instrument Sans / fler</p>
+            <p class="option-desc">Neutral, modern SaaS wordmark.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-dm">fler</div>
+            <p class="option-title">04. DM Sans / fler</p>
+            <p class="option-desc">Friendly, softer consumer tone.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-mulish">FLER</div>
+            <p class="option-title">05. Mulish / FLER</p>
+            <p class="option-desc">Wide and stable, works in sidebar.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-space dark-chip">FLER</div>
+            <p class="option-title">06. Space Mono / FLER</p>
+            <p class="option-desc">Data tool tone, more technical.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-jetbrains">FLER</div>
+            <p class="option-title">07. JetBrains Mono / FLER</p>
+            <p class="option-desc">Technical but readable.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-fira">fler</div>
+            <p class="option-title">08. Fira Code / fler</p>
+            <p class="option-desc">Developer-like. Use only if AI tooling is core.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-playfair">fler</div>
+            <p class="option-title">09. Playfair / fler</p>
+            <p class="option-desc">Editorial. Distinct, less dashboard-native.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-merriweather">fler</div>
+            <p class="option-title">10. Merriweather / fler</p>
+            <p class="option-desc">Serif trust signal. Too heavy for dense UI.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark wordmark-split font-outfit"><span>fl</span><span>er</span></div>
+            <p class="option-title">11. Outfit Split / fler</p>
+            <p class="option-desc">Keeps normal casing with a small brand color hook.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark wordmark-underlined font-geist">fler</div>
+            <p class="option-title">12. Geist Underline / fler</p>
+            <p class="option-desc">Signal line adds movement without changing letters.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark wordmark-pill font-instrument">FLER</div>
+            <p class="option-title">13. Instrument Pill / FLER</p>
+            <p class="option-desc">Logo lockup can work alone in a header.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark wordmark-gradient font-dm">fler</div>
+            <p class="option-title">14. DM Gradient / fler</p>
+            <p class="option-desc">More product-brand than admin-template.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark wordmark-wide font-mulish">fler</div>
+            <p class="option-title">15. Mulish Wide / FLER</p>
+            <p class="option-desc">Premium but still readable at sidebar width.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-outfit">
+              f<span style="color: #059669">l</span>er
+            </div>
+            <p class="option-title">16. Accent L / fler</p>
+            <p class="option-desc">Subtle pull-loop point inside the word itself.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark wordmark-outline font-geist">FLER</div>
+            <p class="option-title">17. Outline / FLER</p>
+            <p class="option-desc">Distinct on light backgrounds, not ideal for small UI.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark wordmark-compact font-space">fler.ai</div>
+            <p class="option-title">18. Space Mono / fler.ai</p>
+            <p class="option-desc">If the AI assistant becomes the main identity.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark font-jetbrains">
+              fl<span style="color: #0284c7">_</span>er
+            </div>
+            <p class="option-title">19. JetBrains / fl_er</p>
+            <p class="option-desc">Tooling/data feel. More niche, less consumer.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark dark-chip font-outfit">
+              <span style="color: #059669">F</span>LER
+            </div>
+            <p class="option-title">20. Dark Lockup / FLER</p>
+            <p class="option-desc">Strongest for dark sidebar and favicon pairing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Flowing wordmark options</h2>
+        <div class="grid">
+          <article class="option">
+            <div class="wordmark script-wordmark font-snell">fler</div>
+            <p class="option-title">21. Snell Roundhand / fler</p>
+            <p class="option-desc">Elegant flow, still controlled enough for a brand mark.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-savoye">fler</div>
+            <p class="option-title">22. Savoye / fler</p>
+            <p class="option-desc">More fashion/editorial, useful if the brand should feel lighter.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-chancery">fler</div>
+            <p class="option-title">23. Apple Chancery / fler</p>
+            <p class="option-desc">Readable handwritten rhythm without going too cute.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark script-wordmark-sm font-zapfino">fler</div>
+            <p class="option-title">24. Zapfino / fler</p>
+            <p class="option-desc">Most decorative. Better for landing than dashboard chrome.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-segoe-script">fler</div>
+            <p class="option-title">25. Segoe Script / fler</p>
+            <p class="option-desc">Smooth and friendly, less premium than Snell.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-lucida-hand">fler</div>
+            <p class="option-title">26. Lucida Handwriting / fler</p>
+            <p class="option-desc">Casual script, usable only if we want a warmer tone.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-bradley">fler</div>
+            <p class="option-title">27. Bradley Hand / fler</p>
+            <p class="option-desc">Human and loose, but less SaaS-polished.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-noteworthy">fler</div>
+            <p class="option-title">28. Noteworthy / fler</p>
+            <p class="option-desc">Marker-like flow, more playful than enterprise.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-marker">fler</div>
+            <p class="option-title">29. Marker Felt / fler</p>
+            <p class="option-desc">Bold casual stroke. Distinct, but risky for B2B.</p>
+          </article>
+          <article class="option">
+            <div class="wordmark script-wordmark font-kefa">fler</div>
+            <p class="option-title">30. Kefa Italic / fler</p>
+            <p class="option-desc">A calmer flowing serif if full script feels too soft.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
