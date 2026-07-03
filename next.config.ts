@@ -1,6 +1,8 @@
 import type { NextConfig } from 'next';
 import { withSentryConfig } from '@sentry/nextjs';
 
+const apiProxyTarget = process.env.INFINDER_API_PROXY_URL ?? 'https://fler.co.kr';
+
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
   devIndicators: false,
@@ -25,6 +27,22 @@ const baseConfig: NextConfig = {
   transpilePackages: ['geist'],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/infinder.v1.InfinderService/:path*',
+        destination: `${apiProxyTarget}/infinder.v1.InfinderService/:path*`
+      },
+      {
+        source: '/api/auth/:path*',
+        destination: `${apiProxyTarget}/api/auth/:path*`
+      },
+      {
+        source: '/api/ai/:path*',
+        destination: `${apiProxyTarget}/api/ai/:path*`
+      }
+    ];
   }
 };
 

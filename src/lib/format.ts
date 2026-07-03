@@ -15,3 +15,18 @@ export function formatDate(
     return '';
   }
 }
+
+export function formatNumber(value: bigint | number | string | undefined) {
+  return new Intl.NumberFormat('ko-KR').format(toNumber(value));
+}
+
+export function formatCompact(value: bigint | number | string | undefined) {
+  return new Intl.NumberFormat('ko-KR', {
+    notation: 'compact',
+    maximumFractionDigits: 1
+  }).format(toNumber(value));
+}
+
+function toNumber(value: bigint | number | string | undefined) {
+  return Number(value ?? 0);
+}

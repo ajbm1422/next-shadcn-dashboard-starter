@@ -3,89 +3,97 @@
 import { LabelList, Pie, PieChart } from 'recharts';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent
-} from '@/components/ui/chart';
+import { ChartConfig, ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import { Badge } from '@/components/ui/badge';
 import { Icons } from '@/components/icons';
-
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 187, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 90, fill: 'var(--color-other)' }
-];
+import {
+  useDashboardOverview,
+  type CompositionDatum
+} from '@/features/overview/lib/use-dashboard-overview';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const chartConfig = {
-  visitors: {
-    label: 'Visitors'
+  value: {
+    label: '상대 규모'
   },
-  chrome: {
-    label: 'Chrome',
+  channels: {
+    label: '운영 채널',
     color: 'var(--chart-1)'
   },
-  safari: {
-    label: 'Safari',
+  videos: {
+    label: '저장 영상',
     color: 'var(--chart-2)'
   },
-  firefox: {
-    label: 'Firefox',
+  backlog: {
+    label: '백로그',
     color: 'var(--chart-3)'
-  },
-  edge: {
-    label: 'Edge',
-    color: 'var(--chart-4)'
-  },
-  other: {
-    label: 'Other',
-    color: 'var(--chart-5)'
   }
 } satisfies ChartConfig;
 
 export function PieGraph() {
+  const { overview, isLoading } = useDashboardOverview();
+
   return (
     <Card className='flex h-full flex-col'>
       <CardHeader className='items-center pb-0'>
         <CardTitle>
-          Pie Chart
+          데이터 구성
           <Badge variant='outline'>
             <Icons.trendingUp />
-            +5.2%
+            Log scale
           </Badge>
         </CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>운영 채널, 저장 영상, 백로그 상대 비중</CardDescription>
       </CardHeader>
       <CardContent className='flex flex-1 items-center justify-center pb-0'>
-        <ChartContainer
-          config={chartConfig}
-          className='[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[300px] min-h-[250px]'
-        >
-          <PieChart>
-            <ChartTooltip content={<ChartTooltipContent nameKey='visitors' hideLabel />} />
-            <Pie
-              data={chartData}
-              innerRadius={30}
-              dataKey='visitors'
-              radius={10}
-              cornerRadius={8}
-              paddingAngle={4}
-            >
-              <LabelList
-                dataKey='visitors'
-                stroke='none'
-                fontSize={12}
-                fontWeight={500}
-                fill='currentColor'
-                formatter={(value) => `${value ?? ''}`}
-              />
-            </Pie>
-          </PieChart>
-        </ChartContainer>
+        {isLoading ? (
+          <Skeleton className='h-[250px] w-[250px] rounded-full' />
+        ) : (
+          <ChartContainer
+            config={chartConfig}
+            className='[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[300px] min-h-[250px]'
+          >
+            <PieChart>
+              <ChartTooltip content={<CompositionTooltip />} />
+              <Pie
+                data={overview.compositionData}
+                innerRadius={42}
+                dataKey='value'
+                nameKey='label'
+                cornerRadius={8}
+                paddingAngle={4}
+              >
+                <LabelList
+                  dataKey='label'
+                  stroke='none'
+                  fontSize={12}
+                  fontWeight={500}
+                  fill='currentColor'
+                  formatter={(value) => `${value ?? ''}`}
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
+  );
+}
+
+function CompositionTooltip({
+  active,
+  payload
+}: {
+  active?: boolean;
+  payload?: ReadonlyArray<{ payload?: CompositionDatum }>;
+}) {
+  const item = payload?.[0]?.payload;
+  if (!active || !item) return null;
+
+  return (
+    <div className='border-border/50 bg-background rounded-lg border px-2.5 py-1.5 text-xs shadow-xl'>
+      <div className='font-medium'>{item.label}</div>
+      <div className='text-muted-foreground mt-1'>실제 값 {item.displayValue}</div>
+    </div>
   );
 }
