@@ -9,8 +9,8 @@ export const usersInfoContent: InfobarContent = {
         'This page demonstrates client-side data fetching with React Query combined with nuqs URL search params — as an alternative to the Products page which uses server-side RSC fetching. Both patterns use the same DataTable, useDataTable hook, and nuqs URL state.',
       links: [
         {
-          title: 'TanStack Query SSR Docs',
-          url: 'https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr'
+          title: 'React Query guide',
+          url: '/guide'
         }
       ]
     },
@@ -26,8 +26,8 @@ export const usersInfoContent: InfobarContent = {
         'Pagination, search, and role filters are synced to the URL via nuqs. The useDataTable hook manages the TanStack Table state and debounces filter changes before updating the URL. When the URL changes, React Query automatically refetches because the query key includes the filters.',
       links: [
         {
-          title: 'nuqs Documentation',
-          url: 'https://nuqs.47ng.com'
+          title: 'URL state example',
+          url: '/dashboard/users'
         }
       ]
     },

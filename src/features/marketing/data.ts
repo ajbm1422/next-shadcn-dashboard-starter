@@ -58,8 +58,8 @@ export const footerGroups = [
     label: '이용 가이드',
     links: [
       { label: '찰나 이용 가이드', href: '/guide' },
-      { label: '공지사항', href: 'https://support.charlla.io/charllaintro/notice' },
-      { label: '업데이트 소식', href: 'https://support.charlla.io/charllaintro/releasenote' },
+      { label: '공지사항', href: '/notice' },
+      { label: '업데이트 소식', href: '/release-notes' },
       { label: '자주 묻는 질문', href: '/faq' },
       { label: '블로그', href: '/blog' }
     ]
@@ -67,8 +67,8 @@ export const footerGroups = [
   {
     label: '고객센터',
     links: [
-      { label: '이메일(고객전용): help@charlla.io', href: 'mailto:help@charlla.io' },
-      { label: '채팅 문의', href: 'https://support.charlla.io/' }
+      { label: '문의하기', href: '/support' },
+      { label: '자주 묻는 질문', href: '/faq' }
     ]
   }
 ];

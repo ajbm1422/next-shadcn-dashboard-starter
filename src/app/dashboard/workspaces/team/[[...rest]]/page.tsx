@@ -41,16 +41,20 @@ export default function TeamPage() {
       {activeOrganization && (
         <Tabs defaultValue='members' className='space-y-4'>
           <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
-            <div className='flex items-center gap-3'>
-              <div className='bg-primary text-primary-foreground flex size-11 items-center justify-center rounded-lg text-sm font-semibold'>
+            <div className='flex min-w-0 items-center gap-3'>
+              <div className='bg-primary text-primary-foreground flex size-11 shrink-0 items-center justify-center rounded-lg text-sm font-semibold'>
                 {activeOrganization.initials}
               </div>
-              <div>
-                <div className='flex items-center gap-2'>
-                  <h2 className='text-xl font-semibold'>{activeOrganization.name}</h2>
+              <div className='min-w-0'>
+                <div className='flex min-w-0 flex-wrap items-center gap-2'>
+                  <h2 className='min-w-0 break-words text-xl font-semibold'>
+                    {activeOrganization.name}
+                  </h2>
                   <Badge variant='secondary'>{activeOrganization.plan}</Badge>
                 </div>
-                <p className='text-muted-foreground text-sm'>{activeOrganization.description}</p>
+                <p className='text-muted-foreground break-words text-sm'>
+                  {activeOrganization.description}
+                </p>
               </div>
             </div>
             <TabsList>

@@ -1,17 +1,17 @@
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
+import Link from 'next/link';
 
 export default function CtaGithub() {
   return (
     <Button variant='ghost' asChild size='sm' className='group hidden sm:flex'>
-      <a
-        href='https://github.com/Kiranism/next-shadcn-dashboard-starter'
-        rel='noopener noreferrer'
-        target='_blank'
-        className='dark:text-foreground transition-colors duration-300 hover:text-[#24292e] dark:hover:text-yellow-400'
+      <Link
+        href='/dashboard/overview'
+        aria-label='Dashboard overview'
+        className='dark:text-foreground transition-colors duration-300'
       >
-        <Icons.github className='transition-transform duration-300 group-hover:animate-bounce' />
-      </a>
+        <Icons.dashboard className='transition-transform duration-300 group-hover:scale-110' />
+      </Link>
     </Button>
   );
 }

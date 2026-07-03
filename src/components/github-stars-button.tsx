@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
-
-// ─── GitHub API helpers (self-contained) ─────────────────────────────────────
 
 interface GitHubRepo {
   fullName: string;
@@ -10,23 +9,9 @@ interface GitHubRepo {
 }
 
 async function fetchGitHubRepo(owner: string, repo: string): Promise<GitHubRepo | null> {
-  try {
-    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-      headers: { Accept: 'application/vnd.github.v3+json' },
-      next: { revalidate: 3600 }
-    });
-    if (!response.ok) return null;
-    const data = await response.json();
-    if (typeof data.full_name !== 'string' || typeof data.stargazers_count !== 'number') {
-      return null;
-    }
-    return {
-      fullName: data.full_name,
-      stars: data.stargazers_count
-    };
-  } catch {
-    return null;
-  }
+  void owner;
+  void repo;
+  return null;
 }
 
 function formatCount(count: number): string {
@@ -101,7 +86,7 @@ const githubStarsButtonVariants = cva(
 
 interface GitHubStarsButtonProps
   extends
-    Omit<React.ComponentProps<'a'>, 'children'>,
+    Omit<React.ComponentProps<typeof Link>, 'children' | 'href'>,
     VariantProps<typeof githubStarsButtonVariants> {
   owner: string;
   repo: string;
@@ -126,12 +111,10 @@ async function GitHubStarsButton({
   const fullName = data?.fullName ?? `${owner}/${repo}`;
 
   return (
-    <a
-      href={`https://github.com/${owner}/${repo}`}
-      target='_blank'
-      rel='noopener noreferrer'
+    <Link
+      href='/dashboard/overview'
       data-slot='github-stars-button'
-      aria-label={`${fullName} on GitHub${stars !== null ? ` — ${stars.toLocaleString('en-US')} stars` : ''}`}
+      aria-label={`${fullName} local dashboard reference`}
       className={cn(githubStarsButtonVariants({ variant, size, className }))}
       {...props}
     >
@@ -143,7 +126,7 @@ async function GitHubStarsButton({
           <span className='tabular-nums'>{formatCount(stars)}</span>
         </>
       )}
-    </a>
+    </Link>
   );
 }
 

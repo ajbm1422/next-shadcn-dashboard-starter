@@ -86,21 +86,23 @@ export default function WorkspacesPage() {
           const isActive = organization.id === activeOrganizationId;
 
           return (
-            <Card key={organization.id} className={isActive ? 'border-primary' : undefined}>
+            <Card key={organization.id} className={isActive ? 'border-primary min-w-0' : 'min-w-0'}>
               <CardHeader className='space-y-3'>
-                <div className='flex items-start justify-between gap-3'>
-                  <div className='flex items-center gap-3'>
-                    <div className='bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-lg text-sm font-semibold'>
+                <div className='flex min-w-0 items-start justify-between gap-3'>
+                  <div className='flex min-w-0 items-center gap-3'>
+                    <div className='bg-primary text-primary-foreground flex size-10 shrink-0 items-center justify-center rounded-lg text-sm font-semibold'>
                       {organization.initials}
                     </div>
-                    <div>
-                      <CardTitle className='text-base'>{organization.name}</CardTitle>
-                      <CardDescription>{organization.slug}</CardDescription>
+                    <div className='min-w-0'>
+                      <CardTitle className='break-words text-base'>{organization.name}</CardTitle>
+                      <CardDescription className='break-words'>{organization.slug}</CardDescription>
                     </div>
                   </div>
                   {isActive && <Badge>Active</Badge>}
                 </div>
-                <CardDescription>{organization.description}</CardDescription>
+                <CardDescription className='break-words'>
+                  {organization.description}
+                </CardDescription>
               </CardHeader>
               <CardContent className='space-y-4'>
                 <div className='grid grid-cols-3 gap-3 text-sm'>

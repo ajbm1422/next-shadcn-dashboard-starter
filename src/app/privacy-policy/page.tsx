@@ -1,5 +1,11 @@
-import { redirect } from 'next/navigation';
+import { TermsPage } from '@/features/marketing/components/marketing-pages';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '개인정보처리방침 - 찰나',
+  description: '찰나 서비스 개인정보처리방침 로컬 문서입니다.'
+};
 
 export default function Page() {
-  redirect('https://charlla.io/kr/terms/privacy');
+  return <TermsPage kind='privacy' />;
 }

@@ -3,6 +3,27 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Input } from '@/components/ui/input';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle
+} from '@/components/ui/navigation-menu';
+import { Separator } from '@/components/ui/separator';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Accordion,
   AccordionContent,
@@ -10,6 +31,7 @@ import {
   AccordionTrigger
 } from '@/components/ui/accordion';
 import { Icons } from '@/components/icons';
+import { cn } from '@/lib/utils';
 import {
   blogCategories,
   blogPosts,
@@ -30,8 +52,22 @@ import {
 } from '../data';
 
 const CHARLLA_ASSET_BASE = 'https://charlla.io/about/image/';
-const CHARLLA_CONSOLE_URL = 'https://console.charlla.io/signin';
-const CHARLLA_SAMPLE_URL = 'https://charllasample.cafe24.com';
+const LOCAL_SIGN_IN_URL = '/auth/sign-in';
+const LOCAL_SIGN_UP_URL = '/auth/sign-up';
+const LOCAL_SAMPLE_URL = '/sample';
+const LOCAL_SUPPORT_URL = '/support';
+const MARKETING_NAV_TRIGGER_CLASS =
+  'bg-white text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 focus:bg-neutral-100 focus:text-neutral-950 data-[state=open]:bg-neutral-100 data-[state=open]:text-neutral-950 dark:bg-white dark:text-neutral-700 dark:hover:bg-neutral-100 dark:hover:text-neutral-950 dark:focus:bg-neutral-100 dark:focus:text-neutral-950';
+const MARKETING_NAV_CONTENT_CLASS =
+  'border-neutral-200 bg-white text-neutral-950 dark:border-neutral-200 dark:bg-white dark:text-neutral-950';
+const MARKETING_NAV_LINK_CLASS =
+  'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 focus:bg-neutral-100 focus:text-neutral-950 dark:text-neutral-700 dark:hover:bg-neutral-100 dark:hover:text-neutral-950 dark:focus:bg-neutral-100 dark:focus:text-neutral-950';
+const MARKETING_PRIMARY_BUTTON_CLASS =
+  'bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-800';
+const MARKETING_GHOST_BUTTON_CLASS =
+  'bg-transparent text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 dark:bg-transparent dark:text-neutral-700 dark:hover:bg-neutral-100 dark:hover:text-neutral-950';
+const MARKETING_OUTLINE_BUTTON_CLASS =
+  'border-neutral-200 bg-white text-neutral-950 hover:bg-neutral-100 hover:text-neutral-950 dark:border-neutral-200 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 dark:hover:text-neutral-950';
 
 function asset(path: string) {
   return `${CHARLLA_ASSET_BASE}${path}`;
@@ -76,7 +112,7 @@ function AssetImage({
 
 function MarketingHeader() {
   return (
-    <header className='sticky top-0 z-40 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80'>
+    <header className='sticky top-0 z-40 border-b border-neutral-200 bg-white/95 text-neutral-950 backdrop-blur supports-[backdrop-filter]:bg-white/80'>
       <div className='bg-neutral-950 px-4 py-2 text-center text-xs font-medium text-white sm:text-sm'>
         [무료 다운로드] 레퍼런스 찾느라 밤새지 마세요. 업종별 숏폼 활용법 총정리.zip
       </div>
@@ -85,54 +121,79 @@ function MarketingHeader() {
           <CharllaLogo />
         </Link>
 
-        <nav className='hidden items-center gap-6 text-sm font-medium text-neutral-700 lg:flex'>
-          <div className='group relative py-6'>
-            <button className='flex items-center gap-1'>
-              서비스 소개
-              <Icons.chevronDown className='size-4' />
-            </button>
-            <div className='invisible absolute top-14 left-0 w-64 rounded-lg border bg-white p-2 opacity-0 shadow-lg transition group-hover:visible group-hover:opacity-100'>
-              {marketingNav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className='flex items-center justify-between rounded-md px-3 py-2 hover:bg-neutral-100'
+        <NavigationMenu viewport={false} className='hidden lg:flex'>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className={MARKETING_NAV_TRIGGER_CLASS}>
+                서비스 소개
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className={cn('w-72', MARKETING_NAV_CONTENT_CLASS)}>
+                <div className='grid gap-1 p-1'>
+                  {marketingNav.map((item) => (
+                    <NavigationMenuLink
+                      asChild
+                      key={item.href}
+                      className={MARKETING_NAV_LINK_CLASS}
+                    >
+                      <Link href={item.href} className='flex items-center justify-between gap-3'>
+                        <span>{item.label}</span>
+                        {item.badge && <Badge variant='secondary'>{item.badge}</Badge>}
+                      </Link>
+                    </NavigationMenuLink>
+                  ))}
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            {[
+              ['가격 안내', '/price'],
+              ['이용 가이드', '/guide'],
+              ['자주 묻는 질문', '/faq'],
+              ['블로그', '/blog']
+            ].map(([label, href]) => (
+              <NavigationMenuItem key={href}>
+                <NavigationMenuLink
+                  asChild
+                  className={cn(navigationMenuTriggerStyle(), MARKETING_NAV_TRIGGER_CLASS)}
                 >
-                  <span>{item.label}</span>
-                  {item.badge && <Badge variant='secondary'>{item.badge}</Badge>}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <Link href='/price'>가격 안내</Link>
-          <Link href='/guide'>이용 가이드</Link>
-          <Link href='/faq'>자주 묻는 질문</Link>
-          <Link href='/blog'>블로그</Link>
-        </nav>
+                  <Link href={href}>{label}</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
 
         <div className='hidden items-center gap-2 md:flex'>
-          <Button asChild variant='ghost'>
-            <a href={CHARLLA_CONSOLE_URL}>로그인</a>
+          <Button asChild variant='ghost' className={MARKETING_GHOST_BUTTON_CLASS}>
+            <Link href={LOCAL_SIGN_IN_URL}>로그인</Link>
           </Button>
-          <Button asChild>
-            <a href={CHARLLA_CONSOLE_URL}>무료로 시작하기</a>
+          <Button asChild className={MARKETING_PRIMARY_BUTTON_CLASS}>
+            <Link href={LOCAL_SIGN_UP_URL}>무료로 시작하기</Link>
           </Button>
         </div>
 
         <div className='flex gap-2 md:hidden'>
-          <Button asChild size='sm' variant='outline'>
+          <Button asChild size='sm' variant='outline' className={MARKETING_OUTLINE_BUTTON_CLASS}>
             <Link href='/price'>가격</Link>
           </Button>
-          <Button asChild size='sm'>
-            <a href={CHARLLA_CONSOLE_URL}>시작</a>
+          <Button asChild size='sm' className={MARKETING_PRIMARY_BUTTON_CLASS}>
+            <Link href={LOCAL_SIGN_UP_URL}>시작</Link>
           </Button>
         </div>
       </div>
-      <div className='border-t bg-white px-4 py-2 lg:hidden'>
-        <div className='mx-auto flex max-w-7xl gap-3 overflow-x-auto text-sm whitespace-nowrap'>
+      <div className='border-t border-neutral-200 bg-white px-4 py-2 text-neutral-950 lg:hidden'>
+        <div className='mx-auto flex max-w-7xl gap-2 overflow-x-auto text-sm whitespace-nowrap'>
           {marketingNav.map((item) => (
-            <Link key={item.href} href={item.href} className='rounded-full border px-3 py-1.5'>
-              {item.label}
+            <Link
+              key={item.href}
+              href={item.href}
+              className='rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950'
+            >
+              {{
+                '/widget': '숏폼 위젯',
+                '/setting': '설정',
+                '/player': '플레이어',
+                '/statistic': '통계'
+              }[item.href] ?? item.label}
             </Link>
           ))}
         </div>
@@ -161,18 +222,21 @@ function MarketingFooter() {
             (C) 2023 Catenoid Inc. All Rights Reserved.
           </p>
           <nav className='mt-5 flex flex-wrap gap-x-4 gap-y-2 text-xs text-neutral-500'>
-            <a href='https://charlla.io/kr/terms/use' className='hover:text-neutral-950'>
+            <Link href='/kr/terms/use' className='hover:text-neutral-950'>
               회원 이용약관
-            </a>
-            <a href='https://charlla.io/kr/terms/privacy' className='hover:text-neutral-950'>
+            </Link>
+            <Separator orientation='vertical' className='h-3' />
+            <Link href='/kr/terms/privacy' className='hover:text-neutral-950'>
               개인정보 처리방침
-            </a>
-            <a href='https://charlla.io/kr/terms/dpa' className='hover:text-neutral-950'>
+            </Link>
+            <Separator orientation='vertical' className='h-3' />
+            <Link href='/kr/terms/dpa' className='hover:text-neutral-950'>
               데이터 처리 계약서
-            </a>
-            <a href='https://charlla.io/kr/terms/japan-addendum' className='hover:text-neutral-950'>
+            </Link>
+            <Separator orientation='vertical' className='h-3' />
+            <Link href='/kr/terms/japan-addendum' className='hover:text-neutral-950'>
               일본 고객 특약
-            </a>
+            </Link>
           </nav>
         </div>
         <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4'>
@@ -200,7 +264,7 @@ function MarketingFooter() {
 
 export function MarketingShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className='min-h-screen bg-white text-neutral-950'>
+    <div className='marketing-light-scope min-h-screen bg-white text-neutral-950'>
       <MarketingHeader />
       <main>{children}</main>
       <MarketingFooter />
@@ -213,24 +277,44 @@ function HeroVisual() {
     <div className='mx-auto mt-10 grid max-w-6xl gap-5 lg:grid-cols-[0.78fr_1.22fr] lg:items-center'>
       <div className='grid grid-cols-2 gap-3 sm:gap-5'>
         <div className='overflow-hidden rounded-[28px] bg-neutral-950 p-2 shadow-xl'>
-          <iframe
-            title='charlla displayer sample'
-            src='https://player.charlla.io/TKCFQW3eBxq'
-            className='aspect-[9/16] w-full rounded-[20px] border-0'
-            allow='autoplay; clipboard-write; web-share'
-            sandbox='allow-scripts allow-popups allow-forms allow-presentation'
-            loading='lazy'
-          />
+          <AspectRatio ratio={9 / 16}>
+            <div className='flex h-full w-full flex-col justify-between rounded-[20px] bg-[linear-gradient(160deg,#fff7ed_0%,#fef3c7_42%,#111827_42%,#111827_100%)] p-3'>
+              <div className='flex items-center justify-between text-[11px] font-semibold text-neutral-950'>
+                <span>Sample Mall</span>
+                <Badge className='bg-white/90 text-neutral-950 hover:bg-white'>1080p</Badge>
+              </div>
+              <div className='rounded-2xl bg-white/90 p-2 shadow-lg'>
+                <div className='aspect-square rounded-xl bg-[linear-gradient(135deg,#f59e0b,#10b981)]' />
+                <div className='mt-2 h-2 rounded-full bg-neutral-200' />
+                <div className='mt-2 h-2 w-2/3 rounded-full bg-neutral-200' />
+              </div>
+              <div className='rounded-2xl bg-white p-3 text-neutral-950 shadow-lg'>
+                <div className='text-xs font-semibold'>Pure Balance Skin Serum</div>
+                <div className='mt-1 text-sm font-bold text-[#ff5a3d]'>15% ₩28,000</div>
+              </div>
+            </div>
+          </AspectRatio>
         </div>
         <div className='mt-10 overflow-hidden rounded-[28px] bg-neutral-950 p-2 shadow-xl'>
-          <iframe
-            title='charlla shop player sample'
-            src='https://player.charlla.io/shoplayer/j54gCVDrkcf'
-            className='aspect-[9/16] w-full rounded-[20px] border-0'
-            allow='autoplay; clipboard-write; web-share'
-            sandbox='allow-scripts allow-popups allow-forms allow-presentation'
-            loading='lazy'
-          />
+          <AspectRatio ratio={9 / 16}>
+            <div className='flex h-full w-full flex-col justify-between rounded-[20px] bg-[linear-gradient(160deg,#bae6fd,#14b8a6_52%,#111827_52%)] p-3 text-white'>
+              <div className='flex items-center justify-between text-[11px] font-semibold'>
+                <span>Shop Player</span>
+                <span className='rounded-full bg-white px-2 py-1 text-neutral-950'>+2</span>
+              </div>
+              <div className='mx-auto w-4/5 rounded-[24px] bg-white/20 p-2 shadow-lg ring-1 ring-white/25'>
+                <div className='aspect-[4/5] rounded-[18px] bg-[linear-gradient(135deg,#fca5a5,#fde68a,#67e8f9)]' />
+              </div>
+              <div className='space-y-2 rounded-2xl bg-white p-3 text-neutral-950 shadow-lg'>
+                <div className='h-2 rounded-full bg-neutral-200' />
+                <div className='h-2 w-2/3 rounded-full bg-neutral-200' />
+                <div className='flex items-center justify-between text-xs font-bold'>
+                  <span>Tropical Swimwear</span>
+                  <span className='text-[#ff5a3d]'>₩72,000</span>
+                </div>
+              </div>
+            </div>
+          </AspectRatio>
         </div>
       </div>
       <div className='rounded-[32px] bg-white p-4 shadow-xl ring-1 ring-black/5'>
@@ -249,12 +333,11 @@ function StoreLogoStrip() {
   return (
     <div className='mx-auto mt-10 grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8'>
       {storeShowcases.map((showcase) => (
-        <div
-          key={showcase}
-          className='flex h-20 items-center justify-center rounded-lg border bg-white px-3 text-center text-sm font-semibold text-neutral-600 shadow-sm'
-        >
-          {showcase}
-        </div>
+        <Card key={showcase} className='rounded-lg py-0'>
+          <CardContent className='flex h-20 items-center justify-center px-3 text-center text-sm font-semibold text-neutral-600'>
+            {showcase}
+          </CardContent>
+        </Card>
       ))}
     </div>
   );
@@ -295,23 +378,30 @@ function ComparisonTable() {
           </div>
         </div>
       </div>
-      <div className='overflow-hidden rounded-lg border bg-white shadow-sm'>
-        <div className='grid grid-cols-[0.75fr_1fr_1fr] border-b bg-neutral-950 px-4 py-3 text-sm font-semibold text-white'>
-          <span>항목</span>
-          <span>숏폼 플레이어</span>
-          <span>GIF</span>
-        </div>
-        {landingComparison.map((row) => (
-          <div
-            key={row.label}
-            className='grid grid-cols-[0.75fr_1fr_1fr] border-b px-4 py-4 text-sm last:border-b-0'
-          >
-            <span className='font-semibold text-neutral-950'>{row.label}</span>
-            <span className='text-emerald-700'>{row.shorts}</span>
-            <span className='text-neutral-500'>{row.gif}</span>
-          </div>
-        ))}
-      </div>
+      <Card className='overflow-hidden rounded-lg py-0'>
+        <Table>
+          <TableHeader className='bg-neutral-950'>
+            <TableRow className='hover:bg-neutral-950'>
+              {['항목', '숏폼 플레이어', 'GIF'].map((heading) => (
+                <TableHead key={heading} className='h-12 px-4 font-semibold text-white'>
+                  {heading}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {landingComparison.map((row) => (
+              <TableRow key={row.label}>
+                <TableCell className='px-4 py-4 font-semibold text-neutral-950'>
+                  {row.label}
+                </TableCell>
+                <TableCell className='px-4 py-4 text-emerald-700'>{row.shorts}</TableCell>
+                <TableCell className='px-4 py-4 text-neutral-500'>{row.gif}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
     </div>
   );
 }
@@ -323,16 +413,13 @@ function CommerceFlowVisual() {
         <div className='rounded-md bg-[#edf2ff] p-4 text-white'>
           <div className='flex items-center justify-between text-xs text-neutral-300'>
             <span className='text-neutral-700'>Shop player</span>
-            <span className='rounded-full bg-white px-2 py-1 text-neutral-950'>Live</span>
+            <span className='rounded-full bg-white px-2 py-1 text-neutral-950'>Preview</span>
           </div>
           <div className='mx-auto mt-4 max-w-[260px] overflow-hidden rounded-[28px] bg-neutral-950 p-2 shadow-xl'>
-            <iframe
-              title='charlla commerce player'
-              src='https://player.charlla.io/shoplayer/j54gCVDrkcf'
-              className='aspect-[9/16] w-full rounded-[20px] border-0'
-              allow='autoplay; clipboard-write; web-share'
-              sandbox='allow-scripts allow-popups allow-forms allow-presentation'
-              loading='lazy'
+            <AssetImage
+              src='shoplayer-phone.svg'
+              alt='shop player preview'
+              className='h-auto w-full rounded-[20px]'
             />
           </div>
         </div>
@@ -386,10 +473,10 @@ function FinalCta() {
         </p>
         <div className='mt-8 flex flex-col justify-center gap-3 sm:flex-row'>
           <Button asChild size='lg'>
-            <a href={CHARLLA_SAMPLE_URL}>샘플페이지</a>
+            <Link href={LOCAL_SAMPLE_URL}>샘플페이지</Link>
           </Button>
           <Button asChild size='lg' variant='outline'>
-            <a href={CHARLLA_CONSOLE_URL}>무료로 시작하기</a>
+            <Link href={LOCAL_SIGN_UP_URL}>무료로 시작하기</Link>
           </Button>
         </div>
       </div>
@@ -413,10 +500,10 @@ export function LandingPage() {
           </p>
           <div className='mt-8 flex flex-col justify-center gap-3 sm:flex-row'>
             <Button asChild size='lg'>
-              <a href={CHARLLA_SAMPLE_URL}>샘플페이지</a>
+              <Link href={LOCAL_SAMPLE_URL}>샘플페이지</Link>
             </Button>
             <Button asChild size='lg' variant='outline'>
-              <a href={CHARLLA_CONSOLE_URL}>무료로 시작하기</a>
+              <Link href={LOCAL_SIGN_UP_URL}>무료로 시작하기</Link>
             </Button>
           </div>
           <HeroVisual />
@@ -585,9 +672,55 @@ export function LandingPage() {
   );
 }
 
+function StatisticHeroPreview() {
+  const bars = [38, 72, 54, 88, 67, 112, 96, 124];
+
+  return (
+    <div className='rounded-[24px] bg-neutral-950 p-5 text-white'>
+      <div className='flex items-start justify-between gap-4'>
+        <div>
+          <div className='text-xs font-medium text-neutral-400'>Video analytics</div>
+          <div className='mt-2 text-3xl font-bold'>24,810</div>
+          <div className='mt-1 text-xs text-neutral-400'>날짜별 조회수</div>
+        </div>
+        <Badge className='bg-emerald-400 text-neutral-950 hover:bg-emerald-400'>+18.4%</Badge>
+      </div>
+      <div className='mt-6 grid grid-cols-[1fr_auto] items-end gap-3'>
+        <div className='flex h-32 items-end gap-2 rounded-2xl bg-white/8 p-3'>
+          {bars.map((height, index) => (
+            <div
+              key={`${height}-${index}`}
+              className='flex-1 rounded-t bg-[linear-gradient(180deg,#67e8f9,#34d399)]'
+              style={{ height }}
+            />
+          ))}
+        </div>
+        <div className='space-y-2 text-right text-xs text-neutral-400'>
+          <div>조회수</div>
+          <div>좋아요</div>
+          <div>댓글</div>
+          <div>참여율</div>
+        </div>
+      </div>
+      <div className='mt-5 grid gap-2 sm:grid-cols-3'>
+        {[
+          ['좋아요', '3,428'],
+          ['댓글', '812'],
+          ['참여율', '8.7%']
+        ].map(([label, value]) => (
+          <div key={label} className='rounded-xl bg-white p-3 text-neutral-950'>
+            <div className='text-xs text-neutral-500'>{label}</div>
+            <div className='mt-1 text-lg font-bold'>{value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function FeatureHero({ page }: { page: MarketingPage }) {
   const heroImages: Record<string, string> = {
-    widget: 'img_widget_main.png',
+    widget: 'img_floatingwidget.png',
     setting: 'img-setting-control-01.png',
     player: 'img-player-01.svg',
     statistic: 'img-statistic-01.png'
@@ -607,15 +740,17 @@ function FeatureHero({ page }: { page: MarketingPage }) {
           <p className='mt-5 max-w-2xl text-lg leading-8 text-neutral-700'>{page.description}</p>
           <div className='mt-8 flex flex-col gap-3 sm:flex-row'>
             <Button asChild size='lg'>
-              <a href={CHARLLA_CONSOLE_URL}>{page.primaryCta}</a>
+              <Link href={LOCAL_SIGN_UP_URL}>{page.primaryCta}</Link>
             </Button>
             <Button asChild size='lg' variant='outline'>
-              <a href={CHARLLA_SAMPLE_URL}>{page.secondaryCta}</a>
+              <Link href={LOCAL_SAMPLE_URL}>{page.secondaryCta}</Link>
             </Button>
           </div>
         </div>
         <div className='overflow-hidden rounded-[32px] bg-white p-4 shadow-xl ring-1 ring-black/5'>
-          {heroImage ? (
+          {page.slug === 'statistic' ? (
+            <StatisticHeroPreview />
+          ) : heroImage ? (
             <AssetImage
               src={heroImage}
               alt={`${page.slug} preview`}
@@ -663,6 +798,7 @@ function WidgetDetail() {
     ['동영상 & 상품 선택', '보여줄 영상과 연결할 상품을 한 번에 묶습니다.'],
     ['코드 복사해서 붙이기', '생성된 코드를 쇼핑몰 페이지에 넣고 바로 미리봅니다.']
   ];
+  const defaultWidgetType = widgetTypes[0]?.[0] ?? '';
 
   return (
     <>
@@ -706,17 +842,31 @@ function WidgetDetail() {
           title='우리 쇼핑몰에 딱 맞는 위젯 디자인을 선택하세요'
           description='플로팅, 슬라이드, 멀티 샵플레이어, 스포트라이트까지 다양한 템플릿을 제공합니다.'
         />
-        <div className='mx-auto mt-12 grid max-w-6xl gap-5 lg:grid-cols-2'>
+        <Tabs defaultValue={defaultWidgetType} className='mx-auto mt-12 max-w-6xl'>
+          <TabsList className='grid h-auto w-full grid-cols-2 gap-1 p-1 lg:grid-cols-4'>
+            {widgetTypes.map(([title]) => (
+              <TabsTrigger key={title} value={title} className='h-auto min-h-10 whitespace-normal'>
+                {title}
+              </TabsTrigger>
+            ))}
+          </TabsList>
           {widgetTypes.map(([title, description, image]) => (
-            <div key={title} className='rounded-[32px] bg-white p-6 shadow-sm ring-1 ring-black/5'>
-              <div className='rounded-[24px] bg-[#f3f4f6] p-3'>
-                <AssetImage src={image} alt={title} className='h-auto w-full rounded-[18px]' />
-              </div>
-              <h3 className='mt-5 text-2xl font-bold text-[#13bdb3]'>{title}</h3>
-              <p className='mt-2 text-sm leading-6 text-neutral-600'>{description}</p>
-            </div>
+            <TabsContent key={title} value={title} className='mt-6'>
+              <Card className='rounded-lg'>
+                <CardContent className='grid gap-6 pt-0 lg:grid-cols-[1.08fr_0.92fr] lg:items-center'>
+                  <div className='rounded-lg bg-[#f3f4f6] p-3'>
+                    <AssetImage src={image} alt={title} className='h-auto w-full rounded-md' />
+                  </div>
+                  <div>
+                    <Badge variant='secondary'>Widget preset</Badge>
+                    <h3 className='mt-4 text-3xl font-bold text-[#13bdb3]'>{title}</h3>
+                    <p className='mt-3 text-base leading-7 text-neutral-600'>{description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
           ))}
-        </div>
+        </Tabs>
       </section>
 
       <section className='bg-neutral-50 px-4 py-20 md:px-6'>
@@ -764,13 +914,15 @@ function WidgetDetail() {
         />
         <div className='mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3'>
           {setupSteps.map(([title, description], index) => (
-            <div key={title} className='rounded-lg border bg-white p-5 shadow-sm'>
-              <div className='mb-8 flex size-10 items-center justify-center rounded-lg bg-neutral-950 text-white'>
-                {index + 1}
-              </div>
-              <h3 className='font-semibold'>{title}</h3>
-              <p className='mt-3 text-sm leading-6 text-neutral-600'>{description}</p>
-            </div>
+            <Card key={title} className='rounded-lg'>
+              <CardHeader>
+                <div className='mb-6 flex size-10 items-center justify-center rounded-lg bg-neutral-950 text-white'>
+                  {index + 1}
+                </div>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+              </CardHeader>
+            </Card>
           ))}
         </div>
       </section>
@@ -1111,9 +1263,9 @@ export function PricingPage() {
                   className='w-full'
                   variant={plan.name === 'Enterprise' ? 'outline' : 'default'}
                 >
-                  <a href={CHARLLA_CONSOLE_URL}>
+                  <Link href={plan.name === 'Enterprise' ? LOCAL_SUPPORT_URL : LOCAL_SIGN_UP_URL}>
                     {plan.name === 'Enterprise' ? '영업팀 문의' : '무료로 시작하기'}
-                  </a>
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
@@ -1126,26 +1278,27 @@ export function PricingPage() {
           title='플랜별 기능 상세'
           description='업로드 수, 로드 수, 플레이어 기능과 통계를 비교합니다.'
         />
-        <div className='mx-auto mt-10 max-w-6xl overflow-x-auto rounded-lg border bg-white'>
-          <table className='w-full min-w-[760px] text-sm'>
-            <thead className='bg-neutral-950 text-white'>
-              <tr>
+        <Card className='mx-auto mt-10 max-w-6xl overflow-x-auto rounded-lg py-0'>
+          <Table className='min-w-[760px]'>
+            <TableHeader className='bg-neutral-950'>
+              <TableRow className='hover:bg-neutral-950'>
                 {['기능', 'Lite', 'Basic', 'Standard', 'Enterprise'].map((heading) => (
-                  <th key={heading} className='px-4 py-3 text-left font-semibold'>
+                  <TableHead key={heading} className='h-12 px-4 font-semibold text-white'>
                     {heading}
-                  </th>
+                  </TableHead>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {featureMatrix.map((row) => (
-                <tr key={row[0]} className='border-t'>
+                <TableRow key={row[0]}>
                   {row.map((cell, cellIndex) => (
-                    <td
+                    <TableCell
                       key={`${row[0]}-${cellIndex}`}
-                      className={`px-4 py-4 ${
+                      className={cn(
+                        'px-4 py-4',
                         cellIndex === 0 ? 'font-semibold text-neutral-950' : 'text-neutral-700'
-                      }`}
+                      )}
                     >
                       {cell === '포함' ? (
                         <span className='inline-flex items-center gap-2 font-medium text-emerald-700'>
@@ -1155,13 +1308,13 @@ export function PricingPage() {
                       ) : (
                         cell
                       )}
-                    </td>
+                    </TableCell>
                   ))}
-                </tr>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+          </Table>
+        </Card>
       </section>
 
       <section id='faq' className='px-4 py-20 md:px-6'>
@@ -1185,56 +1338,55 @@ export function PricingPage() {
 
 function BlogHeader() {
   return (
-    <header className='sticky top-0 z-50 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80'>
+    <header className='sticky top-0 z-50 border-b border-neutral-200 bg-white/95 text-neutral-950 backdrop-blur supports-[backdrop-filter]:bg-white/80'>
       <div className='mx-auto flex h-[54px] max-w-[1152px] items-center justify-between gap-4 px-4'>
         <div className='flex min-w-0 items-center gap-3'>
           <Link href='/' className='flex items-center gap-2 font-semibold tracking-tight'>
             <CharllaLogo className='h-6 w-auto' />
           </Link>
           <Link href='/blog' className='flex items-center gap-2 text-sm font-semibold'>
-            <span className='h-5 w-px bg-neutral-300' />
+            <Separator orientation='vertical' className='h-5' />
             <span>Blog</span>
           </Link>
         </div>
 
         <nav className='hidden items-center gap-2 text-sm text-neutral-700 lg:flex'>
-          <div className='group relative'>
-            <button className='flex h-9 items-center gap-1 rounded-md px-3 font-medium hover:bg-neutral-100'>
-              서비스 소개
-              <Icons.chevronDown className='size-4' />
-            </button>
-            <div className='invisible absolute top-10 right-0 w-72 rounded-lg border bg-white p-2 opacity-0 shadow-lg transition group-hover:visible group-hover:opacity-100'>
-              {marketingNav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className='flex items-center justify-between rounded-md px-3 py-2 hover:bg-neutral-100'
-                >
-                  <span>{item.label}</span>
-                  {item.badge && <Badge variant='secondary'>{item.badge}</Badge>}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <Button asChild size='sm'>
-            <a
-              href={`${CHARLLA_CONSOLE_URL}?utm_source=charlla_inblog&utm_medium=blog&utm_campaign=cta`}
-            >
-              1개월 무료 이용
-            </a>
+          <NavigationMenu viewport={false}>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={MARKETING_NAV_TRIGGER_CLASS}>
+                  서비스 소개
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className={cn('w-72', MARKETING_NAV_CONTENT_CLASS)}>
+                  <div className='grid gap-1 p-1'>
+                    {marketingNav.map((item) => (
+                      <NavigationMenuLink
+                        asChild
+                        key={item.href}
+                        className={MARKETING_NAV_LINK_CLASS}
+                      >
+                        <Link href={item.href} className='flex items-center justify-between gap-3'>
+                          <span>{item.label}</span>
+                          {item.badge && <Badge variant='secondary'>{item.badge}</Badge>}
+                        </Link>
+                      </NavigationMenuLink>
+                    ))}
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          <Button asChild size='sm' className={MARKETING_PRIMARY_BUTTON_CLASS}>
+            <Link href={LOCAL_SIGN_UP_URL}>1개월 무료 이용</Link>
           </Button>
         </nav>
 
         <div className='flex items-center gap-2 lg:hidden'>
-          <Button asChild size='sm' variant='outline'>
+          <Button asChild size='sm' variant='outline' className={MARKETING_OUTLINE_BUTTON_CLASS}>
             <Link href='/blog'>Blog</Link>
           </Button>
-          <Button asChild size='sm'>
-            <a
-              href={`${CHARLLA_CONSOLE_URL}?utm_source=charlla_inblog&utm_medium=blog&utm_campaign=cta`}
-            >
-              시작
-            </a>
+          <Button asChild size='sm' className={MARKETING_PRIMARY_BUTTON_CLASS}>
+            <Link href={LOCAL_SIGN_UP_URL}>시작</Link>
           </Button>
         </div>
       </div>
@@ -1244,7 +1396,7 @@ function BlogHeader() {
 
 function BlogShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className='min-h-screen bg-white text-neutral-950'>
+    <div className='marketing-light-scope min-h-screen bg-white text-neutral-950'>
       <BlogHeader />
       {children}
       <footer className='border-t px-4 py-10'>
@@ -1398,10 +1550,7 @@ export function BlogPage() {
             </div>
             <div className='rounded-lg border bg-white p-2 shadow-sm'>
               <div className='flex gap-2'>
-                <input
-                  className='h-9 min-w-0 flex-1 rounded-md border px-3 text-sm outline-none focus:border-neutral-400'
-                  placeholder='Email'
-                />
+                <Input className='min-w-0 flex-1' placeholder='Email' type='email' />
                 <Button size='sm'>Subscribe</Button>
               </div>
             </div>
@@ -1430,7 +1579,7 @@ export function BlogPage() {
 
 function GuideHeader() {
   return (
-    <header className='sticky top-0 z-50 flex h-16 items-center border-b bg-white px-4'>
+    <header className='sticky top-0 z-50 flex h-16 items-center border-b border-neutral-200 bg-white px-4 text-neutral-950'>
       <div className='grid w-full grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[320px_1fr_320px]'>
         <Link href='/' className='flex min-w-0 items-center gap-2 font-semibold'>
           <CharllaLogo className='h-6 w-auto' />
@@ -1438,12 +1587,12 @@ function GuideHeader() {
         </Link>
 
         <nav className='hidden items-center justify-center gap-6 text-sm text-neutral-600 lg:flex'>
-          <a href={CHARLLA_CONSOLE_URL} className='hover:text-neutral-950'>
+          <Link href={LOCAL_SIGN_IN_URL} className='hover:text-neutral-950'>
             Sign In
-          </a>
-          <a href={CHARLLA_CONSOLE_URL} className='hover:text-neutral-950'>
+          </Link>
+          <Link href={LOCAL_SIGN_UP_URL} className='hover:text-neutral-950'>
             Free Trial
-          </a>
+          </Link>
           <button className='flex items-center gap-1 hover:text-neutral-950'>
             Support Center
             <Icons.chevronDown className='size-4' />
@@ -1451,15 +1600,19 @@ function GuideHeader() {
         </nav>
 
         <div className='flex justify-end'>
-          <div className='hidden h-9 w-full max-w-[220px] items-center gap-2 rounded-lg border bg-white px-3 text-sm text-neutral-500 md:flex'>
-            <Icons.search className='size-4' />
-            <span className='min-w-0 flex-1 truncate'>Ask or search...</span>
-            <kbd className='rounded border bg-neutral-50 px-1.5 py-0.5 text-[10px] text-neutral-500'>
+          <div className='relative hidden w-full max-w-[220px] md:block'>
+            <Icons.search className='pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-500' />
+            <Input
+              readOnly
+              placeholder='Ask or search...'
+              className='h-9 cursor-pointer border-neutral-200 bg-white pr-14 pl-9 text-sm text-neutral-950 placeholder:text-neutral-500 dark:border-neutral-200 dark:bg-white dark:text-neutral-950 dark:placeholder:text-neutral-500'
+            />
+            <kbd className='pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 rounded border bg-neutral-50 px-1.5 py-0.5 text-[10px] text-neutral-500'>
               Ctrl K
             </kbd>
           </div>
           <Button asChild size='sm' className='md:hidden'>
-            <a href={CHARLLA_CONSOLE_URL}>시작</a>
+            <Link href={LOCAL_SIGN_UP_URL}>시작</Link>
           </Button>
         </div>
       </div>
@@ -1468,7 +1621,9 @@ function GuideHeader() {
 }
 
 function GuideShell({ children }: { children: React.ReactNode }) {
-  return <div className='min-h-screen bg-white text-neutral-950'>{children}</div>;
+  return (
+    <div className='marketing-light-scope min-h-screen bg-white text-neutral-950'>{children}</div>
+  );
 }
 
 function GuideSidebar() {
@@ -1488,7 +1643,7 @@ function GuideSidebar() {
               <div className='space-y-1'>
                 {section.items.map((item) => (
                   <Link
-                    key={item.href}
+                    key={`${section.group}-${item.href}-${item.label}`}
                     href={item.href}
                     className={`block rounded-md px-3 py-2 text-sm ${
                       item.href === '/faq'
@@ -1584,7 +1739,7 @@ export function FaqPage() {
               ))}
             </div>
             <Button asChild className='mt-8 w-full' variant='outline'>
-              <a href={CHARLLA_CONSOLE_URL}>Free Trial</a>
+              <Link href={LOCAL_SIGN_UP_URL}>Free Trial</Link>
             </Button>
           </div>
         </aside>
@@ -1593,17 +1748,366 @@ export function FaqPage() {
   );
 }
 
+const termDocuments = {
+  privacy: {
+    eyebrow: '개인정보 처리방침',
+    title: '찰나(Charlla) 서비스 개인정보처리방침',
+    version: 'Version 3.6 · 통합 표준 개인정보처리방침',
+    effective: '시행일: 2026년 6월 1일',
+    summary:
+      '찰나 서비스 제공을 위해 필요한 최소한의 개인정보를 수집하고, 서비스 운영과 고객 지원 목적 안에서만 처리합니다.',
+    sections: [
+      {
+        title: '제1조 수집하는 개인정보 항목 및 이용 목적',
+        body: '회원 가입, 서비스 이용, 결제, 고객 지원, 보안 관리를 위해 이름, 이메일, 회사명, 접속 기록, 결제 상태, 문의 내용을 처리할 수 있습니다.'
+      },
+      {
+        title: '제2조 보관 및 파기',
+        body: '서비스 제공 기간 동안 정보를 보관하며, 관련 법령 또는 분쟁 대응에 필요한 기간이 지나면 지체 없이 파기합니다.'
+      },
+      {
+        title: '제3조 제3자 제공 및 처리위탁',
+        body: '결제, 인프라, 고객 상담 등 서비스 운영에 필요한 범위에서만 처리 업무를 위탁하며, 위탁사는 보안 의무를 준수합니다.'
+      },
+      {
+        title: '제4조 이용자의 권리',
+        body: '이용자는 개인정보 열람, 정정, 삭제, 처리정지를 요청할 수 있으며, 고객센터를 통해 접수할 수 있습니다.'
+      }
+    ]
+  },
+  use: {
+    eyebrow: '이용약관',
+    title: '찰나(Charlla) 서비스 표준이용약관',
+    version: 'Version 5.5 · 표준이용약관',
+    effective: '시행일: 2026년 6월 1일',
+    summary:
+      '찰나 서비스 이용 조건, 계정 관리, 요금제, 제한 행위, 서비스 제공 범위와 책임 기준을 정의합니다.',
+    sections: [
+      {
+        title: '제1조 목적',
+        body: '본 약관은 찰나 서비스 이용과 관련하여 회사와 이용자 사이의 권리, 의무, 책임사항을 정합니다.'
+      },
+      {
+        title: '제2조 계정 및 조직',
+        body: '이용자는 정확한 정보를 바탕으로 계정을 생성하고, 조직 구성원 권한을 책임 있게 관리해야 합니다.'
+      },
+      {
+        title: '제3조 서비스 이용',
+        body: '회사는 영상 업로드, 플레이어 설정, 위젯 배포, 통계 조회 기능을 제공하며, 안정적 운영을 위해 필요한 조치를 할 수 있습니다.'
+      },
+      {
+        title: '제4조 요금 및 플랜',
+        body: '유료 플랜은 선택한 사용량과 계약 조건에 따라 과금되며, 초과 사용 정책은 가격 안내에 따릅니다.'
+      }
+    ]
+  },
+  dpa: {
+    eyebrow: 'DATA PROCESSING AGREEMENT',
+    title: '데이터 처리 계약서 (DPA)',
+    version: 'Version 1.2.3 · 한국어 참조 번역본',
+    effective: '최종 업데이트: 2026년 4월 2일',
+    summary:
+      '고객사의 위탁 데이터 처리 범위, 보안 조치, 하위 처리자, 사고 대응, 국제 이전 기준을 정리합니다.',
+    sections: [
+      {
+        title: '제1조 처리 범위',
+        body: '찰나는 고객이 서비스에 업로드하거나 연동한 데이터를 서비스 제공과 유지보수 목적 범위에서 처리합니다.'
+      },
+      {
+        title: '제2조 보안 조치',
+        body: '접근 통제, 전송 구간 보호, 로그 관리, 권한 분리 등 합리적인 기술적·관리적 보호조치를 유지합니다.'
+      },
+      {
+        title: '제3조 하위 처리자',
+        body: '서비스 인프라, 결제, 고객 상담에 필요한 하위 처리자를 이용할 수 있으며 주요 변경은 고객에게 고지합니다.'
+      },
+      {
+        title: '제4조 종료 후 처리',
+        body: '계약 종료 후 법령상 보관 의무가 없는 데이터는 삭제하거나 고객에게 반환할 수 있도록 지원합니다.'
+      }
+    ]
+  },
+  'japan-addendum': {
+    eyebrow: 'JAPAN ADDENDUM',
+    title: '찰나(Charlla) 서비스 일본 고객 특약',
+    version: 'Japan Addendum v1.0',
+    effective: '시행일: 2026년 6월 1일',
+    summary:
+      '일본 고객에게 적용되는 계약 보충 조항과 현지 법령 대응 기준을 정리한 특약 문서입니다.',
+    sections: [
+      {
+        title: '제1조 적용 범위',
+        body: '본 특약은 일본 법인 또는 일본 소재 사업장이 찰나 서비스를 이용하는 경우 표준약관과 함께 적용됩니다.'
+      },
+      {
+        title: '제2조 데이터 보호',
+        body: '개인정보 처리와 이전은 적용 가능한 일본 개인정보 보호 관련 법령과 고객 계약 조건을 고려하여 수행합니다.'
+      },
+      {
+        title: '제3조 지원 언어 및 통지',
+        body: '운영 통지와 지원은 기본적으로 한국어 또는 영어로 제공되며, 별도 계약에 따라 일본어 지원 범위를 정할 수 있습니다.'
+      }
+    ]
+  }
+};
+
+export function TermsPage({ kind }: { kind: keyof typeof termDocuments }) {
+  const doc = termDocuments[kind];
+
+  return (
+    <GuideShell>
+      <GuideHeader />
+      <main className='px-5 py-12 md:px-10'>
+        <article className='mx-auto max-w-3xl'>
+          <div className='text-xs font-semibold tracking-wide text-neutral-500 uppercase'>
+            {doc.eyebrow}
+          </div>
+          <h1 className='mt-3 text-4xl leading-tight font-semibold tracking-tight md:text-5xl'>
+            {doc.title}
+          </h1>
+          <div className='mt-5 space-y-1 text-sm text-blue-700'>
+            <p>{doc.version}</p>
+            <p>{doc.effective}</p>
+            <div className='flex flex-wrap gap-2 pt-2'>
+              <Link href='/kr/terms/use' className='underline underline-offset-4'>
+                이용약관
+              </Link>
+              <span>·</span>
+              <Link href='/kr/terms/privacy' className='underline underline-offset-4'>
+                개인정보처리방침
+              </Link>
+              <span>·</span>
+              <Link href='/kr/terms/dpa' className='underline underline-offset-4'>
+                DPA
+              </Link>
+            </div>
+          </div>
+          <Separator className='my-8' />
+          <p className='text-base leading-8 text-neutral-700'>{doc.summary}</p>
+          <div className='mt-10 space-y-8'>
+            {doc.sections.map((section) => (
+              <section key={section.title}>
+                <h2 className='text-xl font-semibold tracking-tight'>{section.title}</h2>
+                <p className='mt-3 leading-8 text-neutral-700'>{section.body}</p>
+              </section>
+            ))}
+          </div>
+        </article>
+      </main>
+    </GuideShell>
+  );
+}
+
+export function GuideOverviewPage() {
+  return (
+    <GuideShell>
+      <GuideHeader />
+      <div className='grid min-h-[calc(100vh-4rem)] lg:grid-cols-[320px_1fr]'>
+        <GuideSidebar />
+        <main className='px-5 py-10 md:px-10 lg:px-14'>
+          <div className='mx-auto max-w-5xl'>
+            <Badge className='bg-emerald-100 text-emerald-900 hover:bg-emerald-100'>
+              Charlla Guide
+            </Badge>
+            <h1 className='mt-5 max-w-3xl text-4xl leading-tight font-semibold tracking-tight md:text-5xl'>
+              영상 업로드부터 위젯 배포와 통계 확인까지 한 번에 보는 이용 가이드
+            </h1>
+            <p className='mt-5 max-w-2xl text-base leading-8 text-neutral-600'>
+              실제 서비스 연결 전에도 로컬 리플리카에서 회원가입, 무료체험, 플레이어 설정, 위젯
+              적용, 통계 조회 흐름을 확인할 수 있습니다.
+            </p>
+            <div className='mt-10 grid gap-4 md:grid-cols-2'>
+              {guideNav.flatMap((section) =>
+                section.items.map((item) => (
+                  <Link
+                    key={`${section.group}-${item.href}-${item.label}`}
+                    href={item.href}
+                    className='rounded-lg border bg-white p-5 shadow-sm transition hover:border-neutral-400'
+                  >
+                    <div className='text-xs font-semibold text-neutral-500'>{section.group}</div>
+                    <div className='mt-3 flex items-center justify-between gap-3'>
+                      <div className='font-semibold'>{item.label}</div>
+                      <Icons.arrowRight className='size-4 text-neutral-500' />
+                    </div>
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>
+        </main>
+      </div>
+    </GuideShell>
+  );
+}
+
+const localNews = [
+  {
+    title: '영상 상세 통계 페이지가 추가되었습니다',
+    date: '2026.07.03',
+    tag: 'Dashboard',
+    body: '조회수, 좋아요, 댓글, 참여율을 날짜별 그래프로 확인하고 YouTube 임베드 미리보기를 볼 수 있습니다.'
+  },
+  {
+    title: '마케팅 랜딩 링크가 로컬 리플리카로 연결됩니다',
+    date: '2026.07.03',
+    tag: 'Marketing',
+    body: '로그인, 무료 시작, 샘플, 약관, 지원 페이지가 외부 사이트 대신 현재 프론트엔드 라우트로 이동합니다.'
+  },
+  {
+    title: '다크모드에서도 랜딩 페이지가 라이트 브랜드 화면을 유지합니다',
+    date: '2026.07.03',
+    tag: 'Theme',
+    body: '대시보드 다크모드는 유지하면서 마케팅 페이지는 고정된 라이트 스코프로 분리했습니다.'
+  }
+];
+
+export function NoticePage() {
+  return (
+    <BlogShell>
+      <main className='mx-auto max-w-[960px] px-4 py-16'>
+        <Badge className='bg-neutral-950 text-white hover:bg-neutral-950'>공지사항</Badge>
+        <h1 className='mt-5 text-4xl font-semibold tracking-tight md:text-5xl'>
+          찰나 서비스 공지사항
+        </h1>
+        <div className='mt-10 space-y-4'>
+          {localNews.map((item) => (
+            <Card key={item.title} className='rounded-lg'>
+              <CardHeader>
+                <div className='flex flex-wrap items-center gap-2 text-sm text-neutral-500'>
+                  <Badge variant='secondary'>{item.tag}</Badge>
+                  <span>{item.date}</span>
+                </div>
+                <CardTitle>{item.title}</CardTitle>
+                <CardDescription>{item.body}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </main>
+    </BlogShell>
+  );
+}
+
+export function ReleaseNotesPage() {
+  return (
+    <BlogShell>
+      <main className='mx-auto max-w-[960px] px-4 py-16'>
+        <Badge className='bg-neutral-950 text-white hover:bg-neutral-950'>업데이트 소식</Badge>
+        <h1 className='mt-5 text-4xl font-semibold tracking-tight md:text-5xl'>릴리즈 노트</h1>
+        <div className='mt-10 space-y-6'>
+          {localNews.map((item) => (
+            <section key={item.title} className='rounded-lg border bg-white p-6'>
+              <div className='text-sm font-semibold text-neutral-500'>{item.date}</div>
+              <h2 className='mt-3 text-2xl font-semibold tracking-tight'>{item.title}</h2>
+              <p className='mt-3 leading-7 text-neutral-600'>{item.body}</p>
+            </section>
+          ))}
+        </div>
+      </main>
+    </BlogShell>
+  );
+}
+
+export function SupportPage() {
+  return (
+    <MarketingShell>
+      <section className='bg-[#f6f7f1] px-4 py-20 md:px-6'>
+        <div className='mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_420px] lg:items-start'>
+          <div>
+            <Badge className='bg-emerald-100 text-emerald-900 hover:bg-emerald-100'>고객센터</Badge>
+            <h1 className='mt-5 text-4xl leading-tight font-bold tracking-tight md:text-6xl'>
+              문의와 지원 요청을 로컬 페이지에서 확인하세요
+            </h1>
+            <p className='mt-5 max-w-2xl text-lg leading-8 text-neutral-700'>
+              실제 채팅 솔루션 연결 전까지 외부 지원센터 대신 현재 프론트엔드에서 문의 흐름을 미리
+              볼 수 있습니다.
+            </p>
+          </div>
+          <Card className='rounded-lg'>
+            <CardHeader>
+              <CardTitle>문의 접수</CardTitle>
+              <CardDescription>help@charlla.io로 전달될 문의 폼 미리보기입니다.</CardDescription>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <Input defaultValue='help@charlla.io' readOnly />
+              <Input placeholder='회사명 또는 쇼핑몰 URL' />
+              <Input placeholder='문의 내용을 입력하세요' />
+              <Button asChild className='w-full'>
+                <Link href='/faq'>자주 묻는 질문 먼저 보기</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </MarketingShell>
+  );
+}
+
+export function SamplePage() {
+  return (
+    <MarketingShell>
+      <section className='bg-[#f6f7f1] px-4 py-16 md:px-6'>
+        <div className='mx-auto max-w-6xl'>
+          <Badge className='bg-emerald-100 text-emerald-900 hover:bg-emerald-100'>
+            Sample Mall
+          </Badge>
+          <h1 className='mt-5 max-w-3xl text-4xl leading-tight font-bold tracking-tight md:text-6xl'>
+            숏폼 위젯과 샵 플레이어가 들어간 샘플 페이지
+          </h1>
+          <p className='mt-5 max-w-2xl text-lg leading-8 text-neutral-700'>
+            외부 샘플몰로 이동하지 않고도 현재 프론트엔드에서 상품 카드, 영상 플레이어, 구매 CTA
+            배치를 확인할 수 있습니다.
+          </p>
+          <div className='mt-10 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]'>
+            <Card className='rounded-lg'>
+              <CardContent className='p-5'>
+                <div className='rounded-xl bg-neutral-950 p-4 text-white'>
+                  <div className='flex items-center justify-between'>
+                    <span className='text-sm font-semibold'>Shop Player</span>
+                    <Badge className='bg-white text-neutral-950 hover:bg-white'>1080p</Badge>
+                  </div>
+                  <div className='mt-5 aspect-video rounded-lg bg-[linear-gradient(135deg,#14b8a6,#fde68a)]' />
+                  <div className='mt-5 grid gap-3 sm:grid-cols-3'>
+                    {['제품 영상', '상품 링크', '통계 추적'].map((item) => (
+                      <div key={item} className='rounded-md bg-white/10 p-3 text-sm'>
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className='rounded-lg'>
+              <CardHeader>
+                <CardTitle>Pure Balance Skin Serum</CardTitle>
+                <CardDescription>샘플 상품 상세 페이지 구성</CardDescription>
+              </CardHeader>
+              <CardContent className='space-y-4'>
+                <div className='text-3xl font-bold'>₩28,000</div>
+                <p className='leading-7 text-neutral-600'>
+                  영상으로 사용감을 보여주고 바로 구매 CTA로 연결되는 상품 상세 화면입니다.
+                </p>
+                <Button className='w-full'>장바구니에 담기</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    </MarketingShell>
+  );
+}
+
 export function MarketingAuthPage({ mode }: { mode: 'sign-in' | 'sign-up' }) {
   const isSignIn = mode === 'sign-in';
 
   return (
-    <div className='min-h-screen bg-[#f6f7f1] text-neutral-950'>
+    <div className='marketing-light-scope min-h-screen bg-[#f6f7f1] text-neutral-950'>
       <header className='px-4 py-5 md:px-8'>
         <div className='mx-auto flex max-w-6xl items-center justify-between'>
           <Link href='/' className='flex items-center gap-2 font-semibold tracking-tight'>
             <CharllaLogo />
           </Link>
-          <Button asChild variant='ghost'>
+          <Button asChild variant='ghost' className={MARKETING_GHOST_BUTTON_CLASS}>
             <Link href='/'>서비스 소개</Link>
           </Button>
         </div>
@@ -1646,26 +2150,29 @@ export function MarketingAuthPage({ mode }: { mode: 'sign-in' | 'sign-up' }) {
             </CardHeader>
             <CardContent className='space-y-4'>
               {!isSignIn && (
-                <label className='block text-sm font-medium'>
+                <label htmlFor='marketing-auth-name' className='block text-sm font-medium'>
                   이름
-                  <input
-                    className='mt-2 h-10 w-full rounded-md border px-3'
+                  <Input
+                    id='marketing-auth-name'
+                    className='mt-2 h-10'
                     defaultValue='Charlla Operator'
                   />
                 </label>
               )}
-              <label className='block text-sm font-medium'>
+              <label htmlFor='marketing-auth-email' className='block text-sm font-medium'>
                 이메일
-                <input
-                  className='mt-2 h-10 w-full rounded-md border px-3'
+                <Input
+                  id='marketing-auth-email'
+                  className='mt-2 h-10'
                   type='email'
                   defaultValue='help@charlla.io'
                 />
               </label>
-              <label className='block text-sm font-medium'>
+              <label htmlFor='marketing-auth-password' className='block text-sm font-medium'>
                 비밀번호
-                <input
-                  className='mt-2 h-10 w-full rounded-md border px-3'
+                <Input
+                  id='marketing-auth-password'
+                  className='mt-2 h-10'
                   type='password'
                   defaultValue='local-preview'
                 />

@@ -9,16 +9,18 @@ interface HeadingProps {
 
 export function Heading({ title, description, infoContent }: HeadingProps) {
   return (
-    <div>
-      <div className='flex items-center gap-2'>
-        <h2 className='text-3xl font-bold tracking-tight'>{title}</h2>
+    <div className='min-w-0'>
+      <div className='flex min-w-0 flex-wrap items-center gap-2'>
+        <h2 className='min-w-0 break-words text-2xl font-bold tracking-tight sm:text-3xl'>
+          {title}
+        </h2>
         {infoContent && (
           <div className='pt-1'>
             <InfoButton content={infoContent} />
           </div>
         )}
       </div>
-      <p className='text-muted-foreground text-sm'>{description}</p>
+      <p className='text-muted-foreground break-words text-sm'>{description}</p>
     </div>
   );
 }

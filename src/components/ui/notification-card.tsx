@@ -31,6 +31,8 @@ export interface NotificationCardProps {
 
 const formatDate = (date: string | Date): string => {
   const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return String(date);
+
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   const diffMins = Math.floor(diffMs / (1000 * 60));

@@ -9,8 +9,8 @@ export const reactQueryInfoContent: InfobarContent = {
         'Data is prefetched on the server using getQueryClient().prefetchQuery(). The dehydrated state is passed to HydrationBoundary so the client starts with cached data — no loading spinners on first load.',
       links: [
         {
-          title: 'TanStack Query SSR Docs',
-          url: 'https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr'
+          title: 'React Query guide',
+          url: '/guide'
         }
       ]
     },
@@ -20,8 +20,8 @@ export const reactQueryInfoContent: InfobarContent = {
         'Query keys and fetch functions are defined in a shared queryOptions() object. This is reused across server prefetch and client hooks, keeping them in sync.',
       links: [
         {
-          title: 'queryOptions API',
-          url: 'https://tanstack.com/query/latest/docs/framework/react/reference/queryOptions'
+          title: 'Dashboard data pattern',
+          url: '/dashboard/react-query'
         }
       ]
     },
@@ -37,8 +37,8 @@ export const reactQueryInfoContent: InfobarContent = {
         'Mutations use onMutate to optimistically update the cache before the request completes. On error, the previous state is rolled back. On settle, the query is invalidated to refetch fresh data.',
       links: [
         {
-          title: 'Optimistic Updates Guide',
-          url: 'https://tanstack.com/query/latest/docs/framework/react/guides/optimistic-updates'
+          title: 'Users table pattern',
+          url: '/dashboard/users'
         }
       ]
     }
