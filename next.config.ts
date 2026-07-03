@@ -5,6 +5,7 @@ const apiProxyTarget = process.env.INFINDER_API_PROXY_URL ?? 'https://fler.co.kr
 
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
+  allowedDevOrigins: ['127.0.0.1'],
   devIndicators: false,
   turbopack: {
     root: process.cwd()

@@ -23,14 +23,14 @@ type NotificationState = {
 const mockNotifications: Notification[] = [
   {
     id: '1',
-    title: 'New team member joined',
-    body: 'Sarah Connor has joined the Engineering workspace.',
+    title: '새 팀원이 합류했습니다',
+    body: '김서연님이 운영 워크스페이스에 합류했습니다.',
     status: 'unread',
-    createdAt: '5m ago',
+    createdAt: '5분 전',
     actions: [
       {
         id: 'view',
-        label: 'View workspace',
+        label: '워크스페이스 보기',
         type: 'redirect',
         style: 'primary'
       }
@@ -38,14 +38,14 @@ const mockNotifications: Notification[] = [
   },
   {
     id: '2',
-    title: 'New product added',
-    body: 'A new product "Dashboard Pro" has been added to the catalog.',
+    title: '새 콘텐츠가 추가되었습니다',
+    body: '저장 콘텐츠 목록에 새 분석 대상 영상이 추가되었습니다.',
     status: 'unread',
-    createdAt: '30m ago',
+    createdAt: '30분 전',
     actions: [
       {
         id: 'view-product',
-        label: 'View products',
+        label: '콘텐츠 보기',
         type: 'redirect',
         style: 'primary'
       }
@@ -53,14 +53,14 @@ const mockNotifications: Notification[] = [
   },
   {
     id: '3',
-    title: 'Billing cycle updated',
-    body: 'Your Pro plan has been renewed. Next invoice on April 24, 2026.',
+    title: '결제 주기가 갱신되었습니다',
+    body: '프로 플랜이 갱신되었습니다. 다음 청구 예정일은 2026년 4월 24일입니다.',
     status: 'unread',
-    createdAt: '2h ago',
+    createdAt: '2시간 전',
     actions: [
       {
         id: 'billing',
-        label: 'View billing',
+        label: '결제 보기',
         type: 'redirect',
         style: 'primary'
       }
@@ -68,14 +68,14 @@ const mockNotifications: Notification[] = [
   },
   {
     id: '4',
-    title: 'Task assigned to you',
-    body: 'You have been assigned "Update dashboard analytics" on the Kanban board.',
+    title: '작업이 배정되었습니다',
+    body: '칸반 보드에 "대시보드 분석 업데이트" 작업이 배정되었습니다.',
     status: 'read',
-    createdAt: '1d ago',
+    createdAt: '1일 전',
     actions: [
       {
         id: 'open',
-        label: 'Open kanban',
+        label: '칸반 열기',
         type: 'redirect',
         style: 'primary'
       }
@@ -83,14 +83,14 @@ const mockNotifications: Notification[] = [
   },
   {
     id: '5',
-    title: 'New message from Alex',
-    body: 'Alex sent you a message: "Hey, can we sync on the overview dashboard?"',
+    title: '새 메시지가 도착했습니다',
+    body: '운영 매니저가 메시지를 보냈습니다. "오버뷰 대시보드 기준으로 맞춰볼까요?"',
     status: 'read',
-    createdAt: '3d ago',
+    createdAt: '3일 전',
     actions: [
       {
         id: 'open-chat',
-        label: 'Open chat',
+        label: '채팅 열기',
         type: 'redirect',
         style: 'primary'
       }

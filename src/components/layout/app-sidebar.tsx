@@ -22,10 +22,13 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarRail
+  SidebarTrigger
 } from '@/components/ui/sidebar';
+import { ThemeModeToggle } from '@/components/themes/theme-mode-toggle';
+import { ThemeSelector } from '@/components/themes/theme-selector';
 import { UserAvatarProfile } from '@/components/user-avatar-profile';
 import { navGroups } from '@/config/nav-config';
+import { NotificationCenter } from '@/features/notifications/components/notification-center';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useFilteredNavGroups } from '@/hooks/use-nav';
 import { useAccount } from '@/lib/account-context';
@@ -57,13 +60,18 @@ export default function AppSidebar() {
   return (
     <Sidebar collapsible='icon'>
       <SidebarHeader className='gap-2 group-data-[collapsible=icon]:pt-4'>
-        <Link
-          href='/'
-          aria-label='플러 홈'
-          className='hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex h-10 items-center rounded-lg px-2 text-sidebar-foreground transition-colors group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0'
-        >
-          <FlurLogo size='sm' wordmarkClassName='group-data-[collapsible=icon]:hidden' />
-        </Link>
+        <div className='flex min-w-0 items-center gap-1 group-data-[collapsible=icon]:justify-center'>
+          <Link
+            href='/'
+            aria-label='플러 홈'
+            className='hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex h-10 min-w-0 flex-1 items-center rounded-lg px-2 text-sidebar-foreground transition-colors group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:flex-none group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0'
+          >
+            <FlurLogo size='sm' wordmarkClassName='group-data-[collapsible=icon]:hidden' />
+          </Link>
+          <div className='shrink-0 group-data-[collapsible=icon]:hidden'>
+            <NotificationCenter />
+          </div>
+        </div>
         <OrgSwitcher />
       </SidebarHeader>
       <SidebarContent className='overflow-x-hidden'>
@@ -125,7 +133,16 @@ export default function AppSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className='gap-2'>
+        <div className='flex flex-col gap-2 px-1 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:px-0'>
+          <div className='flex min-w-0 items-center gap-2 group-data-[collapsible=icon]:hidden'>
+            <ThemeModeToggle />
+            <ThemeSelector compact className='min-w-0 flex-1' />
+          </div>
+          <div className='flex justify-end group-data-[collapsible=icon]:justify-center'>
+            <SidebarTrigger className='text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground size-8' />
+          </div>
+        </div>
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -181,7 +198,6 @@ export default function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }

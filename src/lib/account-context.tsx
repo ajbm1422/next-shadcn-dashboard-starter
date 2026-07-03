@@ -40,8 +40,8 @@ export type AccountOrganization = {
 
 const accountUser: AccountUser = {
   id: 'user_local_admin',
-  fullName: 'Zbo Moon',
-  title: 'Dashboard Owner',
+  fullName: '장보문',
+  title: '대시보드 관리자',
   timezone: 'Asia/Seoul',
   emailAddresses: [{ emailAddress: 'admin@influence.local' }]
 };
@@ -65,7 +65,7 @@ const initialOrganizations: AccountOrganization[] = [
     members: [
       {
         id: 'mem_admin',
-        name: 'Zbo Moon',
+        name: '장보문',
         email: 'admin@influence.local',
         role: 'Owner',
         status: 'Active',
