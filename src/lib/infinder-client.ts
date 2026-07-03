@@ -5,6 +5,8 @@ import {
   GetDashboardRequestSchema,
   ChannelReportQuerySchema,
   InfinderService,
+  LoadChatRoomRequestSchema,
+  LoadChatSnapshotRequestSchema,
   ListChannelsRequestSchema,
   ListContentsRequestSchema,
   VideoReportQuerySchema
@@ -78,4 +80,34 @@ export function getChannelReport(id: string) {
 
 export function getVideoReport(id: string) {
   return infinderClient.getVideoReport(create(VideoReportQuerySchema, { id, videoId: id }));
+}
+
+export function loadChatRoom(input: {
+  roomId: string;
+  limit?: number;
+  accessToken?: string;
+  clientId?: string;
+}) {
+  return infinderClient.loadChatRoom(
+    create(LoadChatRoomRequestSchema, {
+      roomId: input.roomId,
+      limit: input.limit ?? 60,
+      accessToken: input.accessToken ?? '',
+      clientId: input.clientId ?? ''
+    })
+  );
+}
+
+export function loadChatSnapshot(input: {
+  snapshotId: string;
+  accessToken?: string;
+  clientId?: string;
+}) {
+  return infinderClient.loadChatSnapshot(
+    create(LoadChatSnapshotRequestSchema, {
+      snapshotId: input.snapshotId,
+      accessToken: input.accessToken ?? '',
+      clientId: input.clientId ?? ''
+    })
+  );
 }

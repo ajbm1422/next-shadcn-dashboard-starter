@@ -1,14 +1,16 @@
 'use client';
 
 import { create, fromJson, toJsonString, type JsonValue } from '@bufbuild/protobuf';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ChatRequestSchema,
   ChatResponseSchema,
   type Channel,
   type ChatResponse,
+  type ChatSnapshot,
   type Content
 } from '@/gen/infinder/v1/infinder_pb';
+import { loadChatRoom, loadChatSnapshot } from '@/lib/infinder-client';
 import { assistantEventSchema } from '../schemas/assistant-event.schema';
 import type {
   ArtifactState,
@@ -22,6 +24,8 @@ import type { AppArtifact, CreatorRow, VideoItem } from '../schemas/artifact.sch
 const DEFAULT_ASSISTANT_ENDPOINT =
   process.env.NEXT_PUBLIC_ASSISTANT_STREAM_ENDPOINT || '/api/ai/chat-stream';
 const MOCK_ASSISTANT_ENDPOINT = '/api/assistant/mock-chat';
+const ROOM_STORAGE_KEY = 'fler_assistant_room_id';
+const CLIENT_STORAGE_KEY = 'fler_assistant_client_id';
 
 type RawSseEvent = {
   event: string;
@@ -41,6 +45,28 @@ function createId(prefix: string) {
   }
 
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
+
+function getStoredValue(key: string) {
+  if (typeof window === 'undefined') return '';
+  return window.localStorage.getItem(key) || '';
+}
+
+function setStoredValue(key: string, value: string) {
+  if (typeof window === 'undefined') return;
+  if (value) {
+    window.localStorage.setItem(key, value);
+    return;
+  }
+  window.localStorage.removeItem(key);
+}
+
+function getOrCreateClientId() {
+  const stored = getStoredValue(CLIENT_STORAGE_KEY);
+  if (stored) return stored;
+  const next = createId('client');
+  setStoredValue(CLIENT_STORAGE_KEY, next);
+  return next;
 }
 
 function parseSseBlock(block: string): RawSseEvent | undefined {
@@ -208,7 +234,7 @@ function artifactsFromChatResponse(response: ChatResponse): AppArtifact[] {
     artifacts.push({
       id: `${snapshotId}_videos`,
       kind: 'video_grid',
-      title: '추천 콘텐츠 후보',
+      title: response.resultSnapshot?.title || '추천 콘텐츠 후보',
       description: '요청 조건과 관련도가 높은 영상입니다.',
       items: response.recommendedContents.map(contentToVideoItem)
     });
@@ -217,7 +243,74 @@ function artifactsFromChatResponse(response: ChatResponse): AppArtifact[] {
   return artifacts;
 }
 
-function buildChatRequestBody(message: string, history: UIChatMessage[], endpoint: string) {
+function artifactStatesFromArtifacts(items: AppArtifact[]): ArtifactState[] {
+  return items.map((artifact) => ({
+    id: artifact.id,
+    kind: artifact.kind,
+    title: artifact.title,
+    description: artifact.description,
+    status: 'completed',
+    artifact
+  }));
+}
+
+function artifactsFromSnapshot(snapshot: ChatSnapshot): AppArtifact[] {
+  const artifacts: AppArtifact[] = [];
+  const snapshotId = snapshot.id || createId('snapshot');
+
+  if (snapshot.channels.length > 0) {
+    artifacts.push({
+      id: `${snapshotId}_creators`,
+      kind: 'creator_table',
+      title: snapshot.title || '추천 인플루언서 후보',
+      description: snapshot.search || snapshot.category || '저장된 후보 테이블입니다.',
+      rows: snapshot.channels.map(channelToCreatorRow)
+    });
+  }
+
+  if (snapshot.contents.length > 0) {
+    artifacts.push({
+      id: `${snapshotId}_videos`,
+      kind: 'video_grid',
+      title: snapshot.title || '추천 콘텐츠 후보',
+      description: snapshot.search || '저장된 영상 후보입니다.',
+      items: snapshot.contents.map(contentToVideoItem)
+    });
+  }
+
+  return artifacts;
+}
+
+function resultLinkFromSnapshot(snapshot: ChatSnapshot | undefined) {
+  if (!snapshot?.id) return undefined;
+
+  return {
+    snapshotId: snapshot.id,
+    title: snapshot.title || fallbackResultTitle(snapshot.kind),
+    kind: snapshot.kind || 'result'
+  };
+}
+
+function fallbackResultTitle(kind: string) {
+  if (kind === 'contents') return '영상 결과';
+  if (kind === 'channels') return '후보 결과';
+  return '결과 보기';
+}
+
+type ChatRequestContext = {
+  roomId: string;
+  activeSnapshotId: string;
+  clientId: string;
+  currentCandidates: Channel[];
+  currentContents: Content[];
+};
+
+function buildChatRequestBody(
+  message: string,
+  history: UIChatMessage[],
+  endpoint: string,
+  context: ChatRequestContext
+) {
   if (endpoint === MOCK_ASSISTANT_ENDPOINT) {
     return JSON.stringify({ message });
   }
@@ -226,15 +319,17 @@ function buildChatRequestBody(message: string, history: UIChatMessage[], endpoin
     ChatRequestSchema,
     create(ChatRequestSchema, {
       message,
+      roomId: context.roomId,
+      clientId: context.clientId,
+      activeSnapshotId: context.activeSnapshotId,
       history: history
         .filter((item) => item.content.trim())
         .map((item) => ({
           role: item.role,
           content: item.content
         })),
-      filters: {
-        sort: 'subscriber_count'
-      }
+      currentCandidates: context.currentCandidates,
+      currentContents: context.currentContents
     })
   );
 }
@@ -268,6 +363,11 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
   const [messages, setMessages] = useState<UIChatMessage[]>([]);
   const [artifacts, setArtifacts] = useState<ArtifactState[]>([]);
   const [activeArtifactId, setActiveArtifactId] = useState<string>();
+  const [roomId, setRoomId] = useState('');
+  const [activeSnapshotId, setActiveSnapshotId] = useState('');
+  const [clientId, setClientId] = useState('');
+  const [currentCandidates, setCurrentCandidates] = useState<Channel[]>([]);
+  const [currentContents, setCurrentContents] = useState<Content[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [status, setStatus] = useState<AssistantStreamStatus>('idle');
   const [error, setError] = useState<string>();
@@ -276,6 +376,64 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
   const toolOwnerMessageRef = useRef<Record<string, string>>({});
 
   const activeArtifact = artifacts.find((artifact) => artifact.id === activeArtifactId);
+
+  useEffect(() => {
+    const nextClientId = getOrCreateClientId();
+    setClientId(nextClientId);
+    setRoomId(getStoredValue(ROOM_STORAGE_KEY));
+  }, []);
+
+  useEffect(() => {
+    setStoredValue(ROOM_STORAGE_KEY, roomId);
+  }, [roomId]);
+
+  useEffect(() => {
+    if (!roomId || !clientId || endpoint === MOCK_ASSISTANT_ENDPOINT) return;
+    let cancelled = false;
+
+    loadChatRoom({ roomId, limit: 60, clientId })
+      .then((room) => {
+        if (cancelled) return;
+        if (room.messages.length > 0) {
+          setMessages(
+            room.messages.map((message) => ({
+              id: message.id || createId(message.role || 'message'),
+              role: message.role === 'user' ? 'user' : 'assistant',
+              content: message.content,
+              createdAt: message.createdAt
+                ? Date.parse(message.createdAt) || Date.now()
+                : Date.now(),
+              status: 'completed',
+              toolCalls: [],
+              result: message.snapshotId
+                ? {
+                    snapshotId: message.snapshotId,
+                    title: message.snapshotTitle || fallbackResultTitle(message.snapshotKind),
+                    kind: message.snapshotKind || 'result'
+                  }
+                : undefined
+            }))
+          );
+        }
+        setActiveSnapshotId(room.activeSnapshotId);
+        if (room.activeSnapshot) {
+          setCurrentCandidates(room.activeSnapshot.channels);
+          setCurrentContents(room.activeSnapshot.contents);
+          const restoredArtifacts = artifactsFromSnapshot(room.activeSnapshot);
+          setArtifacts(artifactStatesFromArtifacts(restoredArtifacts));
+          setActiveArtifactId(restoredArtifacts[0]?.id);
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setRoomId('');
+        setActiveSnapshotId('');
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId, endpoint, roomId]);
 
   const ensureAssistantMessage = useCallback(() => {
     if (activeAssistantMessageIdRef.current) {
@@ -311,6 +469,42 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
   const closeArtifact = useCallback(() => {
     setActiveArtifactId(undefined);
   }, []);
+
+  const selectResultSnapshot = useCallback(
+    async (snapshotId: string) => {
+      const id = snapshotId.trim();
+      if (!id || endpoint === MOCK_ASSISTANT_ENDPOINT) return;
+
+      try {
+        setError(undefined);
+        const effectiveClientId = clientId || getOrCreateClientId();
+        if (!clientId) {
+          setClientId(effectiveClientId);
+        }
+
+        const snapshot = await loadChatSnapshot({
+          snapshotId: id,
+          clientId: effectiveClientId
+        });
+        const nextArtifacts = artifactsFromSnapshot(snapshot);
+        if (nextArtifacts.length === 0) return;
+
+        setRoomId(snapshot.roomId || roomId);
+        setActiveSnapshotId(snapshot.id);
+        setCurrentCandidates(snapshot.channels);
+        setCurrentContents(snapshot.contents);
+        setArtifacts(artifactStatesFromArtifacts(nextArtifacts));
+        setActiveArtifactId(nextArtifacts[0].id);
+      } catch (snapshotError) {
+        setError(
+          snapshotError instanceof Error
+            ? snapshotError.message
+            : '결과를 다시 불러오지 못했습니다.'
+        );
+      }
+    },
+    [clientId, endpoint, roomId]
+  );
 
   const applyEvent = useCallback((event: AssistantEvent) => {
     const now = Date.now();
@@ -464,24 +658,13 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
 
   const applyLegacyPayload = useCallback(
     (payload: LegacyChatStreamPayload) => {
-      const now = Date.now();
       const messageId = ensureAssistantMessage();
-      const toolCallId = `${messageId}_tool`;
 
       if (payload.type === 'status') {
-        toolOwnerMessageRef.current[toolCallId] = messageId;
         setMessages((current) =>
           updateMessage(current, messageId, (message) => ({
             ...message,
-            status: 'streaming',
-            toolCalls: upsertToolCall(message.toolCalls, {
-              id: toolCallId,
-              name: 'backend_chat_stream',
-              label: 'AI 후보 검색',
-              status: 'progress',
-              message: payload.message,
-              updatedAt: now
-            })
+            status: 'streaming'
           }))
         );
         return;
@@ -513,43 +696,36 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
       if (payload.type === 'final' && payload.response) {
         const response = fromJson(ChatResponseSchema, payload.response);
         const nextArtifacts = artifactsFromChatResponse(response);
+        const resultLink = resultLinkFromSnapshot(response.resultSnapshot);
         setSuggestions(cleanSuggestions(response.suggestions));
+        if (response.roomId) {
+          setRoomId(response.roomId);
+        }
+        if (response.resultSnapshot?.id) {
+          setActiveSnapshotId(response.resultSnapshot.id);
+          setCurrentCandidates(response.resultSnapshot.channels);
+          setCurrentContents(response.resultSnapshot.contents);
+        } else {
+          if (response.recommendedChannels.length > 0) {
+            setCurrentCandidates(response.recommendedChannels);
+          }
+          if (response.recommendedContents.length > 0) {
+            setCurrentContents(response.recommendedContents);
+          }
+        }
 
         setMessages((current) =>
           updateMessage(current, messageId, (message) => ({
             ...message,
             content: response.message.trim() ? response.message : message.content,
             status: 'completed',
-            toolCalls: upsertToolCall(message.toolCalls, {
-              id: toolCallId,
-              name: 'backend_chat_stream',
-              label: 'AI 후보 검색',
-              status: 'completed',
-              message: '검색이 완료됐습니다.',
-              updatedAt: now
-            })
+            toolCalls: [],
+            result: resultLink ?? message.result
           }))
         );
 
         if (nextArtifacts.length > 0) {
-          setArtifacts((current) => {
-            const completedArtifacts: ArtifactState[] = nextArtifacts.map((artifact) => ({
-              id: artifact.id,
-              kind: artifact.kind,
-              title: artifact.title,
-              description: artifact.description,
-              status: 'completed',
-              artifact
-            }));
-            const existingIds = new Set(current.map((artifact) => artifact.id));
-            return [
-              ...current.filter(
-                (artifact) => !completedArtifacts.some((next) => next.id === artifact.id)
-              ),
-              ...completedArtifacts.filter((artifact) => !existingIds.has(artifact.id)),
-              ...completedArtifacts.filter((artifact) => existingIds.has(artifact.id))
-            ];
-          });
+          setArtifacts(artifactStatesFromArtifacts(nextArtifacts));
           setActiveArtifactId(nextArtifacts[0].id);
         }
       }
@@ -597,13 +773,23 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
       setMessages(nextHistory);
 
       try {
+        const effectiveClientId = clientId || getOrCreateClientId();
+        if (!clientId) {
+          setClientId(effectiveClientId);
+        }
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: {
             Accept: 'text/event-stream',
             'Content-Type': 'application/json'
           },
-          body: buildChatRequestBody(message, nextHistory, endpoint),
+          body: buildChatRequestBody(message, nextHistory, endpoint, {
+            roomId,
+            activeSnapshotId,
+            clientId: effectiveClientId,
+            currentCandidates,
+            currentContents
+          }),
           signal: controller.signal
         });
 
@@ -663,7 +849,17 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
         }
       }
     },
-    [endpoint, handleRawEvent, messages, stop]
+    [
+      activeSnapshotId,
+      clientId,
+      currentCandidates,
+      currentContents,
+      endpoint,
+      handleRawEvent,
+      messages,
+      roomId,
+      stop
+    ]
   );
 
   return {
@@ -677,6 +873,7 @@ export function useAssistantStream(endpoint = DEFAULT_ASSISTANT_ENDPOINT) {
     sendMessage,
     stop,
     selectArtifact,
+    selectResultSnapshot,
     closeArtifact
   };
 }

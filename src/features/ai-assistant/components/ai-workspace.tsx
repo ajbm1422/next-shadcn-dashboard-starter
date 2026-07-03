@@ -22,6 +22,7 @@ export function AiWorkspace() {
     sendMessage,
     stop,
     selectArtifact,
+    selectResultSnapshot,
     closeArtifact
   } = useAssistantStream();
   const shouldReduceMotion = useReducedMotion();
@@ -43,6 +44,7 @@ export function AiWorkspace() {
       hasArtifact={hasArtifact}
       onSend={sendMessage}
       onStop={stop}
+      onSelectResult={selectResultSnapshot}
     />
   );
 

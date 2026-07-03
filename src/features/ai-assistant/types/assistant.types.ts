@@ -16,6 +16,12 @@ export type ToolCallState = {
   updatedAt: number;
 };
 
+export type ChatResultLink = {
+  snapshotId: string;
+  title: string;
+  kind: string;
+};
+
 export type ChatMessage = {
   id: string;
   role: ChatRole;
@@ -23,6 +29,7 @@ export type ChatMessage = {
   createdAt: number;
   status?: 'streaming' | 'completed' | 'error';
   toolCalls: ToolCallState[];
+  result?: ChatResultLink;
 };
 
 export type PendingArtifact = {

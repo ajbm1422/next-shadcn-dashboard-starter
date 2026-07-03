@@ -6,11 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import type { AssistantStreamStatus } from '../types/assistant.types';
 
-function preventBareEnter(event: KeyboardEvent<HTMLTextAreaElement>) {
-  if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return;
-  event.preventDefault();
-}
-
 export function PromptBox({
   value,
   status,
@@ -31,17 +26,24 @@ export function PromptBox({
     if (!isWorking) onSubmit();
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return;
+
+    event.preventDefault();
+    if (!isWorking && value.trim()) onSubmit();
+  };
+
   return (
-    <div className='space-y-1.5'>
+    <div className='space-y-0.5'>
       <form
         onSubmit={submit}
         className='border-border/70 rounded-2xl border bg-transparent p-2 shadow-none'
       >
-        <div className='flex items-center gap-2'>
+        <div className='flex items-end gap-2'>
           <Textarea
             value={value}
             onChange={(event) => onChange(event.target.value)}
-            onKeyDown={preventBareEnter}
+            onKeyDown={handleKeyDown}
             rows={1}
             placeholder='어떤 인플루언서를 찾을지 조건을 입력해 주세요'
             className='placeholder:text-muted-foreground/55 max-h-40 min-h-8 resize-none border-none bg-transparent px-3 py-1.5 text-sm leading-5 shadow-none focus-visible:ring-0 dark:bg-transparent'
@@ -71,7 +73,7 @@ export function PromptBox({
           )}
         </div>
       </form>
-      <p className='text-muted-foreground px-3 text-[11px]'>Shift+Enter 줄바꿈</p>
+      <p className='text-muted-foreground px-3 text-[11px] leading-4'>Shift+Enter 줄바꿈</p>
     </div>
   );
 }

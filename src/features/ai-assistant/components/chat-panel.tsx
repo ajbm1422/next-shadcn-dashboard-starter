@@ -15,7 +15,8 @@ export function ChatPanel({
   error,
   hasArtifact,
   onSend,
-  onStop
+  onStop,
+  onSelectResult
 }: {
   messages: ChatMessage[];
   suggestions: string[];
@@ -24,6 +25,7 @@ export function ChatPanel({
   hasArtifact: boolean;
   onSend: (message: string) => Promise<void>;
   onStop: () => void;
+  onSelectResult: (snapshotId: string) => void;
 }) {
   const [input, setInput] = useState('');
 
@@ -57,41 +59,43 @@ export function ChatPanel({
     <section
       className={
         hasArtifact
-          ? 'flex min-h-[560px] min-w-0 flex-1 flex-col overflow-hidden md:h-[calc(100dvh-2rem)]'
-          : 'mx-auto flex h-[calc(100dvh-2rem)] w-full max-w-3xl flex-col overflow-hidden'
+          ? 'relative flex min-h-[560px] min-w-0 flex-1 flex-col overflow-y-auto md:h-[calc(100dvh-1rem)]'
+          : 'relative mx-auto flex h-[calc(100dvh-1rem)] w-full max-w-3xl flex-col overflow-y-auto'
       }
     >
-      <MessageList messages={messages} />
-      <div className='bg-background/95 sticky bottom-0 space-y-3 px-1 pt-3 pb-3 backdrop-blur md:pb-4'>
-        {error && (
-          <Alert variant='destructive'>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-        {suggestions.length > 0 && (
-          <div className='flex flex-wrap gap-2 px-2'>
-            {suggestions.map((suggestion) => (
-              <Button
-                key={suggestion}
-                type='button'
-                variant='outline'
-                size='sm'
-                className='h-auto min-h-8 max-w-full justify-start rounded-full px-3 py-1.5 text-left text-xs leading-5 whitespace-normal'
-                disabled={isWorking}
-                onClick={() => void send(suggestion)}
-              >
-                {suggestion}
-              </Button>
-            ))}
-          </div>
-        )}
-        <PromptBox
-          value={input}
-          status={status}
-          onChange={setInput}
-          onSubmit={() => void send()}
-          onStop={onStop}
-        />
+      <MessageList messages={messages} onSelectResult={onSelectResult} />
+      <div className='pointer-events-none sticky bottom-4 z-10 mx-auto mt-auto w-full max-w-3xl px-1'>
+        <div className='pointer-events-auto space-y-3'>
+          {error && (
+            <Alert variant='destructive' className='bg-background/95 backdrop-blur'>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          {suggestions.length > 0 && (
+            <div className='flex flex-wrap gap-2 px-2'>
+              {suggestions.map((suggestion) => (
+                <Button
+                  key={suggestion}
+                  type='button'
+                  variant='outline'
+                  size='sm'
+                  className='bg-background/95 h-auto min-h-8 max-w-full justify-start rounded-full px-3 py-1.5 text-left text-xs leading-5 whitespace-normal backdrop-blur'
+                  disabled={isWorking}
+                  onClick={() => void send(suggestion)}
+                >
+                  {suggestion}
+                </Button>
+              ))}
+            </div>
+          )}
+          <PromptBox
+            value={input}
+            status={status}
+            onChange={setInput}
+            onSubmit={() => void send()}
+            onStop={onStop}
+          />
+        </div>
       </div>
     </section>
   );

@@ -2,12 +2,18 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Icons } from '@/components/icons';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { AssistantFormattedMessage } from './assistant-formatted-message';
-import { ToolStatus } from './tool-status';
 import type { ChatMessage } from '../types/assistant.types';
 
-export function MessageBubble({ message }: { message: ChatMessage }) {
+export function MessageBubble({
+  message,
+  onSelectResult
+}: {
+  message: ChatMessage;
+  onSelectResult?: (snapshotId: string) => void;
+}) {
   const isUser = message.role === 'user';
 
   return (
@@ -40,11 +46,18 @@ export function MessageBubble({ message }: { message: ChatMessage }) {
             답변을 준비하고 있습니다.
           </p>
         )}
-        {!isUser && message.toolCalls.length > 0 && (
-          <div className='mt-3 space-y-2'>
-            {message.toolCalls.map((tool) => (
-              <ToolStatus key={tool.id} tool={tool} />
-            ))}
+        {!isUser && message.result && (
+          <div className='mt-3'>
+            <Button
+              type='button'
+              variant='outline'
+              size='sm'
+              className='h-auto max-w-full cursor-pointer justify-start rounded-full px-3 py-1.5 text-xs'
+              onClick={() => onSelectResult?.(message.result?.snapshotId ?? '')}
+            >
+              <Icons.galleryVerticalEnd className='mr-1.5 size-3.5 shrink-0' />
+              <span className='truncate'>{message.result.title}</span>
+            </Button>
           </div>
         )}
       </div>
