@@ -47,7 +47,7 @@ export function ThemeModeToggle() {
           <span className='sr-only'>테마 전환</span>
         </Button>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent className='ml-3'>
         테마 전환 <Kbd>D D</Kbd>
       </TooltipContent>
     </Tooltip>

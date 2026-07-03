@@ -2,6 +2,7 @@ import {
   IconAdjustmentsHorizontal,
   IconAlertCircle,
   IconAlertTriangle,
+  IconArrowUp,
   IconArrowRight,
   IconBell,
   IconBold,
@@ -96,6 +97,7 @@ export const Icons = {
   // General
   alertCircle: IconAlertCircle,
   warning: IconAlertTriangle,
+  arrowUp: IconArrowUp,
   arrowRight: IconArrowRight,
   check: IconCheck,
   checks: IconChecks,

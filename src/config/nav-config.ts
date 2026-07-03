@@ -30,7 +30,7 @@ export const navGroups: NavGroup[] = [
       },
       {
         title: 'AI',
-        url: '/dashboard/ai',
+        url: '/dashboard/assistant',
         icon: 'sparkles',
         isActive: false,
         shortcut: ['a', 'i'],
