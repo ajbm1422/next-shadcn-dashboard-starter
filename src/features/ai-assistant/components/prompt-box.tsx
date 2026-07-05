@@ -37,7 +37,7 @@ export function PromptBox({
     <div className='space-y-0.5'>
       <form
         onSubmit={submit}
-        className='border-border/70 rounded-2xl border bg-transparent p-2 shadow-none'
+        className='border-border/70 bg-background rounded-2xl border p-2 shadow-none'
       >
         <div className='flex items-end gap-2'>
           <Textarea
