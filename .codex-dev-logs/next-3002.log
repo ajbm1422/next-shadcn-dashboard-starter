@@ -1,0 +1,7 @@
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://10.0.0.120:3002
+✓ Ready in 311ms
+
+ GET /dashboard/assistant 200 in 662ms (next.js: 132ms, application-code: 529ms)
+ GET /dashboard/assistant 200 in 59ms (next.js: 3ms, application-code: 56ms)
