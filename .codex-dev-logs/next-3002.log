@@ -1,7 +1,13 @@
 ▲ Next.js 16.2.10 (Turbopack)
 - Local:         http://localhost:3002
 - Network:       http://10.0.0.120:3002
-✓ Ready in 311ms
+✓ Ready in 325ms
+⨯ Another next dev server is already running.
 
- GET /dashboard/assistant 200 in 662ms (next.js: 132ms, application-code: 529ms)
- GET /dashboard/assistant 200 in 59ms (next.js: 3ms, application-code: 56ms)
+- Local:        http://localhost:3000
+- PID:          60012
+- Dir:          /Users/zbomoon/Documents/workspace/influence/next-shadcn-dashboard-starter
+- Log:          .next/dev/logs/next-development.log
+
+Run kill 60012 to stop it.
+[?25h
