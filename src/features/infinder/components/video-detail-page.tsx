@@ -236,12 +236,13 @@ function VideoEmbedFrameCard({
       <CardContent className='p-3'>
         <div className='bg-muted relative aspect-video overflow-hidden rounded-md'>
           {embedUrl ? (
+            // oxlint-disable-next-line react/iframe-missing-sandbox -- YouTube embeds break their player scripts when sandboxed.
             <iframe
               src={embedUrl}
               title={title}
               className='absolute inset-0 size-full'
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-              sandbox='allow-scripts allow-presentation allow-popups'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+              referrerPolicy='strict-origin-when-cross-origin'
               allowFullScreen
             />
           ) : thumbnail ? (
